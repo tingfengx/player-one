@@ -1,1 +1,3 @@
 ./player-one/build/*
+../.idea/
+../node_modules/
