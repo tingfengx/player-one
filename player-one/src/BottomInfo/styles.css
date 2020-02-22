@@ -1,0 +1,17 @@
+.BottomInfoBox {
+    height: 150px;
+    width: 100%;
+    background-color: black;
+}
+
+.BottomInfo {
+    padding-top: 55px;
+    text-align: center;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+}
+
+.Heart {
+    font-weight: bolder;
+    color: #ff0000;
+}

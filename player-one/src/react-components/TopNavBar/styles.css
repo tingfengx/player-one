@@ -4,6 +4,7 @@
 
 .RightElements {
     flex: 1;
+    margin: 0;
 }
 
 body {
@@ -11,11 +12,13 @@ body {
 }
 
 .navbar {
+    width: 100%;
     overflow: hidden;
     background-color: #333;
 }
 
 .navbar a {
+    width: 100%;
     float: left;
     font-size: 16px;
     color: black;
@@ -30,11 +33,12 @@ body {
 }
 
 .dropdown .dropbtn {
+    cursor: pointer;
     font-size: 16px;
     border: none;
     outline: none;
     color: black;
-    padding: 14px 16px;
+    padding: 18px 10px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;

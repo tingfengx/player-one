@@ -19,12 +19,14 @@ export default class CarouselSlides extends Component {
     render() {
         const settings = {
             dots: true,
+            dotsClass: "slick-dots",
             infinite: true,
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: true,
             autoplaySpeed: 5000,
-            pauseOnHover: true
+            pauseOnHover: true,
+            arrows: false
         };
 
         return (

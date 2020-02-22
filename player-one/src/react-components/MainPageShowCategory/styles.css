@@ -1,0 +1,77 @@
+.GameShowCaseContainer {
+    height: 300px;
+    background-color: black;
+    width: 90%;
+    margin-top: -5px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.GameCategoryName {
+    color: whitesmoke;
+    font-weight: bolder;
+    position: relative;
+    float: left;
+    padding: 70px 30px 30px 30px;
+    width: 25%;
+    font-size: xx-large;
+}
+
+.GameCategoryDescription {
+    color: whitesmoke;
+    font-weight: bold;
+    position: absolute;
+    float: left;
+    width: 20%;
+    padding-left: 30px;
+    padding-top: 120px;
+}
+
+.GameCategorySmallCarousel {
+    position: relative;
+    float: left;
+    padding-top: 10px;
+    padding-left: 30px;
+    width: 65%;
+}
+
+.ThumbNailImage {
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+    /*max-height: 200px;*/
+    border: 0;
+    width: auto;
+    height: 200px;
+}
+
+
+/* Arrows */
+.slick-prev,
+.slick-next
+{
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 57%;
+
+    display: block;
+
+    width: 20px;
+    height: 0;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    cursor: pointer;
+
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.ClickableImage {
+    margin-top: 50px;
+}

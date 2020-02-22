@@ -5,10 +5,14 @@ import './App.css';
 import Home from './react-components/Home';
 
 class App extends React.Component {
-    // can use this to store the currect user
+    // can use this to store the current user
     state = {
         abc: "123"
     };
+
+    componentDidMount(){
+        document.title = "Player One - The Player's Game Rating Platform"
+    }
 
     render() {
         return (
