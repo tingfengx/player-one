@@ -2,7 +2,7 @@ import React from "react";
 import TopNavBar from '../TopNavBar';
 import CarouselSlides from '../CarouselSlides';
 import MainPageShowCategory from "../MainPageShowCategory";
-import BottomInfo from "../../BottomInfo";
+import BottomInfo from "../BottomInfo";
 
 /* Component for the Home page */
 class Home extends React.Component {

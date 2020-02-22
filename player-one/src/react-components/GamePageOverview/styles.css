@@ -71,10 +71,14 @@
 }
 
 #GameReviewsBlock {
-    position: absolute;
-    margin-top: 13%;
-    margin-left: 5%;
-    font-size: 12px;
+     position: absolute;
+     margin-top: 13%;
+     margin-left: 5%;
+     font-size: 12px;
+ }
+
+#GamePage {
+    position: relative;
 }
 
 .GameReviewsRow{

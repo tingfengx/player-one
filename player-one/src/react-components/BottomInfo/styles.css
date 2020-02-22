@@ -1,4 +1,6 @@
 .BottomInfoBox {
+    position: relative;
+    bottom: 0%;
     height: 150px;
     width: 100%;
     background-color: black;
