@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
+    "panel": "^2.6.0",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
@@ -16,7 +17,8 @@
     "react-scripts": "3.4.0",
     "react-slick": "^0.25.2",
     "slick-carousel": "^1.8.1",
-    "thumbnail": "^0.1.9"
+    "thumbnail": "^0.1.9",
+    "rsuite": "^4.2.1",
   },
   "scripts": {
     "start": "react-scripts start",
