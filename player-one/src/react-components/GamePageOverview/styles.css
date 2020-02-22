@@ -1,0 +1,100 @@
+#GameOverviewBlock {
+    float: left;
+    width: 100%;
+    height: 78vh;
+    /*background: linear-gradient(color-stop(50%, white), color-stop(100%,rgba(0,0,0,0)));*/
+    background: -webkit-radial-gradient(50% 10%, white, rgba(255,255,255,0.7));
+    /**/
+    /*background-image: url("../../imgs/the_witcher_3_wild_hunt/background.jpg");*/
+    /*background-size: cover;*/
+}
+
+#GameOverviewBlockBackground{
+    float: left;
+    margin-left: 8%;
+    width: 84%;
+    min-height: 64vh;
+    background-image: url("../../imgs/the_witcher_3_wild_hunt/background.jpg");
+    background-size: cover;
+    /*if background image not able*/
+    background-color: #555555;
+}
+
+#GameName {
+    position: center;
+    margin-left: 40px;
+    font-size: 30px;
+    line-height: 18px;
+    text-overflow: ellipsis;
+}
+
+.GameInfo {
+    float:left;
+    font-size: 13px;
+    width: 38%;
+    line-height: 18px;
+    display: -webkit-box;
+    margin-top: 100px;
+}
+
+#GameImage {
+    width: 99.3%;
+    border-radius: 4px;
+    margin-left: 2px;
+}
+
+.DotsPreviewImage {
+    float: left;
+    padding-top: 2px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.slick-dots li{
+    display: inline-block;
+    width: 24.2%;
+    margin: 0.4%;
+    cursor: pointer;
+}
+
+#SliderBlock {
+    width: 60%;
+    float: left;
+    margin-left:8px;
+}
+
+#GameDescription {
+    margin-left: 10%;
+    line-height: 25px;
+    margin-right: 8%;
+}
+
+#GameReviewsBlock {
+    position: absolute;
+    margin-top: 13%;
+    margin-left: 5%;
+    font-size: 12px;
+}
+
+.GameReviewsRow{
+    display: flex;
+    line-height: 10px;
+}
+
+.GameReviews {
+    min-width: 130px;
+    font-size: 12px;
+    color: #556772;
+    text-transform: uppercase;
+}
+
+.GameReviewPersentage {
+    color: dodgerblue;
+}
+
+#ReviewBar{
+    float: left;
+    margin-left: 8%;
+    width: 84%;
+    min-height: 50px;
+}
