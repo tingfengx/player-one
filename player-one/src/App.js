@@ -4,6 +4,7 @@ import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import './App.css';
 import Home from './react-components/Home';
 import Game from './react-components/Game';
+import Account from './react-components/Account';
 
 class App extends React.Component {
     // can use this to store the current user
@@ -25,6 +26,8 @@ class App extends React.Component {
                             (<Home state={this.state} />)} />
                         <Route exact path='/the_witcher_3_wild_hunt' render={() =>
                             (<Game state={this.state} />)} />
+                        <Route exact path='/user_account' render={() =>
+                            (<Account state={this.state} />)} />
                     </Switch>
                 </BrowserRouter>
             </div>
