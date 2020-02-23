@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TopNavBar from "../TopNavBar";
-import UserProfile from "./UserProfile"; 
+import UserProfile from "./UserProfile";
+import UserActivities from "./UserActivities"
 import "./styles.css";
 
 import backgroundImageSrc from "../../imgs/user_account/ff7_wallpaper.jpg";
@@ -26,6 +27,7 @@ class Account extends Component {
           <img src={backgroundImageSrc} />
         </div>
         <UserProfile/>
+        <UserActivities/>
       </div>
     );
   }

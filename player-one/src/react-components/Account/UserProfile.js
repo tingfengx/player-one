@@ -23,7 +23,7 @@ class UserProfile extends Component {
             <div className="username">
               <h1>Chocobosdfsdfsdf</h1>
               <div className="iconContainer">
-                <CreateRoundedIcon fontSize="medium" />
+                <CreateRoundedIcon fontSize="medium" color="primary"/>
               </div>
             </div>
             <div className="likes">

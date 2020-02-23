@@ -19,9 +19,10 @@
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     min-height: 500px;
-    border-radius: 3%;
+    border-top-left-radius: 3%;
+    border-top-right-radius: 3%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -98,6 +99,17 @@
     color: gray;
 }
 
-.userBio {
-    color: blueviolet;
+.activityContainer {
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 50px;
+    min-height: 500px;
+    border-bottom-left-radius: 3%;
+    border-bottom-right-radius: 3%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
 }
