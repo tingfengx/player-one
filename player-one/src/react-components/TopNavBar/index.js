@@ -12,6 +12,7 @@ import './styles.css';
 const useStyles = makeStyles(theme => ({
     toolbar: {
         borderBottom: `2px solid ${theme.palette.divider}`,
+        backgroundColor: theme.palette.background.paper
     },
     toolbarTitle: {
         flex: 1,
