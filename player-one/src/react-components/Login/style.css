@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: url("../../imgs/LoginSignupImg/bg1.png");
+}
+
+
+
+.form{
+    width: 80%;
+    margin-left: 10px;
+    /*marginTop: */
+}
+
+.Typography{
+    margin-left: 15%;
+}
+
+
+
+
+
+.FormCenter {
+    margin-top: 10%;
+    margin-bottom: 100px;
+    margin-left: 33%;
+    margin-right: 33%;
+    background-color: white;
+    width: 34%;
+    border-radius: 5%;
+    padding-right: 20px;
+    padding-left: 15px;
+    padding-top: 20px;
+}
+
+.FormTitle {
+    color: #707C8B;
+    font-weight: 300;
+    margin-bottom: 50px;
+}
+
+.FormTitle__Link {
+    color: #707C8B;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.7em;
+    margin: 0 10px;
+    padding-bottom: 5px;
+}
+
+.FormTitle__Link:first-child {
+    margin-left: 0;
+}
+
+.FormTitle__Link--Active {
+    color: white;
+    border-bottom: 1px solid #199087;
+}
+
+.FormField {
+    margin-bottom: 40px;
+    margin-left: 10px;
+
+}
+
+.header{
+    margin-left: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.textField{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.MuiButtonBase-root{
+    margin-left: 80px;
+    margin-bottom: 20px;
+}
