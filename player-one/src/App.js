@@ -28,6 +28,8 @@ class App extends React.Component {
                             (<Home state={this.state} />)} />
                         <Route exact path='/the_witcher_3_wild_hunt' render={() =>
                             (<Game state={this.state} />)} />
+                        <Route exact path='/user_account' render={() =>
+                            (<Game state={this.state} />)} />
                         <Route exact path='/Login' render={() =>
                             (<Login state={this.state} />)} />
                         <Route exact path='/Signup' render={() =>
