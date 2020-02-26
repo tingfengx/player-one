@@ -10,9 +10,9 @@ export default function MainPageShowCategory(props) {
         <div className={"GameShowCaseContainer"}>
             <div className={"GameCategoryName"}>
                 {GameCategory}
-            </div>
-            <div className={"GameCategoryDescription"}>
-                {CategoryDescription}
+                <div className={"GameCategoryDescription"}>
+                    {CategoryDescription}
+                </div>
             </div>
             <div className={"GameCategorySmallCarousel"}>
                 <GameCategorySmallCarousel Images={Images}/>
