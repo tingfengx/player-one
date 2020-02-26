@@ -1,182 +1,72 @@
-import React, {Component} from 'react';
-
+import React from 'react';
 import Button from '@material-ui/core/Button';
-
 import TextField from '@material-ui/core/TextField';
-import TopNavBar from "../TopNavBar";
-
-import './style.css';
-import InputAdornment from '@material-ui/core/InputAdornment';
-
-
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import "./style.css"
 
-
-
-class SignUpForm extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            email: '',
-            password: '',
-            username: '',
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(e) {
-        let target = e.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        let name = target.name;
-
-        this.setState({
-            [name]: value
-        });
-    }
-
-    handleSubmit(e) {
+export default function Signup() {
+    const SignUpHandler = function (e) {
         e.preventDefault();
-
-        console.log('The form was submitted with the following data:');
-        console.log(this.state);
-    }
-
-    // const classes = useStyles();
-
-
-    render() {
-        const sections = [
-            {title: 'Featured', url: '#'},
-            {title: 'Trending', url: '#'},
-            {title: 'RPG Game', url: '#'},
-            {title: 'Leisure', url: '#'},
-            {title: 'Scenery', url: '#'},
-            {title: 'bruh', url: '#'},
-            {title: 'what else', url: '#'},
-        ];
-        return (
-            <div className='homeImage'>
-                <TopNavBar sections={sections} title="PLAYER ONE"/>
-                <div className="FormCenter">
-
-                    <Typography variant="button" display="block" gutterBottom>
-                        <h3>Sign-Up </h3>
+        console.log("Sign up clicked");
+    };
+    return (
+        // <div>component="main" maxWidth="xs"
+        <div className={"MasterContainer"}>
+            <div>
+                <div className={"SignUpForm"}>
+                    <Typography component="h1" variant="h5">
+                        Sign up
                     </Typography>
-
-                    <form onSubmit={this.handleSubmit} className="FormFields" onSubmit={this.handleSubmit}>
-                        <div className="FormField">
-                            {/*<label className="FormField__Label" htmlFor="email">Email-address</label>*/}
-                            <TextField
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Email</InputAdornment>,
-                                }}
-                                className="textField"
-                                variant="outlined"
-                                margin="dense"
-                                required
-
-                                fullWidth
-                                color="secondary"
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-
-                            />
-
-                            {/*Email:&nbsp; &nbsp; &nbsp;  &nbsp;&nbsp;<input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />*/}
-                        </div>
-
-                        <div className="FormField">
-                            {/*<label className="FormField__Label" htmlFor="Username">UserName</label>*/}
-                            {/*<TextField required id="standard-required" label="Required" defaultValue="Hello World" />*/}
-                            <TextField
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">User Name</InputAdornment>,
-                                }}
-                                className="textField"
-                                variant="outlined"
-                                margin="dense"
-                                required
-
-                                fullWidth
-                                color="secondary"
-                                id="email"
-                                label="User Name"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                            />
-                        </div>
-
-                        <div className="FormField">
-                            {/*<label className="FormField__Label" htmlFor="password">Password</label>*/}
-                            <TextField
-                                className="textField"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">Password</InputAdornment>,
-                                }}
-                                variant="outlined"
-                                margin="dense"
-                                required
-                                fullWidth
-
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                value={this.state.password}
-                                onChange={this.handleChange}
-                            />
-                        </div>
-
-
-
-                        <div className="FormField">
-                            {/*<label className="FormField__Label" htmlFor="repeat_password">repeat_Password</label>*/}
-                            <TextField
-                                className="textField"
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">repeat Password</InputAdornment>,
-                                }}
-                                variant="outlined"
-                                margin="dense"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Repeat Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-
-                            />
-                        </div>
-
-                        <div className="FormField">
-                            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;<Button variant="outlined" >Yeah!</Button>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                        </div>
+                    <form noValidate size={"xs"}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                            autoFocus
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            // autoComplete="current-password"
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="re-enter-password"
+                            label="Retype Password"
+                            type="re-enter-password"
+                            id="re-enter-password"
+                            // autoComplete="current-password"
+                        />
+                        <Grid container className={"SignUpText"}>
+                            <Grid item>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={SignUpHandler}
+                                >Sign Up
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </form>
                 </div>
             </div>
+        </div>
 
-
-
-        );
-    }
-
-
-
+    );
 }
-
-export default SignUpForm;

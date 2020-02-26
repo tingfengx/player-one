@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-
 import TextField from "@material-ui/core/TextField";
-
-import "./style.css";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TopNavBar from "../TopNavBar";
-
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import "./style.css";
+import TopNavBar from "../TopNavBar";
 
 // hardcoded users
 const users = [];
@@ -43,7 +41,7 @@ class SignInForm extends Component {
     if (this.state.isLoggedIn) {
       this.props.history.push({
         pathname: "/",
-        state: { username: this.state.username, type: this.state.type }
+        state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
       });
     }
   }
@@ -52,7 +50,7 @@ class SignInForm extends Component {
     if (this.state.isLoggedIn) {
       this.props.history.push({
         pathname: "/",
-        state: { username: this.state.username, type: this.state.type }
+        state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
       });
     }
   }
@@ -109,47 +107,26 @@ class SignInForm extends Component {
       { title: "what else", url: "#" }
     ];
     return (
-      <div className="homeImage">
-        <TopNavBar sections={sections} title="PLAYER ONE" />
-        <div className="FormCenter">
-          <Typography variant="button" display="block" gutterBottom>
-            <h3>Sign-In </h3>
-          </Typography>
-
-          <form
-            onSubmit={this.handleSubmit}
-            className="FormFields"
-            onSubmit={this.handleSubmit}
-          >
-            <div className="FormField">
+      <div className={"MasterContainer"}>
+        <div>
+          <div className={"SignInForm"}>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form noValidate>
               <TextField
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">User Name</InputAdornment>
-                  )
-                }}
-                className="textField"
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                color="secondary"
-                id="UserName"
-                label="User Name"
+                id="username"
+                label="Username"
                 name="username"
+                autoComplete="username"
                 autoFocus
                 onChange={this.handleChange}
               />
-            </div>
-
-            <div className="FormField">
               <TextField
-                className="textField"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">Password</InputAdornment>
-                  )
-                }}
                 variant="outlined"
                 margin="normal"
                 required
@@ -161,25 +138,20 @@ class SignInForm extends Component {
                 autoComplete="current-password"
                 onChange={this.handleChange}
               />
-            </div>
-
-            <div className="FormField">
-              &nbsp; &nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;
-              <Button variant="outlined" onClick={this.handleSubmit}>
-                Yeah!
-              </Button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-          </form>
+              <Grid container className={"SignInText"}>
+                <Grid item>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                    onClick={this.handleSubmit}
+                  >
+                    Sign In
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
         </div>
       </div>
     );
