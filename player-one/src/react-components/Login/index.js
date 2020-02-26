@@ -71,7 +71,7 @@ class SignInForm extends Component {
 
                             <TextField
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">Email</InputAdornment>,
+                                    startAdornment: <InputAdornment position="start">User Name</InputAdornment>,
                                 }}
                                 className="textField"
                                 variant="outlined"
@@ -80,10 +80,10 @@ class SignInForm extends Component {
 
                                 fullWidth
                                 color="secondary"
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="UserName"
+                                label="User Name"
+                                name="UserName"
+
                                 autoFocus
                             />
 
