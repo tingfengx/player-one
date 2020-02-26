@@ -11,7 +11,8 @@ import Signup from './react-components/Signup';
 class App extends React.Component {
     // can use this to store the current user
     state = {
-        abc: "123"
+        username: "",
+        isLoggedIn: false
     };
 
     componentDidMount(){
@@ -25,7 +26,7 @@ class App extends React.Component {
                     <Switch> { /* Similar to a switch statement - shows the component depending on the URL path */}
                         { /* Each Route below shows a different component depending on the exact path in the URL  */}
                         <Route exact path='/' render={() =>
-                            (<Home state={this.state} />)} />
+                            (<Home state={this.state}/>)} />
                         <Route exact path='/the_witcher_3_wild_hunt' render={() =>
                             (<Game state={this.state} />)} />
                         <Route exact path='/user_account' render={() =>
