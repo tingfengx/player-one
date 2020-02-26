@@ -59,31 +59,30 @@ export default class GamePageOverview extends Component {
                                     }
                                 </Slider>
                             </div>
-                            <div className={"GameInfo"}>
+                            <div id={"GameInfo"}>
                                 <div id={"GameDescription"}>
                                     <p>The Witcher: Wild Hunt is a story-driven open world RPG set in a visually stunning fantasy
-                                    universe full of meaningful choices and impactful consequences. In The Witcher, you play as
-                                    professional monster hunter Geralt of Rivia tasked with finding a child of prophecy in a vast
-                                    open world rich with merchant cities, pirate islands, dangerous mountain passes, and forgotten
-                                        caverns to explore.</p>
+                                    universe full of meaningful choices and impactful consequences.</p>
                                 </div>
                                 <div id={"GameReviewsBlock"}>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}><p>Recent Reviews: </p></div>
-                                        <div className={"GameReviewPersentage"}><p> Overwhelmingly Positive (99%)</p></div>
+                                        <div className={"GameReviews"}>Recent Reviews: </div>
+                                        <div className={"GameReviewPersentage"}> Overwhelmingly Positive (99%)</div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}><p>All Reviews: </p></div>
-                                        <div className={"GameReviewPersentage"}><p> Overwhelmingly Positive (96%)</p></div>
+                                        <div className={"GameReviews"}>All Reviews: </div>
+                                        <div className={"GameReviewPersentage"}> Overwhelmingly Positive (96%)</div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
                                         <div className={"GameReviews"}><p>Realease date: 18 May, 2015</p></div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}><p>Developer: CD PROJEKT RED</p></div>
+                                        <div className={"GameReviews"}>Developer: </div>
+                                        <div className={"GameCompany"}>CD PROJEKT RED</div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}><p>Developer: CD PROJEKT RED</p></div>
+                                        <div className={"GameReviews"}>Release: </div>
+                                        <div className={"GameCompany"}>CD PROJEKT RED</div>
                                     </div>
                                 </div>
                             </div>
