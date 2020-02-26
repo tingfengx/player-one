@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function TopNavBar(props) {
     const classes = useStyles();
-    const { sections, title } = props;
+    const { sections, title, isLoggedIn, username } = props;
 
     return (
         <React.Fragment>

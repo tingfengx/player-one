@@ -1,5 +1,5 @@
 .GameShowCaseContainer {
-    height: 300px;
+    min-height: 350px;
     background-color: black;
     width: 90%;
     margin-top: -5px;
@@ -8,12 +8,13 @@
 }
 
 .GameCategoryName {
+    overflow-wrap: break-word;
     color: whitesmoke;
     font-weight: bolder;
     position: relative;
     float: left;
-    padding: 70px 30px 30px 30px;
-    width: 25%;
+    padding: 5% 30px 30px 30px;
+    width: 30%;
     font-size: xx-large;
 }
 
@@ -22,28 +23,20 @@
     font-weight: bold;
     position: absolute;
     float: left;
-    width: 20%;
-    padding-left: 30px;
-    padding-top: 120px;
+    /*padding-left: 30px;*/
+    padding-top: 5%;
+    font-size: large;
 }
 
 .GameCategorySmallCarousel {
     position: relative;
     float: left;
-    padding-top: 10px;
-    padding-left: 30px;
-    width: 65%;
+    padding-top: 40px;
+    padding-left: 5%;
+    /*padding-top: 30px;*/
+    /*padding-left: 30px;*/
+    width: 55%;
 }
-
-.ThumbNailImage {
-    /*padding-left: 10px;*/
-    /*padding-right: 10px;*/
-    /*max-height: 200px;*/
-    border: 0;
-    width: auto;
-    height: 200px;
-}
-
 
 /* Arrows */
 .slick-prev,
@@ -71,6 +64,15 @@
     outline: none;
     background: transparent;
 }
+
+.ThumbNailImage {
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+    height: 200px;
+    width: auto;
+    /*object-fit: contain;*/
+}
+
 
 .ClickableImage {
     margin-top: 50px;

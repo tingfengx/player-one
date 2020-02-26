@@ -17,22 +17,14 @@ export default function GameCategorySmallCarousel(props) {
     ];
 
     const settings = {
-        className: "center",
         centerMode: true,
         infinite: true,
-        centerPadding: "384px",
-        slidesToShow: 1,
+        slidesToShow: 2.5,
         speed: 500,
     };
     return (
         <div>
             <Slider {...settings}>
-                {/*{Images.map(image => (*/}
-                {/*    <img src={image}*/}
-                {/*         alt={"Icon Image Failed to Load"}*/}
-                {/*         key={image}*/}
-                {/*    />*/}
-                {/*))}*/}
                 {
                     images.map(image => (
                         <a href={"/"} className={"ClickableImage"}>
@@ -47,17 +39,3 @@ export default function GameCategorySmallCarousel(props) {
         </div>
     );
 }
-
-//{sections.map(section => (
-//                         <div className="dropdown" key={section.title}>
-//                             <button
-//                                 className="dropbtn">
-//                                 {section.title}
-//                             </button>
-//                             <div className="dropdown-content">
-//                                 <a href="/">Game 1</a>
-//                                 <a href="/">Game 2</a>
-//                                 <a href="/">Game 3</a>
-//                             </div>
-//                         </div>
-//                     ))}

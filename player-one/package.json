@@ -18,7 +18,8 @@
     "react-slick": "^0.25.2",
     "slick-carousel": "^1.8.1",
     "thumbnail": "^0.1.9",
-    "rsuite": "^4.2.1"
+    "rsuite": "^4.2.1",
+    "prop-types": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

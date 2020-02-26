@@ -18,7 +18,7 @@ export default class CarouselSlides extends Component {
 
     render() {
         const settings = {
-            dots: true,
+            dots: false,
             dotsClass: "slick-dots",
             infinite: true,
             slidesToShow: 1,
