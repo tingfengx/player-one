@@ -1,5 +1,6 @@
 import React from "react";
 import {useHistory} from 'react-router-dom';
+import {useCookies} from "react-cookie";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -24,6 +25,8 @@ const useStyles = makeStyles(theme => ({
 export default function TopNavBar(props) {
     const classes = useStyles();
     const history = useHistory();
+    const cookies = useCookies();
+
     const {sections, title, isLoggedIn, username} = props;
 
     const handleLogin = () => {
@@ -33,6 +36,12 @@ export default function TopNavBar(props) {
     const handleSignUp = () => {
         history.push("/Signup")
     };
+
+    const handleSignOut = () => {
+        cookies.removeCookie("username");
+        cookies.removeCookie("type");
+        cookies.removeCookie("isLoggedIn");
+    }
 
     if (!isLoggedIn) {
         return (
@@ -126,6 +135,7 @@ export default function TopNavBar(props) {
                             <Button className={"dropbtn"}>{username}</Button>
                             <div className={"dropdown-content"}>
                                 <a href={"/user_account"}>My Account</a>
+                                <a href={"/"} onClick={handleSignOut}>Sign Out</a>
                             </div>
                         </div>
                     </Typography>
