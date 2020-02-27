@@ -1,12 +1,14 @@
 import React from "react";
 // Importing react-router-dom to use the React Router
 import { Route, Switch, withRouter } from "react-router-dom";
+import {withCookies} from "react-cookie";
 import "./App.css";
 import Home from "./react-components/Home";
 import Game from "./react-components/Game";
 import Account from "./react-components/Account";
 import Login from "./react-components/Login";
 import Signup from "./react-components/Signup";
+import TopNavBar from "./react-components/TopNavBar";
 
 class App extends React.Component {
   // can use this to store the current user
@@ -21,7 +23,10 @@ class App extends React.Component {
   }
   componentDidUpdate(prevProps) {
     // read user info here with this.props.location.state.xxx
-    if (this.props.location.state && prevProps.location.state !== this.props.location.state) {
+    if (
+      this.props.location.state &&
+      prevProps.location.state !== this.props.location.state
+    ) {
       console.log("username: ");
       let username = this.props.location.state.username
         ? this.props.location.state.username
@@ -46,8 +51,24 @@ class App extends React.Component {
   }
 
   render() {
+    const cookies = this.props;
+    const sections = [
+      { title: "Featured", url: "#" },
+      { title: "Trending", url: "#" },
+      { title: "RPG Game", url: "#" },
+      { title: "Leisure", url: "#" },
+      { title: "Scenery", url: "#" },
+      { title: "bruh", url: "#" },
+      { title: "what else", url: "#" }
+    ];
+
     return (
       <div>
+          <TopNavBar
+            sections={sections}
+            title="PLAYER ONE"
+          />
+
         <Switch>
           {" "}
           {/* Similar to a switch statement - shows the component depending on the URL path */}
@@ -61,7 +82,7 @@ class App extends React.Component {
           <Route
             exact
             path="/user_account"
-            render={() => <Account state={this.state} />}
+            render={(props) => <Account {...props} state={this.state} />}
           />
           <Route
             exact
@@ -79,4 +100,4 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+export default withRouter(withCookies(App));

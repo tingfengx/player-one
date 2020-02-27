@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import TopNavBar from "../TopNavBar";
 import UserProfile from "./UserProfile";
 import UserActivities from "./UserActivities";
 import "./styles.css";
@@ -30,14 +29,6 @@ class Account extends Component {
     ];
     return (
       <div>
-        <div>
-          <TopNavBar
-            sections={sections}
-            title="PLAYER ONE"
-            username={cookies.cookies.username}
-            isLoggedIn={cookies.cookies.isLoggedIn}
-          />
-        </div>
         <div className="backgroundImageContainer">
           <img src={backgroundImageSrc} />
         </div>

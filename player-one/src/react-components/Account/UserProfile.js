@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import { withCookies } from "react-cookie";
 import GroupOrientation from "./ButtonGroup";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
-import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import "./styles.css";
 
 import avatarImageSrc from "../../imgs/user_account/chocobo_avatar.jpg";
 
 class UserProfile extends Component {
   render() {
+    const { cookies } = this.props;
+
     return (
       <div className="profileContainer">
         <div className="leftSideBar">
@@ -21,9 +24,9 @@ class UserProfile extends Component {
         <div className="rightSideBar">
           <div className="userInfoBar">
             <div className="username">
-              <h1>user</h1>
+              <h1>{cookies.cookies.username}</h1>
               <div className="iconContainer">
-                <CreateRoundedIcon fontSize="medium" color="primary"/>
+                <CreateRoundedIcon fontSize="medium" color="primary" />
               </div>
             </div>
             <div className="likes">
@@ -34,9 +37,12 @@ class UserProfile extends Component {
             </div>
           </div>
           <div className="userBioContainer">
-              <p>Love games! Big fan of RPG games! Play games for 12 hours every day! 
-                  Saved hundreds of interesting games to my collection! Check it out!
-                  Don't forget to like me if you enjoy my collections or reviews!</p>
+            <p>
+              Love games! Big fan of RPG games! Play games for 12 hours every
+              day! Saved hundreds of interesting games to my collection! Check
+              it out! Don't forget to like me if you enjoy my collections or
+              reviews!
+            </p>
           </div>
         </div>
       </div>
@@ -44,4 +50,4 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+export default withCookies(UserProfile);

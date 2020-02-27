@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import {withCookies} from "react-cookie"
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import "./style.css";
-import TopNavBar from "../TopNavBar";
-import {withCookies} from "react-cookie"
 
 // hardcoded users
 const users = [];
@@ -104,15 +103,6 @@ class SignInForm extends Component {
   // const classes = useStyles();
 
   render() {
-    const sections = [
-      { title: "Featured", url: "#" },
-      { title: "Trending", url: "#" },
-      { title: "RPG Game", url: "#" },
-      { title: "Leisure", url: "#" },
-      { title: "Scenery", url: "#" },
-      { title: "bruh", url: "#" },
-      { title: "what else", url: "#" }
-    ];
     return (
       <div className={"MasterContainer"}>
         <div>
