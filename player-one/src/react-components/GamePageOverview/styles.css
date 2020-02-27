@@ -21,7 +21,6 @@
 }
 
 #GameName {
-    position: center;
     margin-left: 4%;
     font-size: 170%;
     line-height: 18px;
@@ -34,7 +33,6 @@
     width: 38%;
     line-height: 18px;
     display: block;
-    /*margin-top: 1%;*/
 }
 
 #GameImage {
@@ -66,15 +64,16 @@
 
 #GameDescription {
     margin-left: 10%;
+    margin-top: 10%;
     line-height: 25px;
     margin-right: 8%;
 }
 
 #GameReviewsBlock {
-     /*position: absolute;*/
-     margin-top: 13%;
-     margin-left: 5%;
-     font-size: 12px;
+    float:left;
+    margin-top: 20%;
+    margin-left: 20%;
+    font-size: 15px;
  }
 
 #GamePage {
@@ -83,12 +82,12 @@
 
 .GameReviewsRow{
     display: flex;
+    /*text-align: center;*/
     /*line-height: 5px;*/
 }
 
 .GameReviews {
-    min-width: 100px;
-    font-size: 12px;
+    min-width: 130px;
     color: #556772;
     text-transform: uppercase;
 }
@@ -101,5 +100,14 @@
     float: left;
     margin-left: 8%;
     width: 84%;
-    min-height: 50px;
+    height: 10px;
+}
+
+#LongCommentContent1, #LongCommentContent2{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.LikeButtons{
+    text-align: center;
 }
