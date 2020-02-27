@@ -16,7 +16,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-slick": "^0.25.2",
-    "slick-carousel": "^1.8.1",
+    "slick-carousel": "^1.8.1", 
     "thumbnail": "^0.1.9",
     "rsuite": "^4.2.1",
     "prop-types": "latest"

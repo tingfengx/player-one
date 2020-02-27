@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import "./style.css";
 import TopNavBar from "../TopNavBar";
+import {withCookies} from "react-cookie"
 
 // hardcoded users
 const users = [];
@@ -52,6 +53,12 @@ class SignInForm extends Component {
         pathname: "/",
         state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
       });
+      this.props.cookies.set("username", this.state.username);
+      this.props.cookies.set("type",this.state.type);
+      this.props.cookies.set("isLoggedIn", this.state.isLoggedIn);
+
+
+      
     }
   }
 
@@ -158,4 +165,4 @@ class SignInForm extends Component {
   }
 }
 
-export default withRouter(SignInForm);
+export default withRouter(withCookies(SignInForm));

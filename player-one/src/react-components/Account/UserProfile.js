@@ -21,7 +21,7 @@ class UserProfile extends Component {
         <div className="rightSideBar">
           <div className="userInfoBar">
             <div className="username">
-              <h1>Chocobosdfsdfsdf</h1>
+              <h1>user</h1>
               <div className="iconContainer">
                 <CreateRoundedIcon fontSize="medium" color="primary"/>
               </div>
