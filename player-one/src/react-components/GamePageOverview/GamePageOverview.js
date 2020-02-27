@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Slider from "react-slick";
 import './styles.css'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -115,22 +115,22 @@ export default class GamePageOverview extends Component {
                                 </div>
                                 <div id={"GameReviewsBlock"}>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}>Recent Reviews: </div>
+                                        <div className={"GameReviews"}>Recent Reviews:</div>
                                         <div className={"GameReviewPersentage"}> Overwhelmingly Positive (99%)</div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}>All Reviews: </div>
+                                        <div className={"GameReviews"}>All Reviews:</div>
                                         <div className={"GameReviewPersentage"}> Overwhelmingly Positive (96%)</div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
                                         <div className={"GameReviews"}><p>Realease date: 18 May, 2015</p></div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}>Developer: </div>
+                                        <div className={"GameReviews"}>Developer:</div>
                                         <div className={"GameCompany"}>CD PROJEKT RED</div>
                                     </div>
                                     <div className={"GameReviewsRow"}>
-                                        <div className={"GameReviews"}>Release: </div>
+                                        <div className={"GameReviews"}>Release:</div>
                                         <div className={"GameCompany"}>CD PROJEKT RED</div>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@ export default class GamePageOverview extends Component {
                     <div id={"ReviewBar"}>
                         <ExpansionPanel>
                             <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
+                                expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
                             >
@@ -181,7 +181,7 @@ export default class GamePageOverview extends Component {
                         </ExpansionPanel>
                         <ExpansionPanel>
                             <ExpansionPanelSummary
-                                expandIcon={<ExpandMoreIcon />}
+                                expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
                             >
