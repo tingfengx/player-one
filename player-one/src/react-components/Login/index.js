@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {withCookies} from "react-cookie"
+import { withCookies } from "react-cookie";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -41,7 +41,11 @@ class SignInForm extends Component {
     if (this.state.isLoggedIn) {
       this.props.history.push({
         pathname: "/",
-        state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
+        state: {
+          username: this.state.username,
+          type: this.state.type,
+          isLoggedIn: this.state.isLoggedIn
+        }
       });
     }
   }
@@ -50,14 +54,15 @@ class SignInForm extends Component {
     if (this.state.isLoggedIn) {
       this.props.history.push({
         pathname: "/",
-        state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
+        state: {
+          username: this.state.username,
+          type: this.state.type,
+          isLoggedIn: this.state.isLoggedIn
+        }
       });
       this.props.cookies.set("username", this.state.username);
-      this.props.cookies.set("type",this.state.type);
+      this.props.cookies.set("type", this.state.type);
       this.props.cookies.set("isLoggedIn", this.state.isLoggedIn);
-
-
-      
     }
   }
 
@@ -91,12 +96,12 @@ class SignInForm extends Component {
       let msg = status
         ? "successfully signed in"
         : "wrong username or password";
-      // alert(msg);
       console.log(msg);
+      if (!status) {
+        alert("wrong username or password");
+      }
       console.log("The form was submitted with the following data:");
       console.log(this.state);
-      // let userInfo = {username: this.state.username, type: this.state.type};
-      // this.props.history.push({pathname: "/", state: { detail: userInfo}});
     });
   };
 
