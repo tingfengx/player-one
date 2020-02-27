@@ -25,9 +25,9 @@ const useStyles = makeStyles(theme => ({
 export default function TopNavBar(props) {
     const classes = useStyles();
     const history = useHistory();
-    const cookies = useCookies();
+    const [cookies, setCookie, removeCookie] = useCookies();
 
-    const {sections, title, isLoggedIn, username} = props;
+    const {sections, title} = props;
 
     const handleLogin = () => {
         history.push("/Login")
@@ -38,12 +38,12 @@ export default function TopNavBar(props) {
     };
 
     const handleSignOut = () => {
-        cookies.removeCookie("username");
-        cookies.removeCookie("type");
-        cookies.removeCookie("isLoggedIn");
+        removeCookie("username");
+        removeCookie("type");
+        removeCookie("isLoggedIn");
     }
 
-    if (!isLoggedIn) {
+    if (!cookies.isLoggedIn) {
         return (
             <React.Fragment>
                 <Toolbar className={classes.toolbar}>
@@ -132,7 +132,7 @@ export default function TopNavBar(props) {
                             <SearchIcon/>
                         </IconButton>
                         <div className={"dropdown"}>
-                            <Button className={"dropbtn"}>{username}</Button>
+                            <Button className={"dropbtn"}>{cookies.username}</Button>
                             <div className={"dropdown-content"}>
                                 <a href={"/user_account"}>My Account</a>
                                 <a href={"/"} onClick={handleSignOut}>Sign Out</a>
@@ -147,7 +147,5 @@ export default function TopNavBar(props) {
 
 TopNavBar.propTypes = {
     sections: PropTypes.array,
-    title: PropTypes.string,
-    isLoggedIn: PropTypes.bool,
-    username: PropTypes.string
+    title: PropTypes.string
 };
