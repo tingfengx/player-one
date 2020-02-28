@@ -38,28 +38,14 @@ class SignInForm extends Component {
   }
 
   componentDidMount() {
-    if (this.state.isLoggedIn) {
-      this.props.history.push({
-        pathname: "/",
-        state: {
-          username: this.state.username,
-          type: this.state.type,
-          isLoggedIn: this.state.isLoggedIn
-        }
-      });
+    if (this.props.cookies.cookies.isLoggedIn) {
+      this.props.history.push("/");
     }
   }
 
   componentDidUpdate() {
     if (this.state.isLoggedIn) {
-      this.props.history.push({
-        pathname: "/",
-        state: {
-          username: this.state.username,
-          type: this.state.type,
-          isLoggedIn: this.state.isLoggedIn
-        }
-      });
+      this.props.history.push("/");
       this.props.cookies.set("username", this.state.username);
       this.props.cookies.set("type", this.state.type);
       this.props.cookies.set("isLoggedIn", this.state.isLoggedIn);
