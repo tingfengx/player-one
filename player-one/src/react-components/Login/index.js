@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import "./style.css";
 
 // hardcoded users
@@ -69,8 +68,8 @@ class SignInForm extends Component {
     for (let i = 0; i < users.length; i++) {
       let user = users[i];
       if (
-        this.state.username == user.username &&
-        this.state.password == user.password
+        this.state.username === user.username &&
+        this.state.password === user.password
       ) {
         status = true;
         userType = user.type;
