@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import {withCookies} from "react-cookie"
+import { withCookies } from "react-cookie";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import "./style.css";
 
 // hardcoded users
@@ -38,26 +37,17 @@ class SignInForm extends Component {
   }
 
   componentDidMount() {
-    if (this.state.isLoggedIn) {
-      this.props.history.push({
-        pathname: "/",
-        state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
-      });
+    if (this.props.cookies.cookies.isLoggedIn) {
+      this.props.history.push("/");
     }
   }
 
   componentDidUpdate() {
     if (this.state.isLoggedIn) {
-      this.props.history.push({
-        pathname: "/",
-        state: { username: this.state.username, type: this.state.type, isLoggedIn: this.state.isLoggedIn }
-      });
+      this.props.history.push("/");
       this.props.cookies.set("username", this.state.username);
-      this.props.cookies.set("type",this.state.type);
+      this.props.cookies.set("type", this.state.type);
       this.props.cookies.set("isLoggedIn", this.state.isLoggedIn);
-
-
-      
     }
   }
 
@@ -78,8 +68,8 @@ class SignInForm extends Component {
     for (let i = 0; i < users.length; i++) {
       let user = users[i];
       if (
-        this.state.username == user.username &&
-        this.state.password == user.password
+        this.state.username === user.username &&
+        this.state.password === user.password
       ) {
         status = true;
         userType = user.type;
@@ -91,12 +81,12 @@ class SignInForm extends Component {
       let msg = status
         ? "successfully signed in"
         : "wrong username or password";
-      // alert(msg);
       console.log(msg);
+      if (!status) {
+        alert("wrong username or password");
+      }
       console.log("The form was submitted with the following data:");
       console.log(this.state);
-      // let userInfo = {username: this.state.username, type: this.state.type};
-      // this.props.history.push({pathname: "/", state: { detail: userInfo}});
     });
   };
 

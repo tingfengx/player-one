@@ -15,7 +15,7 @@ class UserProfile extends Component {
       <div className="profileContainer">
         <div className="leftSideBar">
           <div className="avatarImageContainer">
-            <img className="avatarImage" src={avatarImageSrc} />
+            <img className="avatarImage" src={avatarImageSrc} alt="user avatar" />
           </div>
           <div className="buttonContainer">
             <GroupOrientation />

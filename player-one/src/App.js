@@ -1,7 +1,6 @@
 import React from "react";
 // Importing react-router-dom to use the React Router
 import { Route, Switch, withRouter } from "react-router-dom";
-import {withCookies} from "react-cookie";
 import "./App.css";
 import Home from "./react-components/Home";
 import Game from "./react-components/Game";
@@ -51,7 +50,6 @@ class App extends React.Component {
   }
 
   render() {
-    const cookies = this.props;
     const sections = [
       { title: "Featured", url: "#" },
       { title: "Trending", url: "#" },
@@ -100,4 +98,4 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(withCookies(App));
+export default withRouter(App);

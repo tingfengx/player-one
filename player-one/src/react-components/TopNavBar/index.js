@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 export default function TopNavBar(props) {
     const classes = useStyles();
     const history = useHistory();
-    const [cookies, setCookie, removeCookie] = useCookies();
+    const [cookies, , removeCookie] = useCookies();
 
     const {sections, title} = props;
 
