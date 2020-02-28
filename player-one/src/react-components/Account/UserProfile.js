@@ -3,6 +3,7 @@ import { withCookies } from "react-cookie";
 import GroupOrientation from "./ButtonGroup";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import "./styles.css";
 
 import avatarImageSrc from "../../imgs/user_account/chocobo_avatar.jpg";
@@ -17,16 +18,24 @@ class UserProfile extends Component {
           <div className="avatarImageContainer">
             <img className="avatarImage" src={avatarImageSrc} alt="user avatar" />
           </div>
-          <div className="buttonContainer">
+          {/* <div className="buttonContainer">
             <GroupOrientation />
-          </div>
+          </div> */}
         </div>
         <div className="rightSideBar">
           <div className="userInfoBar">
             <div className="username">
-              <h1>{cookies.cookies.username}</h1>
-              <div className="iconContainer">
+              <p><strong className="usernameText">{cookies.cookies.username}</strong></p>
+              <span className="iconContainer">
                 <CreateRoundedIcon fontSize="medium" color="primary" />
+              </span>
+            </div>
+            <p className="gamerText">gamer since 2000</p>
+            <div className="countsContainer">
+            <div className="likes">
+              <h2>123</h2>
+              <div className="iconContainer">
+                <LibraryBooksIcon fontSize="medium" />
               </div>
             </div>
             <div className="likes">
@@ -34,6 +43,7 @@ class UserProfile extends Component {
               <div className="iconContainer">
                 <ThumbUpAltOutlinedIcon fontSize="medium" />
               </div>
+            </div>
             </div>
           </div>
           <div className="userBioContainer">
