@@ -106,8 +106,17 @@
 #LongCommentContent1, #LongCommentContent2{
     margin-left: 10%;
     margin-right: 10%;
+    font-size: 20px;
 }
 
 .LikeButtons{
     text-align: center;
+}
+
+.expansion {
+    margin-left: 10%;
+}
+
+.longCommentTitle{
+    font-size: 25px;
 }

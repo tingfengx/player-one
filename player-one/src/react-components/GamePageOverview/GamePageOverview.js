@@ -13,8 +13,7 @@ import RealGamerIcon from '@material-ui/icons/VideogameAsset';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 // import OutlinedButtons from './Buttons'
-import longComment1 from "./longComment1"
-import longComment2 from "./longComment2"
+import game from "./longComment1"
 import game0 from '../../imgs/the_witcher_3_wild_hunt/image0.jpg'
 import game1 from '../../imgs/the_witcher_3_wild_hunt/image1.jpg'
 import game2 from '../../imgs/the_witcher_3_wild_hunt/image2.jpg'
@@ -26,49 +25,53 @@ export default class GamePageOverview extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameDescription: "The Witcher: Wild Hunt is a story-driven open world RPG set in a visually stunning fantasy universe full of meaningful choices and impactful consequences.",
-            longComment1: longComment1,
-            longComment2: longComment2,
+            gameDescription: game.description,
+
             imgs: [
                 game0, game1, game2, game3
             ]
         };
+        this.longComments = {
+            longComment1: game.longComments[0],
+            longComment2: game.longComments[1]
+        }
     }
 
     handleLike(e) {
         e.preventDefault();
-        let comm;
+        l(this);
         if (e.target.parentNode.parentNode.parentNode.id === 'LongCommentContent1') {
-            comm = this.state.longComment1;
-            this.setState({longComment1: { ...comm, likeNum: comm.likeNum + 1}});
-        }
+            this.longComments.longComment1.likeNum += 1;
+            this.forceUpdate();        }
         else {
-            comm = this.state.longComment2;
-            this.setState({longComment2: { ...comm, likeNum: comm.likeNum + 1}});}
+            this.longComments.longComment2.likeNum += 1;
+            this.forceUpdate();
+        }
     }
 
     handleDislike(e) {
         e.preventDefault();
-        let comm;
+        l(this);
         if (e.target.parentNode.parentNode.parentNode.id === 'LongCommentContent1') {
-            comm = this.state.longComment1;
-            this.setState({longComment1: { ...comm, dislikeNum: comm.dislikeNum + 1}});
+            this.longComments.longComment1.dislikeNum += 1;
+            this.forceUpdate();
         }
         else {
-            comm = this.state.longComment2;
-            this.setState({longComment2: { ...comm, dislikeNum: comm.dislikeNum + 1}});}
+            this.longComments.longComment2.dislikeNum += 1;
+            this.forceUpdate();
+        }
     }
 
     handleRealGamer(e) {
         e.preventDefault();
-        let comm;
         if (e.target.parentNode.parentNode.parentNode.id === 'LongCommentContent1') {
-            comm = this.state.longComment1;
-            this.setState({longComment1: { ...comm, realGamerNum: comm.realGamerNum + 1}});
+            this.longComments.longComment1.realGamerNum += 1;
         }
+
         else {
-            comm = this.state.longComment2;
-            this.setState({longComment2: { ...comm, realGamerNum: comm.realGamerNum + 1}});}
+            this.longComments.longComment2.realGamerNum += 1;
+        }
+        this.forceUpdate();
     }
 
     render() {
@@ -143,57 +146,59 @@ export default class GamePageOverview extends Component {
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
-                            >
-                                <Typography variant={"h5"}><strong>
-
-                                    {this.state.longComment1.title}
-                                </strong></Typography>
+                            >   <div className={"expansion"}> </div>
+                                <strong className={"longCommentTitle"}>
+                                    {this.longComments.longComment1.title}
+                                </strong>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <div id={"LongCommentContent1"}>
                                     {
-                                        this.state.longComment1.content.map(i=>(<p key={i} className={"LongCommentContent"}>{i}</p>))
+                                        this.longComments.longComment1.content.map(i => (
+                                            <p key={i} className={"LongCommentContent"}>{i}</p>))
                                     }
+                                    <p className={"LongCommentContent"}>By {this.longComments.longComment1.author}</p>
                                     <div className={"LikeButtons"}>
                                         <Button
                                             onClick={this.handleLike.bind(this)}
                                             color="primary"
                                             aria-label="like"
                                             startIcon={<LikeIcon />}
-                                        > Agree  {this.state.longComment1.likeNum}
+                                        > Agree  {this.longComments.longComment1.likeNum}
                                         </Button>
                                         <Button
                                             onClick={this.handleDislike.bind(this)}
                                             aria-label="dislike"
                                             startIcon={<DislikeIcon />}
-                                        > Hmm, Nope  {this.state.longComment1.dislikeNum}
+                                        > Hmm, Nope  {this.longComments.longComment1.dislikeNum}
                                         </Button>
                                         <Button
                                             onClick={this.handleRealGamer.bind(this)}
                                             color="secondary"
                                             aria-label="gamer"
                                             startIcon={<RealGamerIcon />}
-                                        > Funny!  {this.state.longComment1.realGamerNum}
+                                        > Funny!  {this.longComments.longComment1.realGamerNum}
                                         </Button>
                                     </div>
                                 </div>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
-                        <ExpansionPanel>
+                        <ExpansionPanel className={"expansionPanel"}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
-                            >
-                                <Typography variant={"h5"}><strong>
-                                    {this.state.longComment2.title}
-                                </strong></Typography>
+                            >   <div className={"expansion"}> </div>
+                                <strong className={"longCommentTitle"}>
+                                    {this.longComments.longComment2.title}
+                                </strong>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <div id={"LongCommentContent2"}>
                                     {
-                                        this.state.longComment2.content.map(i=>(<p key={i} className={"LongCommentContent"}>{i}</p>))
+                                        this.longComments.longComment2.content.map(i=>(<p key={i} className={"LongCommentContent"}>{i}</p>))
                                     }
+                                    <p className={"LongCommentContent"}>By {this.longComments.longComment2.author}</p>
                                     <div className={"LongCommentContent"}>
                                         <div className={"LikeButtons"}>
                                             <Button
@@ -201,20 +206,20 @@ export default class GamePageOverview extends Component {
                                                 color="primary"
                                                 aria-label="like"
                                                 startIcon={<LikeIcon />}
-                                            > Agree  {this.state.longComment2.likeNum}
+                                            > Agree  {this.longComments.longComment2.likeNum}
                                             </Button>
                                             <Button
                                                 onClick={this.handleDislike.bind(this)}
                                                 aria-label="dislike"
                                                 startIcon={<DislikeIcon />}
-                                            > Hmm, Nope  {this.state.longComment2.dislikeNum}
+                                            > Hmm, Nope  {this.longComments.longComment2.dislikeNum}
                                             </Button>
                                             <Button
                                                 onClick={this.handleRealGamer.bind(this)}
                                                 color="secondary"
                                                 aria-label="gamer"
                                                 startIcon={<RealGamerIcon />}
-                                            > Funny!  {this.state.longComment2.realGamerNum}
+                                            > Funny!  {this.longComments.longComment2.realGamerNum}
                                             </Button>
                                         </div>
                                     </div>
