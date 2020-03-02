@@ -1,3 +1,11 @@
+.accountContainer {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .backgroundImageContainer {
   position: fixed;
   top: 0;
@@ -14,46 +22,37 @@
 }
 
 .profileContainer {
-    background-color: rgba(255, 255, 255, 0.8);
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    min-height: 500px;
-    border-top-left-radius: 3%;
-    border-top-right-radius: 3%;
+    background-color: rgba(255, 255, 255, 1);
+    width: 65%;
+    margin-bottom: 50px;
+    min-height: 400px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
+    float: left;
 }
 
 .leftSideBar {
-    /* margin-left: 8%;
-    margin-right: 4%; */
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 70px;
+    margin-bottom: 70px;
     width: 300px;
     min-width: 200px;
-    float: left;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .avatarImageContainer {
-    margin-left: 50px;
-    margin-right: 50px;
-    width: 200px;
-    height: 200px;
+    height: 250px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .avatarImage {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    width: 250px;
+    height: 250px;
 }
 
 .buttonContainer {
@@ -64,30 +63,47 @@
 .rightSideBar {
     width: 50%;
     margin-right: 8%;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 70px;
+    margin-bottom: 70px;
 }
 
-.userInfoBar {
-    height: 150px
+.userInfoBar p {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .username {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.gamerText {
+    color: gray;
+}
+
+.usernameText {
+    font-size: 35px;
 }
 
 .iconContainer {
     display: flex;
     align-items: center;
     margin-left: 5px;
+
+}
+
+.countsContainer {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .likes {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-right: 20px;
 }
 
 .userBioContainer {
@@ -101,15 +117,92 @@
 
 .activityContainer {
     background-color: rgba(255, 255, 255, 0.8);
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 65%;
     margin-bottom: 50px;
-    min-height: 500px;
-    border-bottom-left-radius: 3%;
-    border-bottom-right-radius: 3%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
+    float: left;
+}
+
+.recentLikes {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.recentLike {
+    width: 120px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.recentLike img {
+    width: 120px;
+    height: 160px;
+}
+
+.recentReview {
+    border-bottom: 1px solid gray;
+}
+
+.recentReviewTime {
+    font-size: 15px;
+    color: gray;
+}
+
+.recentReviewText {
+    font-size: 15px;
+}
+
+.recentReviewGame {
+    height: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.recentReviewGame img {
+    height: 120px;
+    width: auto;
+    margin: 20px;
+}
+
+.sideBarContainer {
+    width: 30%;
+    min-height: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    float: right;
+}
+
+.profileTagContainer {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.profileTagContainer p {
+    font-size: 15px;
+    color: gray;
+}
+
+.gameTagContainer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.gameTagContainer p {
+    font-size: 15px;
+    color: gray;
 }

@@ -9,6 +9,9 @@ import ThumbUpRoundedIcon from "@material-ui/icons/ThumbUpRounded";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import Link from "@material-ui/core/Link";
+
+import gameCoverImageSrc from "../../imgs/the_witcher_3_wild_hunt/cover.jpg";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -84,10 +87,68 @@ export default function ScrollableTabsButtonPrevent() {
         </Paper>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Display recent likes
+        <div className="recentLikes">
+          <div className="recentLike">
+            <img src={gameCoverImageSrc} />
+            <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+          </div>
+          <div className="recentLike">
+            <img src={gameCoverImageSrc} />
+            <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+          </div>
+          <div className="recentLike">
+            <img src={gameCoverImageSrc} />
+            <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+          </div>
+          <div className="recentLike">
+            <img src={gameCoverImageSrc} />
+            <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+          </div>
+          <div className="recentLike">
+            <img src={gameCoverImageSrc} />
+            <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+          </div>
+          <div className="recentLike">
+            <img src={gameCoverImageSrc} />
+            <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+          </div>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Display recent reviews
+        <div className="recentReviews">
+          <div className="recentReview">
+            <p className="recentReviewTime">2020-3-2 12:34:56</p>
+            <p className="recentReviewText">I love this game! The Witcher 3 is the best!</p>
+            <div className="recentReviewGame">
+              <img src={gameCoverImageSrc} />
+              <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+            </div>
+          </div>
+          <div className="recentReview">
+            <p className="recentReviewTime">2020-3-2 12:34:56</p>
+            <p className="recentReviewText">This game is so great that I have been playing it like everyday! I highly recommend you guys take a look! It won't disappoint you!</p>
+            <div className="recentReviewGame">
+              <img src={gameCoverImageSrc} />
+              <Link href="/the_witcher_3_wild_hunt" color="primary">
+              The Witcher 3: Wild Hunt
+            </Link>
+            </div>
+          </div>
+        </div>
       </TabPanel>
       {/* <TabPanel value={value} index={2}>
         Display recent bookmarks

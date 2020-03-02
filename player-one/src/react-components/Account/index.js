@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserProfile from "./UserProfile";
 import UserActivities from "./UserActivities";
+import UserSideBar from "./UserSideBar"
 import "./styles.css";
 
 import backgroundImageSrc from "../../imgs/user_account/ff7_wallpaper.jpg";
@@ -10,11 +11,12 @@ import backgroundImageSrc from "../../imgs/user_account/ff7_wallpaper.jpg";
 class Account extends Component {
   render() {
     return (
-      <div>
+      <div className="accountContainer">
         <div className="backgroundImageContainer">
           <img src={backgroundImageSrc} alt="background" />
         </div>
         <UserProfile />
+        <UserSideBar />
         <UserActivities />
       </div>
     );
