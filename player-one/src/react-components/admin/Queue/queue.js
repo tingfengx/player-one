@@ -2,7 +2,7 @@ import React , {useState} from "react";
 
 import UserList from "../UserList";
 import UserForm from "../UserForm";
-
+import { withCookies } from "react-cookie";
 
 
 import { addUser} from "../actions/queue";
@@ -19,7 +19,7 @@ class Queue extends React.Component{
     handleChangeIndex = index => {
         this.setValue(index);
     };
-
+    cookies = this.props;
 
     state = {
         Username: "",
@@ -27,34 +27,30 @@ class Queue extends React.Component{
         users: [
             { Username: "aaa", password: "1111" },
             { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
             { Username: "ccc", password: "1111" },
             { Username: "ddd", password: "22222" },
+            { Username: "kkk", password: "1111" },
+            { Username: "eee", password: "22222" },
+            { Username: "ooo", password: "1111" },
+            { Username: "ttt", password: "22222" },
+            { Username: "mmm", password: "1111" },
+            { Username: "qqq", password: "22222" },
+            { Username: "eee", password: "1111" },
+            { Username: "ttt", password: "22222" },
             { Username: "111", password: "1111" },
-            { Username: "mmm", password: "22222" },
+            { Username: "mmmm", password: "22222" },
             { Username: "hhhhhhhh", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" }
+            { Username: "ppp", password: "22222" },
+            { Username: "lll", password: "1111" },
+            { Username: "iii", password: "22222" }
         ]
     };
+
+
 
     // Generic handler for whenever we type in an input box.
     // We change the state for the particular property bound to the textbox from the event.
     handleInputChange = event => {
-        // var item = {
-        //     target : event.target,
-        //     name :
-        //
-        // }
-
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -62,8 +58,6 @@ class Queue extends React.Component{
         this.setState({
             [name]: value
         });
-
-
     };
 
 
@@ -85,7 +79,8 @@ class Queue extends React.Component{
                 />
 
 
-                <UserList users={this.state.users} password = {this.state.password} queueComponent={this}/>
+                <UserList users={this.state.users}
+                          password = {this.state.password}/>
 
 
             </div>
@@ -93,4 +88,4 @@ class Queue extends React.Component{
     }
 }
 
-export default Queue;
+export default withCookies(Queue);

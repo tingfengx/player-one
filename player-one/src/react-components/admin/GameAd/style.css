@@ -1,0 +1,13 @@
+.user {
+    margin-bottom: 5px;
+    font-size: 150%;
+}
+
+.user .MuiTableCell-root {
+    font-size: 0.75em;
+    color: darkslategray;
+}
+
+.MuiTableCell-root .MuiTableCell-body .password{
+
+}

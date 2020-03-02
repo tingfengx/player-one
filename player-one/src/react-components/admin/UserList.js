@@ -81,7 +81,7 @@ export default function UserList(props) {
                             )}
                             user={user}
                             password={password}
-                            queueComponent={queueComponent}
+                            // queueComponent={queueComponent}
                         />
                     ))}
 
