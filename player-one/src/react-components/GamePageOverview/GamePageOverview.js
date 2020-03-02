@@ -31,6 +31,8 @@ class GamePageOverview extends Component {
             ]
         };
         this.game = game;
+        this.longCommentContent = '';
+        this.longCommentTitle = '';
     }
     handleLike(longComment) {
         longComment.likeNum += 1;
@@ -43,10 +45,54 @@ class GamePageOverview extends Component {
         longComment.funnyNum += 1;
         this.forceUpdate();
     }
+    handleLongCommentSubmission(username) {
+        for (let i = 0; i < this.game.longComments.length; i++){
+            if (this.game.longComments[i].author === username){
+                alert("Every professional agency can only submit ONE long review per game!");
+                return;
+            }
+        }
+        if (this.state.longCommentContent.length < 500){
+            alert("Review body need to be no less than 500 characters!");
+        }
+        else if (this.state.longCommentTitle.length === 0){
+            alert("Forget to add a title to the review!");
+        }
+        else if (this.state.longCommentTitle.length > 80){
+            alert("Title too long - please keep within 80 characters!");
+        }
+        else {
+            const title = this.state.longCommentTitle;
+            const newLongComment = {
+                title: title,
+                content: this.state.longCommentContent.split(/\r?\n/),
+                liked: false,
+                disliked: false,
+                realGamer: false,
+                likeNum: 0,
+                dislikeNum: 0,
+                funnyNum: 0,
+                author: username
+            };
+            l(this.game.longComments.content);
+            this.game.longComments.push(newLongComment);
+            this.setState({longCommentContent: ''});
+            this.setState({longCommentTitle: ''});
+            this.forceUpdate();
+        }
+    }
+    handleLongCommentTitleChange(e){
+        e.preventDefault();
+        this.setState({longCommentTitle: e.target.value});
+    }
+    handleLongCommentContentChange(e){
+        e.preventDefault();
+        this.setState({longCommentContent: e.target.value});
+        l(this.state.longCommentContent);
+    }
 
     render() {
         const {cookies} = this.props;
-        l(cookies.cookies.type);
         const settings = {
             customPaging: (i) => {
                 return (
@@ -238,12 +284,12 @@ class GamePageOverview extends Component {
                                             </p>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
-                                            <div className={"LongCommentContent"}>
+                                            <div>
                                                 {
                                                     longComment.content.map(i => (
-                                                        <p key={uid(i)}>{i}</p>))
+                                                        <p  className={"LongCommentContent"} key={uid(i)}>{i}</p>))
                                                 }
-                                                <p>By {longComment.author}</p>
+                                                <p className={"LongCommentContent"}>By {longComment.author}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
                                                         onClick={this.handleLike.bind(this, longComment)}
@@ -288,6 +334,7 @@ class GamePageOverview extends Component {
                                         id="filled-multiline-static"
                                         label="title"
                                         rows={1}
+                                        onChange={this.handleLongCommentTitleChange.bind(this)}
                                         fullWidth
                                         placeholder="Write your title here"
                                         variant="filled"
@@ -298,6 +345,7 @@ class GamePageOverview extends Component {
                                         label="Need to be no shorter than 1000 characters."
                                         multiline
                                         rows={25}
+                                        onChange={this.handleLongCommentContentChange.bind(this)}
                                         fullWidth
                                         placeholder="Write your long review here"
                                         variant="filled"
@@ -306,7 +354,8 @@ class GamePageOverview extends Component {
                                     <div id={"longCommentSubmissionButton"}>
                                         <Button
                                             height={"10px"}
-                                            // onClick={this.handlelongCommentSubmission.bind(this, longComment)}
+                                            onClick={this.handleLongCommentSubmission.bind(this,
+                                                cookies.cookies.username)}
                                             color="secondary"
                                             aria-label="longCommentSubmission"
                                             startIcon={<FunnyIcon/>}

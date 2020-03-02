@@ -9,6 +9,10 @@
     /*background-size: cover;*/
 }
 
+#MuiExpansionPanelDetails-root{
+    display: block;
+}
+
 #GameOverviewBlockBackground{
     float: left;
     margin-left: 8%;
@@ -107,6 +111,8 @@
     margin-left: 15%;
     margin-right: 15%;
     font-size: 20px;
+    display: block;
+    word-wrap: break-word;
 }
 
 .LikeButtons{
@@ -117,8 +123,11 @@
     margin-left: 15%;
 }
 
+
 .longCommentTitle{
-    font-size: 25px;
+    max-width: 70%;
+    font-size: 22px;
+    overflow: auto;
 }
 
 .longCommentRequest{
@@ -126,7 +135,6 @@
     color: darkgray;
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: 24%;
 }
 
 #longCommentSubmissionButton{
