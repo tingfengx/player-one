@@ -18,6 +18,7 @@ import game2 from '../../imgs/the_witcher_3_wild_hunt/image2.jpg';
 import game3 from '../../imgs/the_witcher_3_wild_hunt/image3.jpg';
 import {uid} from 'react-uid'
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 
 const l = console.log;
 
@@ -125,7 +126,7 @@ class GamePageOverview extends Component {
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
                                         >
-                                            <div className={"expansion"}></div>
+                                            <div className={"expansion"}> </div>
                                             <strong className={"longCommentTitle"}>
                                                 {longComment.title}
                                             </strong>
@@ -282,15 +283,25 @@ class GamePageOverview extends Component {
                                     </p>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
+                                    <FormControl fullWidth autoComplete="off">
+                                    <TextField
+                                        id="filled-multiline-static"
+                                        label="title"
+                                        rows={1}
+                                        fullWidth
+                                        placeholder="Write your title here"
+                                        variant="filled"
+                                        helperText="be polite~"
+                                    />
                                     <TextField
                                         id="filled-multiline-static"
                                         label="Need to be no shorter than 1000 characters."
                                         multiline
+                                        rows={25}
                                         fullWidth
-                                        fullHeight
-                                        placeholder="Write your long reivew here"
+                                        placeholder="Write your long review here"
                                         variant="filled"
-                                        helperText="Need to be no shorter than 1000 characters."
+                                        helperText="Thank you for sharing your voice with everyone!"
                                     />
                                     <div id={"longCommentSubmissionButton"}>
                                         <Button
@@ -302,6 +313,7 @@ class GamePageOverview extends Component {
                                         > Submit!
                                         </Button>
                                     </div>
+                                    </FormControl>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
                         </div>
@@ -315,7 +327,7 @@ class GamePageOverview extends Component {
                     <div id={"GamePage"}>
                         <div id={"GameOverviewBlockBackground"}>
                             <div id={"GameOverviewBlock"}>
-                                <h2 id={"GameName"}> The Witcher 3&reg;    : Wild Hunt</h2>
+                                <h2 id={"GameName"}> The Witcher 3&reg; : Wild Hunt</h2>
                                 <div id={"SliderBlock"}>
                                     <Slider {...settings}>
                                         {

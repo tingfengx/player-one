@@ -130,6 +130,5 @@
 }
 
 #longCommentSubmissionButton{
-    display: block;
-    margin-bottom: 10%;
+    text-align: center;
 }
