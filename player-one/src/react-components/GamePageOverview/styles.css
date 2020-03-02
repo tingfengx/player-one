@@ -104,8 +104,8 @@
 }
 
 .LongCommentContent{
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
     font-size: 20px;
 }
 
@@ -114,9 +114,22 @@
 }
 
 .expansion {
-    margin-left: 10%;
+    margin-left: 15%;
 }
 
 .longCommentTitle{
     font-size: 25px;
+}
+
+.longCommentRequest{
+    font-size: 18px;
+    color: darkgray;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 24%;
+}
+
+#longCommentSubmissionButton{
+    display: block;
+    margin-bottom: 10%;
 }
