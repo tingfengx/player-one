@@ -19,6 +19,7 @@ class User {
 }
 
 users.push(new User("user", "user", "user"));
+users.push(new User("superuser", "superuser", "superuser"));
 users.push(new User("admin", "admin", "admin"));
 
 class SignInForm extends Component {

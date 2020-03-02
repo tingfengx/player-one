@@ -8,6 +8,7 @@ import Account from "./react-components/Account";
 import Login from "./react-components/Login";
 import Signup from "./react-components/Signup";
 import TopNavBar from "./react-components/TopNavBar";
+import Admin from './react-components/admin/tabs/tabs';
 
 class App extends React.Component {
   // can use this to store the current user
@@ -92,6 +93,17 @@ class App extends React.Component {
             path="/Signup"
             render={() => <Signup state={this.state} />}
           />
+          <Route
+              exact
+              path="/"
+              render={() => <Signup state={this.state} />}
+          />
+          <Route
+              exact
+              path="/Admin"
+              render={() => <Admin state={this.state} />}
+          />
+
         </Switch>
       </div>
     );
