@@ -24,14 +24,9 @@ export const addUser= queue => {
 };
 
 export const removeUser = (queue, user) => {
-
-
-
     const filteredUsers = queue.state.users.filter(s => {
         return s !== user;
     });
-
-
 
     queue.setState({
        users: filteredUsers
@@ -41,7 +36,6 @@ export const removeUser = (queue, user) => {
 
 
 export const updateUser = (queue, user) => {
-
 
     // filters out the student we don't want.
     const targetUser = queue.state.users.filter(s => {
@@ -55,3 +49,23 @@ export const updateUser = (queue, user) => {
         users: targetUser
     });
 };
+
+export const handleEvent = (event, queue)=> {
+    let target = event.target;
+    let value = target.value;
+    const name = target.name;
+    console.log("target" + target);
+    let selectedName = target.parentElement.firstElementChild;
+    let newText = document.createElement("Input");
+    newText.id = "inputId";
+
+    target = target.replaceWith('newText');
+    value = document.getElementById("inputId").value;
+
+    queue.setState({
+        [name]: value
+    });
+
+
+}
+

@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 // import TopNavBar from "./TopNavBar";
-import User from "../../User/User.js"
+import GameAd from "../../GameAd"
 import {uid} from "react-uid";
 import {removeUser} from "../../actions/queue";
 import "./GameList.css"
@@ -60,7 +60,7 @@ export default function GameList(props) {
                 <TableBody>
                     {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
                         // {users.map(user => (
-                        <User
+                        <GameAd
                             key={uid(
                                 user
                             )}

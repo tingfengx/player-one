@@ -93,55 +93,107 @@ export default function TopNavBar(props) {
             </React.Fragment>
         );
     } else {
-        return (
-            <React.Fragment>
-                <Toolbar className={classes.toolbar}>
-                    {/* Place holder for logo */}
-                    {/* <span role="img" aria-label="Snowman">&#129409;</span> */}
-                    <Typography
-                        component="h2"
-                        variant="h5"
-                        color="inherit"
-                        align="center"
-                        noWrap
-                    >
-                        <Link
-                            href="/"
-                            variant="inherit"
+        if (cookies.type === "user" || cookies.type === "superuser") {
+            return (
+                <React.Fragment>
+                    <Toolbar className={classes.toolbar}>
+                        {/* Place holder for logo */}
+                        {/* <span role="img" aria-label="Snowman">&#129409;</span> */}
+                        <Typography
+                            component="h2"
+                            variant="h5"
                             color="inherit"
-                            underline='none'
+                            align="center"
+                            noWrap
                         >
-                            {title}
-                        </Link>
-                    </Typography>
-                    <div className={classes.toolbarTitle}>
-                        {sections.map(section => (
-                            <div className="dropdown" key={section.title}>
-                                <button className="dropbtn">{section.title}</button>
-                                <div className="dropdown-content">
-                                    <a href="/the_witcher_3_wild_hunt">The Witcher 3: Wild Hunt</a>
-                                    <a href="/">Game 2</a>
-                                    <a href="/">Game 3</a>
+                            <Link
+                                href="/"
+                                variant="inherit"
+                                color="inherit"
+                                underline='none'
+                            >
+                                {title}
+                            </Link>
+                        </Typography>
+                        <div className={classes.toolbarTitle}>
+                            {sections.map(section => (
+                                <div className="dropdown" key={section.title}>
+                                    <button className="dropbtn">{section.title}</button>
+                                    <div className="dropdown-content">
+                                        <a href="/the_witcher_3_wild_hunt">The Witcher 3: Wild Hunt</a>
+                                        <a href="/">Game 2</a>
+                                        <a href="/">Game 3</a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <Typography>
+                            <IconButton>
+                                <SearchIcon/>
+                            </IconButton>
+                            <div className={"dropdown"}>
+                                <Button className={"dropbtn"}>{cookies.username}</Button>
+                                <div className={"dropdown-content"}>
+                                    <a href={"/user_account"}>My Account</a>
+                                    <a href={"/"} onClick={handleSignOut}>Sign Out</a>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-
-                    <Typography>
-                        <IconButton>
-                            <SearchIcon/>
-                        </IconButton>
-                        <div className={"dropdown"}>
-                            <Button className={"dropbtn"}>{cookies.username}</Button>
-                            <div className={"dropdown-content"}>
-                                <a href={"/user_account"}>My Account</a>
-                                <a href={"/"} onClick={handleSignOut}>Sign Out</a>
-                            </div>
+                        </Typography>
+                    </Toolbar>
+                </React.Fragment>
+            )
+        } else if (cookies.type === "admin") {
+            return (
+                <React.Fragment>
+                    <Toolbar className={classes.toolbar}>
+                        {/* Place holder for logo */}
+                        {/* <span role="img" aria-label="Snowman">&#129409;</span> */}
+                        <Typography
+                            component="h2"
+                            variant="h5"
+                            color="inherit"
+                            align="center"
+                            noWrap
+                        >
+                            <Link
+                                href="/"
+                                variant="inherit"
+                                color="inherit"
+                                underline='none'
+                            >
+                                {title}
+                            </Link>
+                        </Typography>
+                        <div className={classes.toolbarTitle}>
+                            {sections.map(section => (
+                                <div className="dropdown" key={section.title}>
+                                    <button className="dropbtn">{section.title}</button>
+                                    <div className="dropdown-content">
+                                        <a href="/the_witcher_3_wild_hunt">The Witcher 3: Wild Hunt</a>
+                                        <a href="/">Game 2</a>
+                                        <a href="/">Game 3</a>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    </Typography>
-                </Toolbar>
-            </React.Fragment>
-        )
+
+                        <Typography>
+                            <IconButton>
+                                <SearchIcon/>
+                            </IconButton>
+                            <div className={"dropdown"}>
+                                <Button className={"dropbtn"}>{cookies.username}</Button>
+                                <div className={"dropdown-content"}>
+                                    <a href={"/admin"}>Manage</a>
+                                    <a href={"/"} onClick={handleSignOut}>Sign Out</a>
+                                </div>
+                            </div>
+                        </Typography>
+                    </Toolbar>
+                </React.Fragment>
+            )
+        }
     }
 }
 
