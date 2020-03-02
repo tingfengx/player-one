@@ -87,7 +87,7 @@
 }
 
 .GameReviews {
-    min-width: 130px;
+    min-width: 170px;
     color: #556772;
     text-transform: uppercase;
 }
@@ -103,7 +103,7 @@
     height: 10px;
 }
 
-#LongCommentContent1, #LongCommentContent2{
+.LongCommentContent{
     margin-left: 10%;
     margin-right: 10%;
     font-size: 20px;

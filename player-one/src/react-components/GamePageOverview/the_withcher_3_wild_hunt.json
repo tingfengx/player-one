@@ -1,5 +1,11 @@
   {
     "description": "The Witcher: Wild Hunt is a story-driven open world RPG set in a visually stunning fantasy universe full of meaningful choices and impactful consequences.",
+    "recentReview": "Overwhelmingly Positive (99%)",
+    "allReview": "Overwhelmingly Positive (96%)",
+    "releaseDate": "18 May, 2015",
+    "developer": "CD PROJEKT RED",
+    "publisher": "CD PROJEKT RED",
+
     "longComments": [
     {
       "title": "The Dark Places of The Land Are Full of The Habitations of Violence.",
@@ -13,9 +19,9 @@
       "liked": false,
       "disliked": false,
       "realGamer": false,
-      "likeNum": 0,
-      "dislikeNum": 0,
-      "realGamerNum": 0,
+      "likeNum": 1211,
+      "dislikeNum": 312,
+      "funnyNum": 29,
       "author": "GameSpot"
     },
 
@@ -31,9 +37,9 @@
       "liked": false,
       "disliked": false,
       "realGamer": false,
-      "likeNum": 0,
-      "dislikeNum": 0,
-      "realGamerNum": 0,
+      "likeNum": 762,
+      "dislikeNum": 21,
+      "funnyNum": 521,
       "author": "IGN"
     }
   ]
