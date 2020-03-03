@@ -101,6 +101,7 @@
 }
 
 #ReviewBar{
+    position: relative;
     float: left;
     margin-left: 8%;
     width: 84%;
@@ -139,4 +140,49 @@
 
 #longCommentSubmissionButton{
     text-align: center;
+}
+
+.CommentBar{
+    /*position: relative;*/
+    /*float: left;*/
+    /*width: 84%;*/
+    /*margin-left: 8%;*/
+}
+
+.ExistingComments {
+    float: left;
+    width: 70%;
+}
+
+.NewCommentCard {
+    float: right;
+    width: 29.9%;
+}
+
+.YourCommentText {
+    font-size: large;
+    font-weight: bolder;
+}
+
+.NewCommentContainer {
+    padding: 5% 10% 10%;
+}
+
+.SubmitShortCommentButton {
+    position: relative;
+    float: right;
+}
+
+.SpaceBetweenCommentAndSubmit {
+    height: 5px;
+}
+
+.inline {
+    display: inline;
+}
+
+.ShortCommentList {
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
 }

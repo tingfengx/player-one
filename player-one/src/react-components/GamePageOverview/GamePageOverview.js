@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Slider from "react-slick";
 import './styles.css'
-import { withCookies } from "react-cookie";
+import {withCookies} from "react-cookie";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -19,6 +19,9 @@ import game3 from '../../imgs/the_witcher_3_wild_hunt/image3.jpg';
 import {uid} from 'react-uid'
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
+import {Card, List} from "@material-ui/core";
+import ShortComment from '../ShortComment'
+import BottomInfo from "../BottomInfo";
 
 const l = console.log;
 
@@ -33,35 +36,63 @@ class GamePageOverview extends Component {
         this.game = game;
         this.longCommentContent = '';
         this.longCommentTitle = '';
+        this.shortCommentContent = '';
     }
+
     handleLike(longComment) {
         longComment.likeNum += 1;
-        this.forceUpdate();}
+        this.forceUpdate();
+    }
+
     handleDislike(longComment) {
         longComment.dislikeNum += 1;
         this.forceUpdate();
     }
+
     handleFunny(longComment) {
         longComment.funnyNum += 1;
         this.forceUpdate();
     }
+
+    handleTypeShortComment(event) {
+        event.preventDefault();
+        this.setState({shortCommentContent: event.target.value});
+        // l(this.state.shortCommentContent)
+    }
+
+    handleAddShortComment(username) {
+        l(this.state.shortCommentContent);
+        if (this.state.shortCommentContent.length <= 30) {
+            alert("Please try to be informative! Share your thoughts! Enter more than 30 characters.");
+            return;
+        }
+        if (this.state.shortCommentContent.length >= 500) {
+            alert("Sorry, your comment was too long. Please try to be brief... (limit is 500 characters)");
+            return;
+        }
+        // prepend
+        l(this.game.shortComments);
+        this.game.shortComments.unshift({
+            "username": username,
+            "commentText": this.state.shortCommentContent});
+        l(this.game.shortComments);
+        this.forceUpdate();
+    }
+
     handleLongCommentSubmission(username) {
-        for (let i = 0; i < this.game.longComments.length; i++){
-            if (this.game.longComments[i].author === username){
+        for (let i = 0; i < this.game.longComments.length; i++) {
+            if (this.game.longComments[i].author === username) {
                 alert("Every professional agency can only submit ONE long review per game!");
                 return;
             }
         }
-        if (this.state.longCommentContent.length < 500){
+        if (this.state.longCommentContent.length < 500) {
             alert("Review body need to be no less than 500 characters!");
-        }
-        else if (this.state.longCommentTitle.length === 0){
+        } else if (this.state.longCommentTitle.length === 0) {
             alert("Forget to add a title to the review!");
-        }
-        else if (this.state.longCommentTitle.length > 80){
+        } else if (this.state.longCommentTitle.length > 80) {
             alert("Title too long - please keep within 80 characters!");
-        }
-        else {
+        } else {
             const title = this.state.longCommentTitle;
             const newLongComment = {
                 title: title,
@@ -81,11 +112,13 @@ class GamePageOverview extends Component {
             this.forceUpdate();
         }
     }
-    handleLongCommentTitleChange(e){
+
+    handleLongCommentTitleChange(e) {
         e.preventDefault();
         this.setState({longCommentTitle: e.target.value});
     }
-    handleLongCommentContentChange(e){
+
+    handleLongCommentContentChange(e) {
         e.preventDefault();
         this.setState({longCommentContent: e.target.value});
         l(this.state.longCommentContent);
@@ -111,7 +144,7 @@ class GamePageOverview extends Component {
             fade: true,
             arrows: false
         };
-        if (cookies.cookies.type === 'user'){
+        if (cookies.cookies.type === 'user') {
             return (
                 <div>
                     <div id={"GamePage"}>
@@ -146,7 +179,7 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Realease date: {this.game.releaseDate}
+                                                <p>Release date: {this.game.releaseDate}
                                                 </p>
                                             </div>
                                         </div>
@@ -166,13 +199,14 @@ class GamePageOverview extends Component {
                         <div id={"ReviewBar"}>
                             {
                                 this.game.longComments.map(longComment => (
-                                    <ExpansionPanel key={uid(longComment)}>
+                                    <ExpansionPanel key={uid(longComment)} className={"ExpansionPanel"}>
                                         <ExpansionPanelSummary
                                             expandIcon={<ExpandMoreIcon/>}
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
+                                            className={"ExpansionPanel"}
                                         >
-                                            <div className={"expansion"}> </div>
+                                            <div className={"expansion"}></div>
                                             <strong className={"longCommentTitle"}>
                                                 {longComment.title}
                                             </strong>
@@ -211,13 +245,54 @@ class GamePageOverview extends Component {
                                     </ExpansionPanel>
                                 ))
                             }
+                            <div className={"CommentBar"}>
+                                <Card className={"ExistingComments"}>
+                                    <div className={"ShortCommentList"}>
+                                        <List>
+                                            {
+                                                this.game.shortComments.map(i =>
+                                                    (<ShortComment
+                                                        key={uid(i)}
+                                                        username={i.username}
+                                                        commentText={i.commentText}/>))
+                                            }
+                                        </List>
+                                    </div>
+                                </Card>
+                                <Card className={"NewCommentCard"}>
+                                    <div className={"NewCommentContainer"}>
+                                        <p className={"YourCommentText"}>
+                                            Leave Your Comment Here:
+                                        </p>
+                                        <TextField
+                                            label="You Comment Here..."
+                                            fullWidth
+                                            multiline
+                                            rowsMax="4"
+                                            rows={10}
+                                            // used with onChange, fix this later
+                                            // value={value}
+                                            onChange={this.handleTypeShortComment.bind(this)}
+                                            variant="filled"
+                                        />
+                                        <div className={"SpaceBetweenCommentAndSubmit"}>
 
+                                        </div>
+                                        <Button
+                                            className={"SubmitShortCommentButton"}
+                                            variant={"outlined"}
+                                            color={"primary"}
+                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </Card>
+                            </div>
                         </div>
                     </div>
                 </div>
             );
-        }
-        else if (cookies.cookies.type === 'superuser') {
+        } else if (cookies.cookies.type === 'superuser') {
             return (
                 <div>
                     <div id={"GamePage"}>
@@ -278,7 +353,7 @@ class GamePageOverview extends Component {
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
                                         >
-                                            <div className={"expansion"}> </div>
+                                            <div className={"expansion"}></div>
                                             <p className={"longCommentTitle"}>
                                                 {longComment.title}
                                             </p>
@@ -287,7 +362,7 @@ class GamePageOverview extends Component {
                                             <div>
                                                 {
                                                     longComment.content.map(i => (
-                                                        <p  className={"LongCommentContent"} key={uid(i)}>{i}</p>))
+                                                        <p className={"LongCommentContent"} key={uid(i)}>{i}</p>))
                                                 }
                                                 <p className={"LongCommentContent"}>By {longComment.author}</p>
                                                 <div className={"LikeButtons"}>
@@ -323,45 +398,45 @@ class GamePageOverview extends Component {
                                     aria-controls="panel1a-content"
                                     id="panel1a-header"
                                 >
-                                    <div className={"expansion"}> </div>
+                                    <div className={"expansion"}></div>
                                     <p className={"longCommentRequest"}>
                                         want to share your review?
                                     </p>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
                                     <FormControl fullWidth autoComplete="off">
-                                    <TextField
-                                        id="filled-multiline-static"
-                                        label="title"
-                                        rows={1}
-                                        onChange={this.handleLongCommentTitleChange.bind(this)}
-                                        fullWidth
-                                        placeholder="Write your title here"
-                                        variant="filled"
-                                        helperText="be polite~"
-                                    />
-                                    <TextField
-                                        id="filled-multiline-static"
-                                        label="Need to be no shorter than 1000 characters."
-                                        multiline
-                                        rows={25}
-                                        onChange={this.handleLongCommentContentChange.bind(this)}
-                                        fullWidth
-                                        placeholder="Write your long review here"
-                                        variant="filled"
-                                        helperText="Thank you for sharing your voice with everyone!"
-                                    />
-                                    <div id={"longCommentSubmissionButton"}>
-                                        <Button
-                                            height={"10px"}
-                                            onClick={this.handleLongCommentSubmission.bind(this,
-                                                cookies.cookies.username)}
-                                            color="secondary"
-                                            aria-label="longCommentSubmission"
-                                            startIcon={<FunnyIcon/>}
-                                        > Submit!
-                                        </Button>
-                                    </div>
+                                        <TextField
+                                            id="filled-multiline-static"
+                                            label="title"
+                                            rows={1}
+                                            onChange={this.handleLongCommentTitleChange.bind(this)}
+                                            fullWidth
+                                            placeholder="Write your title here"
+                                            variant="filled"
+                                            helperText="be polite~"
+                                        />
+                                        <TextField
+                                            id="filled-multiline-static"
+                                            label="Need to be no shorter than 1000 characters."
+                                            multiline
+                                            rows={25}
+                                            onChange={this.handleLongCommentContentChange.bind(this)}
+                                            fullWidth
+                                            placeholder="Write your long review here"
+                                            variant="filled"
+                                            helperText="Thank you for sharing your voice with everyone!"
+                                        />
+                                        <div id={"longCommentSubmissionButton"}>
+                                            <Button
+                                                height={"10px"}
+                                                onClick={this.handleLongCommentSubmission.bind(this,
+                                                    cookies.cookies.username)}
+                                                color="secondary"
+                                                aria-label="longCommentSubmission"
+                                                startIcon={<FunnyIcon/>}
+                                            > Submit!
+                                            </Button>
+                                        </div>
                                     </FormControl>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
@@ -369,8 +444,7 @@ class GamePageOverview extends Component {
                     </div>
                 </div>
             );
-        }
-        else {
+        } else {
             return (
                 <div>
                     <div id={"GamePage"}>
@@ -431,7 +505,7 @@ class GamePageOverview extends Component {
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
                                         >
-                                            <div className={"expansion"}> </div>
+                                            <div className={"expansion"}></div>
                                             <strong className={"longCommentTitle"}>
                                                 {longComment.title}
                                             </strong>
