@@ -89,37 +89,37 @@ export default function ScrollableTabsButtonPrevent() {
       <TabPanel value={value} index={0}>
         <div className="recentLikes">
           <div className="recentLike">
-            <img src={gameCoverImageSrc} />
+            <img src={gameCoverImageSrc} alt="game1"/>
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} />
+            <img src={gameCoverImageSrc} alt="game2"/>
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} />
+            <img src={gameCoverImageSrc} alt="game3"/>
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} />
+            <img src={gameCoverImageSrc} alt="game4"/>
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} />
+            <img src={gameCoverImageSrc} alt="game5"/>
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} />
+            <img src={gameCoverImageSrc} alt="game6"/>
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
@@ -132,7 +132,7 @@ export default function ScrollableTabsButtonPrevent() {
             <p className="recentReviewTime">2020-3-2 12:34:56</p>
             <p className="recentReviewText">I love this game! The Witcher 3 is the best!</p>
             <div className="recentReviewGame">
-              <img src={gameCoverImageSrc} />
+              <img src={gameCoverImageSrc} alt="review1"/>
               <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
@@ -142,7 +142,7 @@ export default function ScrollableTabsButtonPrevent() {
             <p className="recentReviewTime">2020-3-2 12:34:56</p>
             <p className="recentReviewText">This game is so great that I have been playing it like everyday! I highly recommend you guys take a look! It won't disappoint you!</p>
             <div className="recentReviewGame">
-              <img src={gameCoverImageSrc} />
+              <img src={gameCoverImageSrc} alt="review2"/>
               <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
