@@ -21,7 +21,6 @@ class UserProfile extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props.cookies);
     this.setState({ name: this.props.cookies.cookies.username });
   }
 
@@ -48,7 +47,6 @@ class UserProfile extends Component {
   };
 
   render() {
-    const { cookies } = this.props;
 
     if (!this.state.editName) {
       return (
