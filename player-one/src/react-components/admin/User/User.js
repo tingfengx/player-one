@@ -41,31 +41,8 @@ class User extends React.Component {
         this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    editStatus(event, index){
-        console.log("edit status clicket");
-        console.log(event.target.id);
-        this.setState ({
-            isStatusClicked: index
-        })
-    }
 
-    // handleEvent(event, queue) {
-    //     let target = event.target;
-    //     let value = target.value;
-    //     const name = target.name;
-    //     console.log("target" + target);
-    //     let selectedName = target.parentElement.firstElementChild;
-    //     let newText = document.createElement("Input");
-    //     newText.id = "inputId";
-    //
-    //     target = target.replaceWith('newText');
-    //     value = document.getElementById("inputId").value;
-    //     queue.setState({
-    //         [name]: value
-    //     });
-    //
-    //
-    // }
+
 
     handleChange(event) {
         const tableRow = event.target.parentElement.parentElement.parentElement.parentElement;
@@ -86,7 +63,7 @@ class User extends React.Component {
 
 
     render() {
-        // const { user, queueComponent } = this.props;
+
         const { user, queueComponent, password } = this.props;
 
         return (
@@ -97,13 +74,7 @@ class User extends React.Component {
 
                 </TableCell>
                 <TableCell component="th" scope="row" >
-                    {/*<PasswordInput*/}
-                    {/*    label="Password"*/}
-                    {/*    name="password"*/}
-                    {/*    value={user.password}*/}
-                    {/*    // onChange={this.onChange}*/}
-                    {/*    onClick={this.handleEvent}*/}
-                    {/*  />*/}
+
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -131,7 +102,7 @@ class User extends React.Component {
                     </Button>
                     <Button
                         variant="outlined"
-                        // startIcon={<DeleteIcon />}
+
                         onClick={this.handleUpdate}
                     >
                         update

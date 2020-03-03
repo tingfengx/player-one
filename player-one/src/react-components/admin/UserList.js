@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from "@material-ui/core/Button";
+
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 import User from "./User/User.js"
 import {uid} from "react-uid";
-import {removeUser} from "./actions/queue";
+
 import "./UserList.css"
 
 

@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React from "react";
 
 import UserList from "../UserList";
 import UserForm from "../UserForm";
@@ -16,9 +16,7 @@ class Queue extends React.Component{
         this.setValue(newValue);
     };
 
-    handleChangeIndex = index => {
-        this.setValue(index);
-    };
+
     cookies = this.props;
 
     state = {
@@ -60,10 +58,6 @@ class Queue extends React.Component{
         });
     };
 
-
-
-    // Each section of the Queue now has its own componenet, cleaning up the
-    // JSX a lot.
     render() {
 
         return (
