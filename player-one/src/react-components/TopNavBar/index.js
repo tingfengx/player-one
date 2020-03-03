@@ -128,7 +128,7 @@ export default function TopNavBar(props) {
                             ))}
                         </div>
 
-                        <Typography>
+                        <div>
                             <IconButton>
                                 <SearchIcon/>
                             </IconButton>
@@ -139,7 +139,7 @@ export default function TopNavBar(props) {
                                     <a href={"/"} onClick={handleSignOut}>Sign Out</a>
                                 </div>
                             </div>
-                        </Typography>
+                        </div>
                     </Toolbar>
                 </React.Fragment>
             )
@@ -178,7 +178,7 @@ export default function TopNavBar(props) {
                             ))}
                         </div>
 
-                        <Typography>
+                        <div>
                             <IconButton>
                                 <SearchIcon/>
                             </IconButton>
@@ -189,7 +189,7 @@ export default function TopNavBar(props) {
                                     <a href={"/"} onClick={handleSignOut}>Sign Out</a>
                                 </div>
                             </div>
-                        </Typography>
+                        </div>
                     </Toolbar>
                 </React.Fragment>
             )

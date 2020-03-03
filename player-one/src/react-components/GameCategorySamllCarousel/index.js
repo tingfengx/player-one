@@ -7,6 +7,7 @@ import thumbnail2 from '../../imgs/w3.jpg';
 import thumbnail3 from '../../imgs/w3.jpg';
 import thumbnail4 from '../../imgs/w3.jpg';
 import thumbnail5 from '../../imgs/w3.jpg';
+import { uid } from 'react-uid';
 
 
 export default function GameCategorySmallCarousel(props) {
@@ -27,11 +28,13 @@ export default function GameCategorySmallCarousel(props) {
             <Slider {...settings}>
                 {
                     images.map(image => (
-                        <a href={"/"} className={"ClickableImage"}>
+                        <a href={"/"}
+                           className={"ClickableImage"}
+                           key={uid(image)}>
                             <img className={"ThumbNailImage"}
                                  src={image}
                                  alt={"Game Thumbnail Failed to Load"}
-                                 key={image}
+                                 key={uid(image)}
                             /></a>
                     ))
                 }
