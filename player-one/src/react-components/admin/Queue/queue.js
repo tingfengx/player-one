@@ -6,7 +6,7 @@ import { withCookies } from "react-cookie";
 
 
 import { addUser} from "../actions/queue";
-
+import './style.css'
 
 
 
@@ -80,7 +80,8 @@ class Queue extends React.Component{
 
 
                 <UserList users={this.state.users}
-                          password = {this.state.password}/>
+                          password = {this.state.password}
+                          queueComponent={this}/>
 
 
             </div>
