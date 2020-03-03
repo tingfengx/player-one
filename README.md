@@ -43,7 +43,7 @@ To sign in as a superuser, please click `SIGN IN` button in the top right corner
 ## Features: Admin
 To sign in as a normal user, please click `SIGN IN` button in the top right corner and use username `admin` with password `admin`. We are able to access admin page by signing up as admin.  
 In the Admin page, We can access the information of all current users with their passwords (where users' original password are not visible to admin) and all current games with their descriptions. The tab at the top of the page make it convinient for us to switch views of games and users.   
-Admin is able to add or delete any users, and also changes users' password. When clicking on the user's password, it will show up an alert block saying `changing the user's password to whatever the admin has typed`.   
+Admin is able to add or delete any users, and also changes user's password. Admin can type in user's password in the textfield, then click the `update` button, it will show up an alert box saying `Requires server call! Changing the corresponding user's password to whatever he has typed`.   
 As for the games, he can also add or delete games with their descrpitions.  
 
 
