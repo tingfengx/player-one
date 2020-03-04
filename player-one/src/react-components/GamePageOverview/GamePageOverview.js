@@ -196,6 +196,14 @@ class GamePageOverview extends Component {
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
                                         </div>
+                                        <div>
+                                            <p className={"bestShortCommentContent"}>
+                                                "{this.state.bestShort.commentText}"
+                                            </p>
+                                            <p className={"bestShortCommentAuthor"}>
+                                                &mdash;{this.state.bestShort.username}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -331,7 +339,7 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Realease date: {this.game.releaseDate}
+                                                <p>Release date: {this.game.releaseDate}
                                                 </p>
                                             </div>
                                         </div>
@@ -533,7 +541,7 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Realease date: {this.game.releaseDate}
+                                                <p>Release date: {this.game.releaseDate}
                                                 </p>
                                             </div>
                                         </div>
@@ -544,6 +552,14 @@ class GamePageOverview extends Component {
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
+                                        </div>
+                                        <div>
+                                            <p className={"bestShortCommentContent"}>
+                                                "{this.state.bestShort.commentText}"
+                                            </p>
+                                            <p className={"bestShortCommentAuthor"}>
+                                                &mdash;{this.state.bestShort.username}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
