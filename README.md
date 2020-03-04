@@ -39,7 +39,7 @@ There are the following three login credentials hardcoded into our app currently
  - For superuser: username `superuser` with password `superuser`. A super user represents a professional agency, could be game rating company or game makers, etc.
  - For admin: username `admin` with password `admin`; This is the account of the admin of the site. Unlike the previous two types of users, an admin is allowed to modify other users' data, including but not limited to changing password, adding user, deleting user. 
 
-**The Sign In page** could be accessed by clicking the `SIGNUP` button besides the `SIGNIN`.
+**The Sign Up Page** could be accessed by clicking the `SIGNUP` button besides `SIGNIN`.
 
 
 
