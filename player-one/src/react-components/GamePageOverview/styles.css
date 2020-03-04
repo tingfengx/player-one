@@ -76,7 +76,7 @@
 
 #GameReviewsBlock {
     float:left;
-    margin-top: 18%;
+    margin-top: 15%;
     margin-left: 20%;
     font-size: 16px;
  }
@@ -92,7 +92,7 @@
 }
 
 .GameReviews {
-    min-width: 170px;
+    min-width: 200px;
     color: #556772;
     text-transform: uppercase;
 }
