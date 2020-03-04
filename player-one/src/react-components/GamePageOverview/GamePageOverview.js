@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DislikeIcon from '@material-ui/icons/ThumbDown';
 import LikeIcon from '@material-ui/icons/ThumbUp';
+import WriteIcon from '@material-ui/icons/BorderColor'
 import FunnyIcon from '@material-ui/icons/VideogameAsset';
+import EmotionIcon from '@material-ui/icons/EmojiSymbols'
 import Button from '@material-ui/core/Button'
 import game from "./the_withcher_3_wild_hunt"
 import game0 from '../../imgs/the_witcher_3_wild_hunt/image0.jpg';
@@ -292,7 +294,8 @@ class GamePageOverview extends Component {
                                         <Button
                                             className={"SubmitShortCommentButton"}
                                             variant={"outlined"}
-                                            color={"primary"}
+                                            color={"secondary"}
+                                            startIcon={<EmotionIcon/>}
                                             onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
                                             Submit
                                         </Button>
@@ -420,7 +423,7 @@ class GamePageOverview extends Component {
                                 >
                                     <div className={"expansion"}> </div>
                                     <p className={"longCommentRequest"}>
-                                        want to share your review?
+                                        <WriteIcon/>&emsp;Want to share your review?
                                     </p>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
@@ -433,7 +436,7 @@ class GamePageOverview extends Component {
                                             fullWidth
                                             placeholder="Write your title here"
                                             variant="filled"
-                                            helperText="be polite~"
+                                            helperText="Be polite~"
                                         />
                                         <TextField
                                             id="filled-multiline-static"
@@ -452,8 +455,9 @@ class GamePageOverview extends Component {
                                                 onClick={this.handleLongCommentSubmission.bind(this,
                                                     cookies.cookies.username)}
                                                 color="secondary"
+                                                variant={"outlined"}
                                                 aria-label="longCommentSubmission"
-                                                startIcon={<FunnyIcon/>}
+                                                startIcon={<EmotionIcon/>}
                                             > Submit!
                                             </Button>
                                         </div>
@@ -494,7 +498,8 @@ class GamePageOverview extends Component {
                                         <Button
                                             className={"SubmitShortCommentButton"}
                                             variant={"outlined"}
-                                            color={"primary"}
+                                            color={"secondary"}
+                                            startIcon={<EmotionIcon/>}
                                             onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
                                             Submit
                                         </Button>
@@ -589,6 +594,7 @@ class GamePageOverview extends Component {
                                                 <p>By {longComment.author}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
+                                                        disabled
                                                         onClick={this.handleLike.bind(this, longComment)}
                                                         color="primary"
                                                         aria-label="like"
@@ -596,12 +602,14 @@ class GamePageOverview extends Component {
                                                     > Agree {longComment.likeNum}
                                                     </Button>
                                                     <Button
+                                                        disabled
                                                         onClick={this.handleDislike.bind(this, longComment)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
                                                     > Hmm, Nope {longComment.dislikeNum}
                                                     </Button>
                                                     <Button
+                                                        disabled
                                                         onClick={this.handleFunny.bind(this, longComment)}
                                                         color="secondary"
                                                         aria-label="funny"
@@ -651,6 +659,7 @@ class GamePageOverview extends Component {
                                             variant={"outlined"}
                                             color={"primary"}
                                             disabled
+                                            startIcon={<EmotionIcon/>}
                                             onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
                                             Submit
                                         </Button>
