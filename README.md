@@ -71,10 +71,17 @@ menu, and anyone can view it by clicking on the title text. What a user can see 
 of the user.
 - **For Admin:** We think admin should be limited to his/her own job and should not use the admin account for personal 
 opinion, for example, like writing a comment. Hence, unfortunately, the admin's view of the game page 
-is the same as an not-logged-in user's. 
+is the same as an not-logged-in user's. In particular, the comment input section down below is disabled for
+admin, just like when the user has not logged in.
 - **For User:** A general user can add comment for games. As you can see, there are already
 three hardcoded comments with lorem ipsum text, and the user can add his/her new comment by typing 
-a new comment message in the text input box
+a new comment message in the text input box and then hitting the `SUBMIT` button below. The new comment
+will be added to the *top* of existing comment list. Note: The current policy for these short comments
+is that it has to be longer than 30 characters (informative) and less than 500 characters (not too long).
+- **For Superuser:** A super user can also leave comments, and in addition to that, he/she can add long
+comments for the game. By clicking the `want to share your review?` expansion panel, the super user can see
+an interface for entering a new long comment. As opposed to short comments, long comments have to be at least
+500 characters long. 
 
 
 
