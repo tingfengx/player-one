@@ -1,6 +1,15 @@
 .CommentTextContainer {
     padding-top: 15px;
+    overflow-wrap: break-word;
 }
+
+/*ul .MuiList-root{*/
+/*    display: block;*/
+/*}*/
+
+/*ul .MuiList-padding {*/
+/*    display: block;*/
+/*}*/
 
 .ShortCommentUsername {
     float: right;
