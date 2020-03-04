@@ -270,8 +270,6 @@ class GamePageOverview extends Component {
                                             multiline
                                             rowsMax="4"
                                             rows={10}
-                                            // used with onChange, fix this later
-                                            // value={value}
                                             onChange={this.handleTypeShortComment.bind(this)}
                                             variant="filled"
                                         />
@@ -440,6 +438,47 @@ class GamePageOverview extends Component {
                                     </FormControl>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
+                            <div className={"CommentBar"}>
+                                <Card className={"ExistingComments"}>
+                                    <div className={"ShortCommentList"}>
+                                        <List>
+                                            {
+                                                this.game.shortComments.map(i =>
+                                                    (<ShortComment
+                                                        key={uid(i)}
+                                                        username={i.username}
+                                                        commentText={i.commentText}/>))
+                                            }
+                                        </List>
+                                    </div>
+                                </Card>
+                                <Card className={"NewCommentCard"}>
+                                    <div className={"NewCommentContainer"}>
+                                        <p className={"YourCommentText"}>
+                                            Leave Your Comment Here:
+                                        </p>
+                                        <TextField
+                                            label="You Comment Here..."
+                                            fullWidth
+                                            multiline
+                                            rowsMax="4"
+                                            rows={10}
+                                            onChange={this.handleTypeShortComment.bind(this)}
+                                            variant="filled"
+                                        />
+                                        <div className={"SpaceBetweenCommentAndSubmit"}>
+
+                                        </div>
+                                        <Button
+                                            className={"SubmitShortCommentButton"}
+                                            variant={"outlined"}
+                                            color={"primary"}
+                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </Card>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -544,7 +583,49 @@ class GamePageOverview extends Component {
                                     </ExpansionPanel>
                                 ))
                             }
+                            <div className={"CommentBar"}>
+                                <Card className={"ExistingComments"}>
+                                    <div className={"ShortCommentList"}>
+                                        <List>
+                                            {
+                                                this.game.shortComments.map(i =>
+                                                    (<ShortComment
+                                                        key={uid(i)}
+                                                        username={i.username}
+                                                        commentText={i.commentText}/>))
+                                            }
+                                        </List>
+                                    </div>
+                                </Card>
+                                <Card className={"NewCommentCard"}>
+                                    <div className={"NewCommentContainer"}>
+                                        <p className={"YourCommentText"}>
+                                            Leave Your Comment Here:
+                                        </p>
+                                        <TextField
+                                            label="Sign in as User/Superuser to leave a comment here."
+                                            fullWidth
+                                            multiline
+                                            rowsMax="4"
+                                            rows={10}
+                                            onChange={this.handleTypeShortComment.bind(this)}
+                                            variant="filled"
+                                            disabled
+                                        />
+                                        <div className={"SpaceBetweenCommentAndSubmit"}>
 
+                                        </div>
+                                        <Button
+                                            className={"SubmitShortCommentButton"}
+                                            variant={"outlined"}
+                                            color={"primary"}
+                                            disabled
+                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </Card>
+                            </div>
                         </div>
                     </div>
                 </div>
