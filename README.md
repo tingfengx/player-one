@@ -78,6 +78,8 @@ http://localhost:3000/the_witcher_3_wild_hunt
 ``````
 There should be four selected pictures for the game, and with thumbnails for all of them shown to the left of the screen
 and to the right is a short description, usually from the game developer, and related stats/info for the game. 
+Also, there is one 'selected' comment from the short comments chosen to be displayed below the general stats 
+for the game. The username of the user who left the comment is also shown.
 
 Below, is the section for comments. Each of the long comment is inside a expansion
 menu, and anyone can view it by clicking on the title text. What a user can see below varies with the type
@@ -87,7 +89,7 @@ opinion, for example, like writing a comment. Hence, unfortunately, the admin's 
 is the same as an not-logged-in user's. In particular, the comment input section down below is disabled for
 admin, just like when the user has not logged in.
 - **For User:** A general user can add comment for games. As you can see, there are already
-three hardcoded comments with lorem ipsum text, and the user can add his/her new comment by typing 
+four hardcoded comments, and the user can add his/her new comment by typing 
 a new comment message in the text input box and then hitting the `SUBMIT` button below. The new comment
 will be added to the *top* of existing comment list. Note: The current policy for these short comments
 is that it has to be longer than 30 characters (informative) and less than 500 characters (not too long). Also, the submitted
