@@ -281,8 +281,8 @@ class GamePageOverview extends Component {
                                             label="You Comment Here..."
                                             fullWidth
                                             multiline
-                                            rowsMax="6"
-                                            rows={10}
+                                            rowsMax="50"
+                                            rows={8}
                                             onChange={this.handleTypeShortComment.bind(this)}
                                             variant="filled"
                                         />
