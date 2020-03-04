@@ -30,12 +30,12 @@ class GamePageOverview extends Component {
         this.state = {
             imgs: [
                 game0, game1, game2, game3
-            ]
+            ],
+            longCommentContent: '',
+            longCommentTitle: '',
+            shortCommentContent: ''
         };
         this.game = game;
-        this.longCommentContent = '';
-        this.longCommentTitle = '';
-        this.shortCommentContent = '';
     }
 
     handleLike(longComment) {
@@ -60,7 +60,6 @@ class GamePageOverview extends Component {
     }
 
     handleAddShortComment(username) {
-        l(this.state.shortCommentContent);
         if (this.state.shortCommentContent.length <= 30) {
             alert("Please try to be informative! Share your thoughts! Enter more than 30 characters.");
             return;
