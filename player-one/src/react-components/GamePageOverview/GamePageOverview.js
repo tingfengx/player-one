@@ -437,7 +437,7 @@ class GamePageOverview extends Component {
                                         />
                                         <TextField
                                             id="filled-multiline-static"
-                                            label="Need to be no shorter than 1000 characters."
+                                            label="Need to be no less than 500 characters."
                                             multiline
                                             rows={25}
                                             onChange={this.handleLongCommentContentChange.bind(this)}
@@ -483,8 +483,8 @@ class GamePageOverview extends Component {
                                             label="You Comment Here..."
                                             fullWidth
                                             multiline
-                                            rowsMax="4"
-                                            rows={10}
+                                            rowsMax="50"
+                                            rows={8}
                                             onChange={this.handleTypeShortComment.bind(this)}
                                             variant="filled"
                                         />
@@ -637,8 +637,8 @@ class GamePageOverview extends Component {
                                             label="Sign in as User/Superuser to leave a comment here."
                                             fullWidth
                                             multiline
-                                            rowsMax="4"
-                                            rows={10}
+                                            rowsMax="50"
+                                            rows={8}
                                             onChange={this.handleTypeShortComment.bind(this)}
                                             variant="filled"
                                             disabled
