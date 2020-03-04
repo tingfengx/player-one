@@ -43,16 +43,25 @@
   ],
   "shortComments": [
     {
+      "username": "Demo User Four",
+      "commentText": "Dark, funny, and faithful.",
+      "best": true
+    },
+
+    {
       "username": "Demo User One",
-      "commentText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit turpis in ex molestie gravida. Praesent vitae eleifend purus. Donec vitae nulla eget nulla euismod iaculis. Mauris quis magna vel odio iaculis volutpat. Integer vel feugiat nisi. Nam semper gravida hendrerit. Integer iaculis in justo non volutpat. Nam vehicula facilisis ante eget consequat. Praesent eu nunc velit. Duis ac porta diam, nec elementum arcu. Donec porttitor enim sed metus varius semper sit amet vel dolor. Cras posuere, nisl sit amet feugiat interdum, purus leo iaculis ipsum, id finibus magna ex quis dui."
+      "commentText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit turpis in ex molestie gravida. Praesent vitae eleifend purus. Donec vitae nulla eget nulla euismod iaculis. Mauris quis magna vel odio iaculis volutpat. Integer vel feugiat nisi. Nam semper gravida hendrerit. Integer iaculis in justo non volutpat. Nam vehicula facilisis ante eget consequat. Praesent eu nunc velit. Duis ac porta diam, nec elementum arcu. Donec porttitor enim sed metus varius semper sit amet vel dolor. Cras posuere, nisl sit amet feugiat interdum, purus leo iaculis ipsum, id finibus magna ex quis dui.",
+      "best": false
     },
     {
       "username": "Demo User Two",
-      "commentText": "Aliquam sagittis tristique augue ac varius. Maecenas ut suscipit justo, non varius nulla. Maecenas imperdiet diam magna, sed elementum orci pellentesque id. Proin urna arcu, ullamcorper pretium ipsum ac, molestie fermentum orci. Phasellus maximus tincidunt tortor, a dapibus leo volutpat imperdiet. Maecenas rhoncus venenatis magna in tempor. Vivamus vel ultrices augue. Donec elementum volutpat enim, ac auctor turpis cursus at."
+      "commentText": "Aliquam sagittis tristique augue ac varius. Maecenas ut suscipit justo, non varius nulla. Maecenas imperdiet diam magna, sed elementum orci pellentesque id. Proin urna arcu, ullamcorper pretium ipsum ac, molestie fermentum orci. Phasellus maximus tincidunt tortor, a dapibus leo volutpat imperdiet. Maecenas rhoncus venenatis magna in tempor. Vivamus vel ultrices augue. Donec elementum volutpat enim, ac auctor turpis cursus at.",
+      "best": false
     },
     {
       "username": "Demo User Three",
-      "commentText": "Etiam semper imperdiet ante at convallis. Phasellus aliquet tortor eu laoreet blandit. Nulla cursus ex in nulla condimentum, eu consectetur ex facilisis. Duis luctus eget felis ut varius. Donec et varius eros. Vestibulum vitae blandit sapien. Integer mollis lorem urna. Nam et nisi augue. Etiam ut placerat nunc. Sed id erat scelerisque, finibus ex sit amet, consectetur ante. Phasellus in lorem a ipsum pellentesque scelerisque. Aenean viverra vitae dui in eleifend. Vivamus blandit sed felis sed fringilla."
+      "commentText": "Etiam semper imperdiet ante at convallis. Phasellus aliquet tortor eu laoreet blandit. Nulla cursus ex in nulla condimentum, eu consectetur ex facilisis. Duis luctus eget felis ut varius. Donec et varius eros. Vestibulum vitae blandit sapien. Integer mollis lorem urna. Nam et nisi augue. Etiam ut placerat nunc. Sed id erat scelerisque, finibus ex sit amet, consectetur ante. Phasellus in lorem a ipsum pellentesque scelerisque. Aenean viverra vitae dui in eleifend. Vivamus blandit sed felis sed fringilla.",
+      "best": false
     }
   ]
 }

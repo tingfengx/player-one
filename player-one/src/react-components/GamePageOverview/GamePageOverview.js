@@ -24,6 +24,12 @@ import ShortComment from '../ShortComment'
 
 const l = console.log;
 
+let bestShort = {};
+for (let i = 0; i < game.shortComments.length; i++){
+    if (game.shortComments[i].best)
+        bestShort = game.shortComments[i];
+}
+
 class GamePageOverview extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +39,8 @@ class GamePageOverview extends Component {
             ],
             longCommentContent: '',
             longCommentTitle: '',
-            shortCommentContent: ''
+            shortCommentContent: '',
+            bestShort: bestShort
         };
         this.game = game;
     }
@@ -288,7 +295,8 @@ class GamePageOverview extends Component {
                     </div>
                 </div>
             );
-        } else if (cookies.cookies.type === 'superuser') {
+        }
+        else if (cookies.cookies.type === 'superuser') {
             return (
                 <div>
                     <div id={"GamePage"}>
@@ -334,6 +342,14 @@ class GamePageOverview extends Component {
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
+                                        </div>
+                                        <div>
+                                            <p className={"bestShortCommentContent"}>
+                                                "{this.state.bestShort.commentText}"
+                                            </p>
+                                            <p className={"bestShortCommentAuthor"}>
+                                                &mdash;{this.state.bestShort.username}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -481,7 +497,8 @@ class GamePageOverview extends Component {
                     </div>
                 </div>
             );
-        } else {
+        }
+        else {
             return (
                 <div>
                     <div id={"GamePage"}>
