@@ -82,8 +82,10 @@ Also, there is one 'selected' comment from the short comments chosen to be displ
 for the game. The username of the user who left the comment is also shown.
 
 Below, is the section for comments. Each of the long comment is inside a expansion
-menu, and anyone can view it by clicking on the title text. What a user can see below varies with the type
-of the user.
+menu, and anyone can view it by clicking on the title text. At the bottom of each of the expanded long coments, there are three buttons, namely `AGREE`, `HUMM, NOPE` and `FUNNY`. Each of the three buttons have a counter associated with them and the number of hits is updated in real time as users click the button. Of course, these are all just dummy hard-coded data and not synchronized with any source of data outside. (**Aside:** these buttons are only available for a user to click once they have logged in. It will be showned disabled by someone who has not logged in.) 
+
+After the long comment section, what a user can see below varies with the type
+of the user:
 - **For Admin:** We think admin should be limited to his/her own job and should not use the admin account for personal 
 opinion, for example, like writing a comment. Hence, unfortunately, the admin's view of the game page 
 is the same as an not-logged-in user's. In particular, the comment input section down below is disabled for
