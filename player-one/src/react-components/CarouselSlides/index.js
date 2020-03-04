@@ -35,7 +35,8 @@ export default class CarouselSlides extends Component {
                     {
                         this.imgs.map(img => (
                             <div key={img}>
-                                <img id={"featuredGamesSlider"} src={img} alt={"Home Page Images"}/>
+                                <a href={"/the_witcher_3_wild_hunt"}><img id={"featuredGamesSlider"} src={img}
+                                                                          alt={"Home Page Images"}/></a>
                             </div>
                         ))
                     }
