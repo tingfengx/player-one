@@ -1,15 +1,13 @@
-import React , {useState} from "react";
+import React from "react";
 
 
 import GameList from "./GameList/GameList";
 import GameForm from "./GameForm/GameForm";
 
-import { addUser} from "../actions/queue";
+import {addUser} from "../actions/queue";
 
 
-
-
-class Queue extends React.Component{
+class Queue extends React.Component {
 
 
     handleChange = (event, newValue) => {
@@ -25,24 +23,24 @@ class Queue extends React.Component{
         Username: "",
         password: "",
         users: [
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "ccc", password: "1111" },
-            { Username: "ddd", password: "22222" },
-            { Username: "111", password: "1111" },
-            { Username: "mmm", password: "22222" },
-            { Username: "hhhhhhhh", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" }
+            {Username: "aaa", password: "1111"},
+            {Username: "bbb", password: "22222"},
+            {Username: "aaa", password: "1111"},
+            {Username: "bbb", password: "22222"},
+            {Username: "aaa", password: "1111"},
+            {Username: "bbb", password: "22222"},
+            {Username: "aaa", password: "1111"},
+            {Username: "bbb", password: "22222"},
+            {Username: "aaa", password: "1111"},
+            {Username: "bbb", password: "22222"},
+            {Username: "ccc", password: "1111"},
+            {Username: "ddd", password: "22222"},
+            {Username: "111", password: "1111"},
+            {Username: "mmm", password: "22222"},
+            {Username: "hhhhhhhh", password: "1111"},
+            {Username: "bbb", password: "22222"},
+            {Username: "aaa", password: "1111"},
+            {Username: "bbb", password: "22222"}
         ]
     };
 
@@ -64,14 +62,12 @@ class Queue extends React.Component{
     };
 
 
-
     // Each section of the Queue now has its own componenet, cleaning up the
     // JSX a lot.
     render() {
 
         return (
             <div className="App">
-
 
 
                 <GameForm

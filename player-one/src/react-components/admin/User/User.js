@@ -3,30 +3,21 @@ import Button from "@material-ui/core/Button";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from '@material-ui/icons/Delete';
-// import { M } from 'mdbreact';
 import TextField from '@material-ui/core/TextField';
 import {removeUser} from "./../actions/queue";
-import {withStyles} from '@material-ui/core';
-// import TextField from '@material-ui/core/TextField';
+// import {withStyles} from '@material-ui/core';
 import "./User.css";
 
 
-class PasswordInput extends React.Component {
-    render() {
-        return <TextField type="password" {...this.props} />;
-    }
-}
+// class PasswordInput extends React.Component {
+//     render() {
+//         return <TextField type="password" {...this.props} />;
+//     }
+// }
 
-const styles = theme => ({});
+// const styles = theme => ({});
 
-// PasswordInput.propTypes = {
-//     // classes: PropTypes.object.isRequired,
-//     // onChange: PropTypes.func.isRequired,
-//     // value: PropTypes.func.isRequired,
-//     value: PropTypes.string
-// };
-
-PasswordInput = withStyles(styles)(PasswordInput);
+// PasswordInput = withStyles(styles)(PasswordInput);
 
 class User extends React.Component {
 
@@ -42,13 +33,11 @@ class User extends React.Component {
     }
 
 
-
-
     handleChange(event) {
         const tableRow = event.target.parentElement.parentElement.parentElement.parentElement;
         const nameToChangePassword = tableRow.firstElementChild.innerHTML;
         console.log(nameToChangePassword);
-        this.setState({[nameToChangePassword] : event.target.value});
+        this.setState({[nameToChangePassword]: event.target.value});
         console.log(this.state)
     }
 
@@ -56,24 +45,24 @@ class User extends React.Component {
         const tableRow = event.target.parentElement.parentElement.parentElement;
         const nameToChangePassword = tableRow.firstElementChild.innerHTML;
         console.log(nameToChangePassword);
-            alert("Requires server call! Changing user "
-                + nameToChangePassword + "'s password to "
-                + this.state[nameToChangePassword])
+        alert("Requires server call! Changing user "
+            + nameToChangePassword + "'s password to "
+            + this.state[nameToChangePassword])
     }
 
 
     render() {
 
-        const { user, queueComponent, password } = this.props;
+        const {user, queueComponent, password} = this.props;
 
         return (
             <TableRow className="user" key={user.Username}>
 
                 <TableCell component="th" scope="row" onClick={this.handleEvent}>
-                {user.Username}
+                    {user.Username}
 
                 </TableCell>
-                <TableCell component="th" scope="row" >
+                <TableCell component="th" scope="row">
 
                     <TextField
                         variant="outlined"
@@ -89,11 +78,10 @@ class User extends React.Component {
                 </TableCell>
 
 
-
                 <TableCell component="th" scope="row">
                     <Button
                         variant="outlined"
-                        startIcon={<DeleteIcon />}
+                        startIcon={<DeleteIcon/>}
                         onClick={
                             removeUser.bind(this, queueComponent, user, password)
                         }
