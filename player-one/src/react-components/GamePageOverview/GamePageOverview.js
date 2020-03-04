@@ -21,7 +21,6 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import {Card, List} from "@material-ui/core";
 import ShortComment from '../ShortComment'
-import BottomInfo from "../BottomInfo";
 
 const l = console.log;
 
@@ -206,10 +205,10 @@ class GamePageOverview extends Component {
                                             id="panel1a-header"
                                             className={"ExpansionPanel"}
                                         >
-                                            <div className={"expansion"}></div>
-                                            <strong className={"longCommentTitle"}>
+                                            <div className={"expansion"}> </div>
+                                            <p className={"longCommentTitle"}>
                                                 {longComment.title}
-                                            </strong>
+                                            </p>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
                                             <div className={"LongCommentContent"}>
@@ -351,7 +350,7 @@ class GamePageOverview extends Component {
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
                                         >
-                                            <div className={"expansion"}></div>
+                                            <div className={"expansion"}> </div>
                                             <p className={"longCommentTitle"}>
                                                 {longComment.title}
                                             </p>
@@ -396,7 +395,7 @@ class GamePageOverview extends Component {
                                     aria-controls="panel1a-content"
                                     id="panel1a-header"
                                 >
-                                    <div className={"expansion"}></div>
+                                    <div className={"expansion"}> </div>
                                     <p className={"longCommentRequest"}>
                                         want to share your review?
                                     </p>
@@ -544,10 +543,10 @@ class GamePageOverview extends Component {
                                             aria-controls="panel1a-content"
                                             id="panel1a-header"
                                         >
-                                            <div className={"expansion"}></div>
-                                            <strong className={"longCommentTitle"}>
+                                            <div className={"expansion"}> </div>
+                                            <p className={"longCommentTitle"}>
                                                 {longComment.title}
-                                            </strong>
+                                            </p>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
                                             <div className={"LongCommentContent"}>
