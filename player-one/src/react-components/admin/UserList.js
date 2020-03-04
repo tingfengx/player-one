@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {makeStyles} from '@material-ui/core/styles';
+// import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,24 +15,23 @@ import {uid} from "react-uid";
 
 import "./UserList.css"
 
-
-const useStyles = makeStyles({
-    root: {
-        width: '80%',
-        textAlign: 'center',
-        marginLeft:'5%',
-        marginTop: '20px',
-
-    },
-    container: {
-        maxHeight: 440,
-    },
-});
-
+//
+// const useStyles = makeStyles({
+//     root: {
+//         width: '80%',
+//         textAlign: 'center',
+//         marginLeft: '5%',
+//         marginTop: '20px',
+//
+//     },
+//     container: {
+//         maxHeight: 440,
+//     },
+// });
 
 
 export default function UserList(props) {
-    const classes = useStyles();
+    // const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -46,12 +45,7 @@ export default function UserList(props) {
     };
 
 
-
-
-
-
-
-    const {users,queueComponent,password} = props;
+    const {users, queueComponent, password} = props;
     console.log("user " + users);
 
     return (
@@ -62,7 +56,7 @@ export default function UserList(props) {
                         <TableCell>
                             User Name
                         </TableCell>
-                        <TableCell >
+                        <TableCell>
 
                             password
                         </TableCell>
@@ -74,7 +68,7 @@ export default function UserList(props) {
                 </TableHead>
                 <TableBody>
                     {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
-                    // {users.map(user => (
+                        // {users.map(user => (
                         <User
                             key={uid(
                                 user

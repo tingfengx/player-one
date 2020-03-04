@@ -3,7 +3,7 @@
 const log = console.log;
 
 // Function to add a student, needs to be exported
-export const addUser= queue => {
+export const addUser = queue => {
     log("adding Manager");
     log("queue " + queue.state.__proto__);
     const userList = queue.state.users;
@@ -19,7 +19,7 @@ export const addUser= queue => {
 
 
     queue.setState({
-        users:userList
+        users: userList
     });
 };
 
@@ -29,17 +29,16 @@ export const removeUser = (queue, user) => {
     });
 
     queue.setState({
-       users: filteredUsers
+        users: filteredUsers
     });
 };
-
 
 
 export const updateUser = (queue, user) => {
 
     // filters out the student we don't want.
     const targetUser = queue.state.users.filter(s => {
-    // const targetUser = queue.state.users.filter(s => {
+        // const targetUser = queue.state.users.filter(s => {
         return s === user;
     });
 
@@ -50,12 +49,12 @@ export const updateUser = (queue, user) => {
     });
 };
 
-export const handleEvent = (event, queue)=> {
+export const handleEvent = (event, queue) => {
     let target = event.target;
     let value = target.value;
     const name = target.name;
     console.log("target" + target);
-    let selectedName = target.parentElement.firstElementChild;
+    // let selectedName = target.parentElement.firstElementChild;
     let newText = document.createElement("Input");
     newText.id = "inputId";
 
