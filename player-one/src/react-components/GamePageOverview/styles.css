@@ -9,8 +9,8 @@
     /*background-size: cover;*/
 }
 
-#MuiExpansionPanelDetails-root{
-    display: block;
+.MuiExpansionPanelDetails-root{
+    display: block !important;
 }
 
 #GameOverviewBlockBackground{
