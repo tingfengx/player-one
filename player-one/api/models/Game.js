@@ -2,16 +2,11 @@
 const mongoose = require('mongoose')
 
 const Game = mongoose.model('Game', {
-    gameNname: {
+    gameName: {
         type: String,
         required: true,
         minlegth: 1,
         trim: true
-    },
-    year: {
-        type: Number,
-        required: true,
-        // default: 1
     },
     gamPictures: {
         type: [String]
