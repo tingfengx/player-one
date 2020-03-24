@@ -2,8 +2,8 @@
 
 const log = console.log;
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const { Game } = require('../models/Game')
 const { LongComment } = require('../models/LongComment')
