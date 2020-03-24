@@ -30,6 +30,10 @@ const Comment = mongoose.model('Comment', {
     thumbDown: {
         type: Number,
         required: true
+    },
+    funny: {
+        type: Number,
+        required: true
     }
 })
 

@@ -15,58 +15,85 @@ const bodyParser = require('body-parser')
 // to validate object IDs
 const { ObjectID } = require('mongodb')
 
-// TO BE DISCUSSED WITH TEAMMATES
-// // root: get all games
-// router.get('/', function(req, res) {
-//     Games.find().then((games) => {
-//         res.send({ games })
-//     }, (error) => {
-//         res.status(500).send(error) // server error
-//     })
-// });
+// root: get all games
+// Expected Output: {hottestGamesForGenre: [[<5 games per Genre>]],
+//                  hottestGames: [<5 hottest games>],
+//                  allGames: [<all games with only name and _id>]}
+router.get('/', function(req, res) {
+    let allGames;
+    // Find all games
+    Games.find().then((games) => {
+        allGames = games;
+    }, (error) => {
+        res.status(500).send(error) // server error
+    });
 
+    // Sort by like rate
+    allGames.sort(function(a, b) {
+        return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
+    });
+    let hottest5 = allGames.filter(i => i.thumbUp + i.thumbDown >= 100);
+    // Ensure at least 5 elements in hottest5
+    let index = 0;
+    while(hottest5.length < 5){
+        const thisGame = allGames[index];
+        if (thisGame.thumbUp + thisGame.thumbDown < 100)
+            hottest5.push(thisGame);
+        index += 1;
+    }
+
+    // Sort by Genre
+    allGames.sort(function(a, b) { return a.genre.localeCompare(b.genre); });
+    let gamesByGenre = [];
+    let lastGenre = allGames[0].genre;
+
+    allGames.forEach(function (a){
+        if (a.genre !== lastGenre){
+            index += 1;
+            gamesByGenre[index] = [a];
+            lastGenre = a.genre;
+        }
+        else {
+            gamesByGenre[index].push(a);
+        }
+    });
+
+    let hottest5ForAllGenre = [];
+    gamesByGenre.forEach(function (list){
+        list.sort(function (a, b) {
+            return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
+        });
+        let hottest5PerGenre = list.filter(i => i.thumbUp + i.thumbDown >= 100);
+        // Ensure at least 5 elements in hottest5PerGenre
+        index = 0;
+        while(hottest5PerGenre.length < 5){
+            const thisGame = list[index];
+            if (thisGame.thumbUp + thisGame.thumbDown < 100)
+                hottest5PerGenre.push(thisGame);
+            index += 1;
+        }
+        hottest5ForAllGenre.push(hottest5PerGenre.slice(0, 5));
+    });
+
+    let allGamesOnlyNameId = [];
+    for (let i = 0, len = allGames.length; i < len; i++) {
+        allGamesOnlyNameId.push({_id: allGames[i]._id, gameName: allGames[i].gameName})
+    }
+
+    // Make Sure only 5 games for hottest5 and hottest5PerGenre
+    res.send({hottestGamesForGenre: hottest5ForAllGenre,
+        hottestGames: hottest5.slice(0, 5),
+        allGames: allGamesOnlyNameId.slice(0, 5)});
+});
 
 // Game Page GET: find specific game and corresponding comments
 // Expected Output: {longComments: <long Comments of this game>,
 //                  shortComments: <short Comments of this game>,
 //                  game: <this game object>}
 router.get('/games/:game_id', function(req, res){
-    let thisGame;
-
     const id = req.params.game_id;
-    // Validate id
-    if (!ObjectID.isValid(id)) {
-        // 404 not found
-        res.status(404).send();
-        return;
-    }
-
-    // Find game
-    Game.findById(id).then((game) => {
-        if (!game) {
-            // Can't find the game
-            res.status(404).send()
-            return;
-        } else {
-            // Choose not wrap by another object {game} this time
-            thisGame = game;
-        }
-    }).catch((error) => {
-        // 500 Server error
-        res.status(500).send()
-        return;
-    });
-
-    let longComments = [];
-    let shortComments = [];
-    LongComment.map((i) => {
-        if (i.gameCommented === thisGame.gameName)
-            longComments.push(i);
-    });
-    Comment.map((i) => {
-        if (i.gameCommented === thisGame.gameName)
-            shortComments.push(i);
-    });
+    let thisGame = findGame(id);
+    let {longComments, shortComments} = findComments(thisGame.gameName);
 
     res.send({longComments: longComments,
             shortComments: shortComments,
@@ -79,43 +106,12 @@ router.get('/games/:game_id', function(req, res){
 //                  shortComments: [<short Comments of this game>],
 //                  game: <this game object>}
 router.delete('/<Game Manager Page>', function(req, res){
-    let thisGame;
 
     const id = req.body.id;
-    // Validate id
-    if (!ObjectID.isValid(id)) {
-        // 404 not found
-        res.status(404).send();
-        return;
-    }
-
-    // Find game
-    Game.findById(id).then((game) => {
-        if (!game) {
-            // Can't find the game
-            res.status(404).send()
-            return;
-        } else {
-            // Choose not wrap by another object {game} this time
-            thisGame = game;
-        }
-    }).catch((error) => {
-        // 500 Server error
-        res.status(500).send()
-        return;
-    });
+    let thisGame = findGame(id);
 
     // Find (send these for debug perpose)
-    let thisLongComments = [];
-    let thisShortComments = [];
-    LongComment.map((i) => {
-        if (i.gameCommented === thisGame.gameName)
-            thisLongComments.push(i);
-    });
-    Comment.map((i) => {
-        if (i.gameCommented === thisGame.gameName)
-            thisShortComments.push(i);
-    });
+    let {thisLongComments, thisShortComments} = findComments(thisGame.gameName);
 
     // Delete
     Game.deleteOne(
@@ -168,101 +164,157 @@ router.delete('/<Game Manager Page>', function(req, res){
 router.delete('/games/:game_id/', function(req, res){
     let deletedLong = {};
     let deletedShort = {};
-    let thisGame;
 
-    const id = req.params.d;
+    const id = req.params.id;
     const game_id = req.params.game_id;
     const isLongComment = req.body.isLongComment;
 
+    let thisGame = findGame(game_id);
     // Validate id
     if (!ObjectID.isValid(id)) {
         // 404 not found
         res.status(404).send();
         return;
     }
+
+    let thisCommentModel = isLongComment ? LongComment : Comment;
+    // Delete comment
+    // Find it(for debug purpose)
+    thisCommentModel.findById(id).then((comment) => {
+        if (!comment) {
+            res.status(404).send();
+        }
+        else{
+            if (isLongComment)
+                deletedLong = comment;
+            else
+                deletedShort = comment;
+        }
+    }).catch((error) => {
+        // 500 Server error
+        res.status(500).send();
+    });
+    // Delete it
+    thisCommentModel.deleteOne(
+        {_id: id},
+        function(err) {
+            if (err){
+                res.send(err);
+            }
+        }
+    );
+    // Save LongComment
+    thisCommentModel.save().then(
+        (result) => {res.send({longComments: deletedLong,
+                               shortComments: deletedShort,
+                               game: thisGame})},
+        (error) => {
+            res.status(400).send(error);}
+    );
+});
+
+// Expected req.body: {id: <Game id>,
+//                     isGame: <0: game, 1: long comment, 2: short comment>,
+//                     thumbUp: <number to be added to like>,
+//                     thumbDown: <number to be added to dislike>,
+//                     funny: <number to be added to funny>}
+// Game Page PATCH: respond to a thumb up/thumb down/funny
+// Expected Output: {beenPatched: <the object been liked/disliked/thought funny>,
+//                  game: <this game object>}
+router.patch('/games/:game_id/', function(req, res) {
+    const game_id = req.params.game_id;
+    const id = req.body.id;
+    const isGame = req.body.isGame;
+    let thisGame = findGame(game_id);
+    let toBeSaved = {};
+
+    // Validate id
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send();
+        return;
+    }
+
+    if (isGame === 0){
+        thisGame.thumbUp += req.body.thumbUp;
+        thisGame.thumbDown += req.body.thumbDown;
+        toBeSaved = thisGame;
+    }
+    else if (isGame === 1){
+        LongComment.findById(id).then((thisLongComment) => {
+            if (!thisLongComment) {
+                res.status(404).send();
+            }
+            else{
+                thisLongComment.thumbUp += req.body.thumbUp;
+                thisLongComment.thumbDown += req.body.thumbDown;
+                thisLongComment.funny += req.body.funny;
+                toBeSaved = thisLongComment;
+            }
+        }).catch((error) => {
+            res.status(500).send();
+        });
+    }
+    else{
+        Comment.findById(id).then((thisShortComment) => {
+            if (!thisShortComment) {
+                res.status(404).send();
+            }
+            else{
+                thisShortComment.thumbUp += req.body.thumbUp;
+                thisShortComment.thumbDown += req.body.thumbDown;
+                thisShortComment.funny += req.body.funny;
+                toBeSaved = thisShortComment;
+            }
+        }).catch((error) => {
+            res.status(500).send();
+        });
+    }
+
+    toBeSaved.save().then(
+        (result) => {res.send({beenPatched: result,
+                               game: thisGame})},
+        (error) => {res.status(400).send(error)}
+    );
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+
+// Helper funciton - find the game
+function findGame(game_id) {
+    // Validate id
     if (!ObjectID.isValid(game_id)) {
         // 404 not found
         res.status(404).send();
         return;
     }
 
-    // Find game to ensure
+    // Find game
     Game.findById(game_id).then((game) => {
         if (!game) {
             // Can't find the game
-            res.status(404).send()
-            return;
+            res.status(404).send();
         }
         else{
-            thisGame = game;
+            return game;
         }
     }).catch((error) => {
         // 500 Server error
-        res.status(500).send()
-        return;
+        res.status(500).send();
     });
+}
 
-    // Delete comment
-    if (isLongComment){
-        // Find it(for debug purpose)
-        LongComment.findById(id).then((comment) => {
-            if (!comment) {
-                res.status(404).send()
-                return;
-            }
-            else{
-                deletedLong = comment;
-            }
-        }).catch((error) => {
-            // 500 Server error
-            res.status(500).send()
-            return;
-        });
-        // Delete it
-        LongComment.deleteOne(
-            {_id: id},
-            function(err) {
-                if (err)
-                    res.send(err);
-            }
-        );
-        // Save LongComment
-        LongComment.save().then(
-            (result) => {},
-            (error) => {res.status(400).send(error)}
-        );
-    }
-    else{
-        // Find it(for debug purpose)
-        Comment.findById(id).then((comment) => {
-            if (!comment) {
-                res.status(404).send()
-                return;
-            }
-            else{
-                deletedShort = comment;
-            }
-        }).catch((error) => {
-            // 500 Server error
-            res.status(500).send()
-            return;
-        });
-        // Delete it
-        Comment.deleteOne(
-            {_id: id},
-            function(err) {
-                if (err)
-                    res.send(err);
-            }
-        );
-        // Save Comment
-        Comment.save().then(
-            (result) => {},
-            (error) => {res.status(400).send(error)}
-        );
-    }
-
-    res.send({longComments: deletedLong,
-        shortComments: deletedShort,
-        game: thisGame})
-});
+function findComments(gameName){
+    let longComments = [];
+    let shortComments = [];
+    LongComment.map((i) => {
+        if (i.gameCommented === gameName)
+            longComments.push(i);
+    });
+    Comment.map((i) => {
+        if (i.gameCommented === gameName)
+            shortComments.push(i);
+    });
+    return {longComments, shortComments};
+}

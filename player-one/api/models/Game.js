@@ -30,22 +30,14 @@ const Game = mongoose.model('Game', new mongoose.schema({
         type: String,
         required: true
     },
-    // how many people interested in this game
-    heat: {
+    thumbUp: {
         type: Number,
-        default: 0,
         required: true
     },
-    likes: {
+    thumbDown: {
         type: Number,
-        default: 0,
         required: true
     },
-    dislikes: {
-        type: Number,
-        default: 0,
-        required: true
-    }
 }));
 
 module.exports = { Game }
