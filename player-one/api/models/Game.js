@@ -1,7 +1,7 @@
 /* Game mongoose model */
 const mongoose = require('mongoose')
 
-const Game = mongoose.model('Game', {
+const Game = mongoose.model('Game', new mongoose.schema({
     gameName: {
         type: String,
         required: true,
@@ -14,7 +14,7 @@ const Game = mongoose.model('Game', {
     publisher: {
         type: String
     },
-    maker: {
+    developer: {
         type: String
     },
     introductionText: {
@@ -29,7 +29,23 @@ const Game = mongoose.model('Game', {
     genre: {
         type: String,
         required: true
+    },
+    // how many people interested in this game
+    heat: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    likes: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    dislikes: {
+        type: Number,
+        default: 0,
+        required: true
     }
-})
+}));
 
 module.exports = { Game }
