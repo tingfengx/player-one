@@ -11,6 +11,7 @@ import DislikeIcon from '@material-ui/icons/ThumbDown';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import WriteIcon from '@material-ui/icons/BorderColor'
 import FunnyIcon from '@material-ui/icons/VideogameAsset';
+import DeleteIcon from '@material-ui/icons/Delete';
 import EmotionIcon from '@material-ui/icons/EmojiSymbols'
 import Button from '@material-ui/core/Button'
 import game from "./the_withcher_3_wild_hunt"
@@ -47,6 +48,28 @@ class GamePageOverview extends Component {
         this.game = game;
     }
 
+    handleLongCommentDelete(longComment) {
+        const index = this.game.longComments.indexOf(longComment);
+        if (index > -1) {
+            this.game.longComments.splice(index, 1);
+            this.forceUpdate();
+            return;
+        }
+        alert("Long comment not found!");
+        return;
+    }
+
+    handleShortCommentDelete(shortComment) {
+        const index = this.game.shortComments.indexOf(shortComment);
+        if (index > -1) {
+            this.game.shortComments.splice(index, 1);
+            this.forceUpdate();
+            return;
+        }
+        alert("Short comment not found!");
+        return;
+    }
+
     handleLike(longComment) {
         longComment.likeNum += 1;
         this.forceUpdate();
@@ -68,7 +91,39 @@ class GamePageOverview extends Component {
         // l(this.state.shortCommentContent)
     }
 
+    handleEditShortComment(username) {
+        for (let i = 0; i < this.game.shortComments.length; i++) {
+            if (this.game.shortComments[i].username === username) {
+                if (this.state.shortCommentContent.length <= 30) {
+                    alert("Please try to be informative! Share your thoughts! Enter more than 30 characters.");
+                    return;
+                }
+                if (this.state.shortCommentContent.length >= 500) {
+                    alert("Sorry, your comment was too long. Please try to be brief... (limit is 500 characters)");
+                    return;
+                }
+                if (this.state.shortCommentContent === this.game.shortComments[i].commentText){
+                    alert("Edited review should not have the same content!");
+                    return;
+                }
+                this.game.shortComments[i].commentText = this.state.shortCommentContent;
+                this.forceUpdate();
+                return;
+            }
+            else {
+                alert('Review not found!');
+                return;
+            }
+        }
+    }
+
     handleAddShortComment(username) {
+        for (let i = 0; i < this.game.shortComments.length; i++) {
+            if (this.game.shortComments[i].username === username) {
+                alert("Every player can only submit ONE review per game!");
+                return;
+            }
+        }
         if (this.state.shortCommentContent.length <= 30) {
             alert("Please try to be informative! Share your thoughts! Enter more than 30 characters.");
             return;
@@ -132,7 +187,11 @@ class GamePageOverview extends Component {
     }
 
     render() {
+        let hasShortComment = false;
         const {cookies} = this.props;
+        for (let i = 0; i < this.game.shortComments.length; i++){
+            if (this.game.shortComments[i].username === cookies.cookies.username)
+                hasShortComment = true;}
         const settings = {
             customPaging: (i) => {
                 return (
@@ -265,11 +324,11 @@ class GamePageOverview extends Component {
                                     <div className={"ShortCommentList"}>
                                         <List>
                                             {
-                                                this.game.shortComments.map(i =>
-                                                    (<ShortComment
+                                                this.game.shortComments.map(i => {
+                                                    return <ShortComment
                                                         key={uid(i)}
                                                         username={i.username}
-                                                        commentText={i.commentText}/>))
+                                                        commentText={i.commentText}/>})
                                             }
                                         </List>
                                     </div>
@@ -277,10 +336,12 @@ class GamePageOverview extends Component {
                                 <Card className={"NewCommentCard"}>
                                     <div className={"NewCommentContainer"}>
                                         <p className={"YourCommentText"}>
-                                            Leave Your Comment Here:
+                                            {hasShortComment ?
+                                                "You Can Edit Your From Comment Here" : "Leave Your Comment Here:"}
                                         </p>
                                         <TextField
-                                            label="You Comment Here..."
+                                            label={hasShortComment ?
+                                                 "Edit original Comment here..." : "You Comment Here..."}
                                             fullWidth
                                             multiline
                                             rowsMax="50"
@@ -296,7 +357,10 @@ class GamePageOverview extends Component {
                                             variant={"outlined"}
                                             color={"secondary"}
                                             startIcon={<EmotionIcon/>}
-                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
+                                            onClick={()=>{hasShortComment ?
+                                                this.handleEditShortComment.bind(this)(cookies.cookies.username):
+                                                this.handleAddShortComment.bind(this)(cookies.cookies.username)
+                                            }}>
                                             Submit
                                         </Button>
                                     </div>
@@ -503,6 +567,149 @@ class GamePageOverview extends Component {
                                             onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
                                             Submit
                                         </Button>
+                                    </div>
+                                </Card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else if (cookies.cookies.type === 'admin') {
+            return (
+                <div>
+                    <div id={"GamePage"}>
+                        <div id={"GameOverviewBlockBackground"}>
+                            <div id={"GameOverviewBlock"}>
+                                <h2 id={"GameName"}> The Witcher 3&reg; : Wild Hunt</h2>
+                                <div id={"SliderBlock"}>
+                                    <Slider {...settings}>
+                                        {
+                                            this.state.imgs.map(img => (
+                                                <div key={uid(img)}>
+                                                    <img id={"GameImage"} src={img} alt={"Game Images"}/>
+                                                </div>
+                                            ))
+                                        }
+                                    </Slider>
+                                </div>
+                                <div id={"GameInfo"}>
+                                    <div id={"GameDescription"}>
+                                        <Typography variant={'h6'}>
+                                            {this.game.description}
+                                        </Typography>
+                                    </div>
+                                    <div id={"GameReviewsBlock"}>
+                                        <div className={"GameReviewsRow"}>
+                                            <div className={"GameReviews"}>Recent Reviews:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.recentReview}</div>
+                                        </div>
+                                        <div className={"GameReviewsRow"}>
+                                            <div className={"GameReviews"}>All Reviews:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.allReview}</div>
+                                        </div>
+                                        <div className={"GameReviewsRow"}>
+                                            <div className={"GameReviews"}>
+                                                <p>Release date: {this.game.releaseDate}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className={"GameReviewsRow"}>
+                                            <div className={"GameReviews"}>Developer:</div>
+                                            <div className={"GameCompany"}>{this.game.developer}</div>
+                                        </div>
+                                        <div className={"GameReviewsRow"}>
+                                            <div className={"GameReviews"}>Publisher:</div>
+                                            <div className={"GameCompany"}>{this.game.publisher}</div>
+                                        </div>
+                                        <div>
+                                            <p className={"bestShortCommentContent"}>
+                                                "{this.state.bestShort.commentText}"
+                                            </p>
+                                            <p className={"bestShortCommentAuthor"}>
+                                                &mdash;{this.state.bestShort.username}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id={"ReviewBar"}>
+                            {
+                                this.game.longComments.map(longComment => (
+                                    <ExpansionPanel key={uid(longComment)}>
+                                        <ExpansionPanelSummary
+                                            expandIcon={<ExpandMoreIcon/>}
+                                            aria-controls="panel1a-content"
+                                            id="panel1a-header"
+                                        >
+                                            <div className={"expansion"}> </div>
+                                            <p className={"longCommentTitle"}>
+                                                {longComment.title}
+                                            </p>
+                                            <Button
+                                                onClick={this.handleLongCommentDelete.bind(this, longComment)}
+                                                aria-label="delete"
+                                                startIcon={<DeleteIcon/>}> Delete
+                                            </Button>
+                                        </ExpansionPanelSummary>
+                                        <ExpansionPanelDetails>
+                                            <div className={"LongCommentContent"}>
+                                                {
+                                                    longComment.content.map(i => (
+                                                        <p key={uid(i)}>{i}</p>
+                                                    ))
+                                                }
+                                                <p>By {longComment.author}</p>
+                                                <div className={"LikeButtons"}>
+                                                    <Button
+                                                        disabled
+                                                        onClick={this.handleLike.bind(this, longComment)}
+                                                        color="primary"
+                                                        aria-label="like"
+                                                        startIcon={<LikeIcon/>}
+                                                    > Agree {longComment.likeNum}
+                                                    </Button>
+                                                    <Button
+                                                        disabled
+                                                        onClick={this.handleDislike.bind(this, longComment)}
+                                                        aria-label="dislike"
+                                                        startIcon={<DislikeIcon/>}
+                                                    > Hmm, Nope {longComment.dislikeNum}
+                                                    </Button>
+                                                    <Button
+                                                        disabled
+                                                        onClick={this.handleFunny.bind(this, longComment)}
+                                                        color="secondary"
+                                                        aria-label="funny"
+                                                        startIcon={<FunnyIcon/>}
+                                                    > Funny! {longComment.funnyNum}
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </ExpansionPanelDetails>
+                                    </ExpansionPanel>
+                                ))
+                            }
+                            <div className={"CommentBar"}>
+                                <Card className={"adminExistingComments"}>
+                                    <div className={"ShortCommentList"}>
+                                        <List>
+                                            {
+                                                this.game.shortComments.map(i =>
+                                                    (<div key={uid(i)}>
+                                                        <ShortComment
+                                                            username={i.username}
+                                                            commentText={i.commentText}/>
+                                                        <Button
+                                                            onClick={this.handleShortCommentDelete.bind(this, i)}
+                                                            aria-label="delete"
+                                                            startIcon={<DeleteIcon/>}> Delete
+                                                        </Button>
+                                                    </div>))
+                                            }
+                                        </List>
                                     </div>
                                 </Card>
                             </div>
