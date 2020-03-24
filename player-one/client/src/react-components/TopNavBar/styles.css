@@ -73,3 +73,7 @@ body {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.namePaddingRight {
+    width: 4%;
+}

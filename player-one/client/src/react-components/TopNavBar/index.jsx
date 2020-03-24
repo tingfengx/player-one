@@ -6,8 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
+import SearchBar from "../SearchBar";
 import Typography from "@material-ui/core/Typography";
 
 import "./styles.css";
@@ -77,11 +76,9 @@ export default function TopNavBar(props) {
                             </div>
                         ))}
                     </div>
-
+                    <SearchBar/>
                     <Typography>
-                        <IconButton>
-                            <SearchIcon/>
-                        </IconButton>
+
                         <Button variant="outlined" size="large" onClick={handleLogin}>
                             Sign in
                         </Button>
@@ -127,11 +124,9 @@ export default function TopNavBar(props) {
                                 </div>
                             ))}
                         </div>
-
+                        <SearchBar/>
                         <div>
-                            <IconButton>
-                                <SearchIcon/>
-                            </IconButton>
+
                             <div className={"dropdown"}>
                                 <Button className={"dropbtn"}>{cookies.username}</Button>
                                 <div className={"dropdown-content"}>
@@ -139,6 +134,8 @@ export default function TopNavBar(props) {
                                     <a href={"/"} onClick={handleSignOut}>Sign Out</a>
                                 </div>
                             </div>
+                        </div>
+                        <div className={"namePaddingRight"}>
                         </div>
                     </Toolbar>
                 </React.Fragment>
@@ -177,11 +174,8 @@ export default function TopNavBar(props) {
                                 </div>
                             ))}
                         </div>
-
+                        <SearchBar/>
                         <div>
-                            <IconButton>
-                                <SearchIcon/>
-                            </IconButton>
                             <div className={"dropdown"}>
                                 <Button className={"dropbtn"}>{cookies.username}</Button>
                                 <div className={"dropdown-content"}>
@@ -189,6 +183,8 @@ export default function TopNavBar(props) {
                                     <a href={"/"} onClick={handleSignOut}>Sign Out</a>
                                 </div>
                             </div>
+                        </div>
+                        <div className={"namePaddingRight"}>
                         </div>
                     </Toolbar>
                 </React.Fragment>
