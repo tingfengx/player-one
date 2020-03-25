@@ -63,6 +63,50 @@ UserSchema.pre('save', function(next) {
 	}
 })
 
+// hash password when updating password
+UserSchema.pre("findOneAndUpdate", function(next) {
+    const password = this.getUpdate().$set.password;
+    if (!password) {
+        return next();
+    }
+    try {
+        bcrypt.genSalt(10, (err, salt) => {
+			bcrypt.hash(password, salt, (err, hash) => {
+				this.getUpdate().$set.password = hash;
+				next()
+			})
+		})
+        // const salt = Bcrypt.genSaltSync();
+        // const hash = Bcrypt.hashSync(password, salt);
+        // this.getUpdate().$set.password = hash;
+        // next();
+    } catch (error) {
+        return next(error);
+    }
+});
+
+// get user by username
+UserSchema.statics.findByUsername = function(username) {
+	const User = this // binds this to the User model
+
+	// First find the user by their username
+	return User.findOne({ username: username }).then((user) => {
+		if (!user) {
+			return Promise.reject()  // a rejected promise
+		} else {
+            return Promise.resolve(user)
+        }
+
+		// return new Promise((resolve, reject) => {
+        //     if (user) {
+        //         resolve(user)
+        //     } else {
+        //         reject()
+        //     }
+		// })
+	})
+}
+
 // get user by username and password when login
 UserSchema.statics.findByUsernamePassword = function(username, password) {
 	const User = this // binds this to the User model
