@@ -6,15 +6,15 @@ import './styles.css'
 import Typography from "@material-ui/core/Typography";
 
 export default function (props) {
-    const {username, commentText} = props;
+    const {username, commentBody} = props;
 
     return (
         <div>
             <ListItem alignItems="flex-start">
                 <ListItemText
                     primary={
-                        <div className={"CommentTextContainer"}>
-                            {commentText}
+                        <div className={"commentBodyContainer"}>
+                            {commentBody}
                         </div>
                     }
                     secondary={

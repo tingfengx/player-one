@@ -6,6 +6,10 @@ const LongComment = mongoose.model('LongComment', {
         type: String,
         required: true
     },
+    title: {
+        type: String,
+        required: true
+    },
     time: {
         type: Date,
         default: Date.now,
