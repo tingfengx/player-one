@@ -22,7 +22,7 @@ const { ObjectID } = require('mongodb')
 router.get('/', function(req, res) {
     let allGames;
     // Find all games
-    Games.find().then((games) => {
+    Game.find().then((games) => {
         allGames = games;
     }, (error) => {
         res.status(500).send(error) // server error
@@ -318,3 +318,5 @@ function findComments(gameName){
     });
     return {longComments, shortComments};
 }
+
+module.exports = router;
