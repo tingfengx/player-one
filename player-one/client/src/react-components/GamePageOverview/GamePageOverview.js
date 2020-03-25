@@ -23,7 +23,7 @@ import {uid} from 'react-uid'
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import {Card, List} from "@material-ui/core";
-import ShortComment from '../ShortComment'
+import ShortComment from '../ShortComment';
 
 const l = console.log;
 
@@ -70,18 +70,18 @@ class GamePageOverview extends Component {
         return;
     }
 
-    handleLike(longComment) {
-        longComment.likeNum += 1;
+    handleThumbUp(Comment) {
+        Comment.thumbUp += 1;
         this.forceUpdate();
     }
 
-    handleDislike(longComment) {
-        longComment.dislikeNum += 1;
+    handleThumbDown(Comment) {
+        Comment.thumbDown += 1;
         this.forceUpdate();
     }
 
-    handleFunny(longComment) {
-        longComment.funnyNum += 1;
+    handleFunny(Comment) {
+        Comment.funny += 1;
         this.forceUpdate();
     }
 
@@ -93,7 +93,7 @@ class GamePageOverview extends Component {
 
     handleEditShortComment(username) {
         for (let i = 0; i < this.game.shortComments.length; i++) {
-            if (this.game.shortComments[i].username === username) {
+            if (this.game.shortComments[i].commenter === username) {
                 if (this.state.shortCommentContent.length <= 30) {
                     alert("Please try to be informative! Share your thoughts! Enter more than 30 characters.");
                     return;
@@ -102,11 +102,14 @@ class GamePageOverview extends Component {
                     alert("Sorry, your comment was too long. Please try to be brief... (limit is 500 characters)");
                     return;
                 }
-                if (this.state.shortCommentContent === this.game.shortComments[i].commentText){
+                if (this.state.shortCommentContent === this.game.shortComments[i].commentBody){
                     alert("Edited review should not have the same content!");
                     return;
                 }
-                this.game.shortComments[i].commentText = this.state.shortCommentContent;
+                this.game.shortComments[i].commentBody = this.state.shortCommentContent;
+                this.game.shortComments[i].thumbUp = 0;
+                this.game.shortComments[i].thumbDown = 0;
+                this.game.shortComments[i].funny = 0;
                 this.forceUpdate();
                 return;
             }
@@ -119,7 +122,7 @@ class GamePageOverview extends Component {
 
     handleAddShortComment(username) {
         for (let i = 0; i < this.game.shortComments.length; i++) {
-            if (this.game.shortComments[i].username === username) {
+            if (this.game.shortComments[i].commenter === username) {
                 alert("Every player can only submit ONE review per game!");
                 return;
             }
@@ -135,15 +138,21 @@ class GamePageOverview extends Component {
         // prepend
         l(this.game.shortComments);
         this.game.shortComments.unshift({
-            "username": username,
-            "commentText": this.state.shortCommentContent});
+            "gameCommented": this.game.gameName,
+            "commenter": username,
+            "commentBody": this.state.shortCommentContent,
+            "thumbUp": 0,
+            "thumbDown": 0,
+            "funny": 0,
+            "time": Date.now()
+        });
         l(this.game.shortComments);
         this.forceUpdate();
     }
 
-    handleLongCommentSubmission(username) {
+    handleAddLongComment(username) {
         for (let i = 0; i < this.game.longComments.length; i++) {
-            if (this.game.longComments[i].author === username) {
+            if (this.game.longComments[i].commenter === username) {
                 alert("Every professional agency can only submit ONE long review per game!");
                 return;
             }
@@ -158,16 +167,14 @@ class GamePageOverview extends Component {
             const title = this.state.longCommentTitle;
             const newLongComment = {
                 title: title,
-                content: this.state.longCommentContent.split(/\r?\n/),
-                liked: false,
-                disliked: false,
-                realGamer: false,
-                likeNum: 0,
-                dislikeNum: 0,
-                funnyNum: 0,
-                author: username
+                commentBody: this.state.longCommentContent.split(/\r?\n/),
+                thumbUp: 0,
+                thumbDown: 0,
+                funny: 0,
+                commenter: username,
+                time: Date.now()
             };
-            l(this.game.longComments.content);
+            l(this.game.longComments.commentBody);
             this.game.longComments.push(newLongComment);
             this.setState({longCommentContent: ''});
             this.setState({longCommentTitle: ''});
@@ -190,7 +197,7 @@ class GamePageOverview extends Component {
         let hasShortComment = false;
         const {cookies} = this.props;
         for (let i = 0; i < this.game.shortComments.length; i++){
-            if (this.game.shortComments[i].username === cookies.cookies.username)
+            if (this.game.shortComments[i].commenter === cookies.cookies.username)
                 hasShortComment = true;}
         const settings = {
             customPaging: (i) => {
@@ -231,17 +238,18 @@ class GamePageOverview extends Component {
                                 <div id={"GameInfo"}>
                                     <div id={"GameDescription"}>
                                         <Typography variant={'h6'}>
-                                            {this.game.description}
+                                            {this.game.introductionText}
                                         </Typography>
                                     </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>Recent Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.recentReview}</div>
+                                            <div className={"GameReviews"}>Reviews:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>All Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.allReview}</div>
+                                            <div className={"GameReviews"}>Reviews in Persentage:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
+                                            (this.game.thumbUp + this.game.thumbDown)}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
@@ -259,10 +267,10 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div>
                                             <p className={"bestShortCommentContent"}>
-                                                "{this.state.bestShort.commentText}"
+                                                "{this.state.bestShort.commentBody}"
                                             </p>
-                                            <p className={"bestShortCommentAuthor"}>
-                                                &mdash;{this.state.bestShort.username}
+                                            <p className={"bestShortCommentCommenter"}>
+                                                &mdash;{this.state.bestShort.commenter}
                                             </p>
                                         </div>
                                     </div>
@@ -288,30 +296,30 @@ class GamePageOverview extends Component {
                                         <ExpansionPanelDetails>
                                             <div className={"LongCommentContent"}>
                                                 {
-                                                    longComment.content.map(i => (
+                                                    longComment.commentBody.map(i => (
                                                         <p key={uid(i)}>{i}</p>))
                                                 }
-                                                <p>By {longComment.author}</p>
+                                                <p>By {longComment.commenter}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
-                                                        onClick={this.handleLike.bind(this, longComment)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
-                                                    > Agree {longComment.likeNum}
+                                                    > Agree {longComment.thumbUp}
                                                     </Button>
                                                     <Button
-                                                        onClick={this.handleDislike.bind(this, longComment)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
-                                                    > Hmm, Nope {longComment.dislikeNum}
+                                                    > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
                                                         onClick={this.handleFunny.bind(this, longComment)}
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
-                                                    > Funny! {longComment.funnyNum}
+                                                    > Funny! {longComment.funny}
                                                     </Button>
                                                 </div>
                                             </div>
@@ -324,11 +332,35 @@ class GamePageOverview extends Component {
                                     <div className={"ShortCommentList"}>
                                         <List>
                                             {
-                                                this.game.shortComments.map(i => {
-                                                    return <ShortComment
-                                                        key={uid(i)}
-                                                        username={i.username}
-                                                        commentText={i.commentText}/>})
+                                                this.game.shortComments.map(shortComment => {
+                                                    return <div key={uid(shortComment)}>
+                                                        <ShortComment
+                                                            username={shortComment.commenter}
+                                                            commentBody={shortComment.commentBody}/>
+                                                        <div className={"LikeButtons"}>
+                                                            <Button
+                                                                onClick={this.handleThumbUp.bind(this, shortComment)}
+                                                                color="primary"
+                                                                aria-label="like"
+                                                                startIcon={<LikeIcon/>}
+                                                            > Agree {shortComment.thumbUp}
+                                                            </Button>
+                                                            <Button
+                                                                onClick={this.handleThumbDown.bind(this, shortComment)}
+                                                                aria-label="dislike"
+                                                                startIcon={<DislikeIcon/>}
+                                                            > Hmm, Nope {shortComment.thumbDown}
+                                                            </Button>
+                                                            <Button
+                                                                onClick={this.handleFunny.bind(this, shortComment)}
+                                                                color="secondary"
+                                                                aria-label="funny"
+                                                                startIcon={<FunnyIcon/>}
+                                                            > Funny! {shortComment.funny}
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                })
                                             }
                                         </List>
                                     </div>
@@ -337,7 +369,7 @@ class GamePageOverview extends Component {
                                     <div className={"NewCommentContainer"}>
                                         <p className={"YourCommentText"}>
                                             {hasShortComment ?
-                                                "You Can Edit Your From Comment Here" : "Leave Your Comment Here:"}
+                                                "You Can Edit Your Comment Here" : "Leave Your Comment Here:"}
                                         </p>
                                         <TextField
                                             label={hasShortComment ?
@@ -392,17 +424,18 @@ class GamePageOverview extends Component {
                                 <div id={"GameInfo"}>
                                     <div id={"GameDescription"}>
                                         <Typography variant={'h6'}>
-                                            {this.game.description}
+                                            {this.game.introductionText}
                                         </Typography>
                                     </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>Recent Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.recentReview}</div>
+                                            <div className={"GameReviews"}>Reviews:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>All Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.allReview}</div>
+                                            <div className={"GameReviews"}>Reviews in Persentage:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
+                                            (this.game.thumbUp + this.game.thumbDown)}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
@@ -420,10 +453,10 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div>
                                             <p className={"bestShortCommentContent"}>
-                                                "{this.state.bestShort.commentText}"
+                                                "{this.state.bestShort.commentBody}"
                                             </p>
-                                            <p className={"bestShortCommentAuthor"}>
-                                                &mdash;{this.state.bestShort.username}
+                                            <p className={"bestShortCommentCommenter"}>
+                                                &mdash;{this.state.bestShort.commenter}
                                             </p>
                                         </div>
                                     </div>
@@ -448,30 +481,30 @@ class GamePageOverview extends Component {
                                         <ExpansionPanelDetails>
                                             <div>
                                                 {
-                                                    longComment.content.map(i => (
+                                                    longComment.commentBody.map(i => (
                                                         <p className={"LongCommentContent"} key={uid(i)}>{i}</p>))
                                                 }
-                                                <p className={"LongCommentContent"}>By {longComment.author}</p>
+                                                <p className={"LongCommentContent"}>By {longComment.commenter}, {longComment.time}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
-                                                        onClick={this.handleLike.bind(this, longComment)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
-                                                    > Agree {longComment.likeNum}
+                                                    > Agree {longComment.thumbUp}
                                                     </Button>
                                                     <Button
-                                                        onClick={this.handleDislike.bind(this, longComment)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
-                                                    > Hmm, Nope {longComment.dislikeNum}
+                                                    > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
                                                         onClick={this.handleFunny.bind(this, longComment)}
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
-                                                    > Funny! {longComment.funnyNum}
+                                                    > Funny! {longComment.funny}
                                                     </Button>
                                                 </div>
                                             </div>
@@ -516,7 +549,7 @@ class GamePageOverview extends Component {
                                         <div id={"longCommentSubmissionButton"}>
                                             <Button
                                                 height={"10px"}
-                                                onClick={this.handleLongCommentSubmission.bind(this,
+                                                onClick={this.handleAddLongComment.bind(this,
                                                     cookies.cookies.username)}
                                                 color="secondary"
                                                 variant={"outlined"}
@@ -533,11 +566,35 @@ class GamePageOverview extends Component {
                                     <div className={"ShortCommentList"}>
                                         <List>
                                             {
-                                                this.game.shortComments.map(i =>
-                                                    (<ShortComment
-                                                        key={uid(i)}
-                                                        username={i.username}
-                                                        commentText={i.commentText}/>))
+                                                this.game.shortComments.map(shortComment =>
+                                                {return <div key={uid(shortComment)}>
+                                                    <ShortComment
+                                                        username={shortComment.commenter}
+                                                        commentBody={shortComment.commentBody}/>
+                                                    <div className={"LikeButtons"}>
+                                                        <Button
+                                                            onClick={this.handleThumbUp.bind(this, shortComment)}
+                                                            color="primary"
+                                                            aria-label="like"
+                                                            startIcon={<LikeIcon/>}
+                                                        > Agree {shortComment.thumbUp}
+                                                        </Button>
+                                                        <Button
+                                                            onClick={this.handleThumbDown.bind(this, shortComment)}
+                                                            aria-label="dislike"
+                                                            startIcon={<DislikeIcon/>}
+                                                        > Hmm, Nope {shortComment.thumbDown}
+                                                        </Button>
+                                                        <Button
+                                                            onClick={this.handleFunny.bind(this, shortComment)}
+                                                            color="secondary"
+                                                            aria-label="funny"
+                                                            startIcon={<FunnyIcon/>}
+                                                        > Funny! {shortComment.funny}
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                })
                                             }
                                         </List>
                                     </div>
@@ -545,10 +602,12 @@ class GamePageOverview extends Component {
                                 <Card className={"NewCommentCard"}>
                                     <div className={"NewCommentContainer"}>
                                         <p className={"YourCommentText"}>
-                                            Leave Your Comment Here:
+                                            {hasShortComment ?
+                                                "You Can Edit Your From Comment Here" : "Leave Your Comment Here:"}
                                         </p>
                                         <TextField
-                                            label="You Comment Here..."
+                                            label={hasShortComment ?
+                                                "Edit original Comment here..." : "You Comment Here..."}
                                             fullWidth
                                             multiline
                                             rowsMax="50"
@@ -564,7 +623,10 @@ class GamePageOverview extends Component {
                                             variant={"outlined"}
                                             color={"secondary"}
                                             startIcon={<EmotionIcon/>}
-                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
+                                            onClick={()=>{hasShortComment ?
+                                                this.handleEditShortComment.bind(this)(cookies.cookies.username):
+                                                this.handleAddShortComment.bind(this)(cookies.cookies.username)
+                                            }}>
                                             Submit
                                         </Button>
                                     </div>
@@ -596,17 +658,18 @@ class GamePageOverview extends Component {
                                 <div id={"GameInfo"}>
                                     <div id={"GameDescription"}>
                                         <Typography variant={'h6'}>
-                                            {this.game.description}
+                                            {this.game.introductionText}
                                         </Typography>
                                     </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>Recent Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.recentReview}</div>
+                                            <div className={"GameReviews"}>Reviews:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>All Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.allReview}</div>
+                                            <div className={"GameReviews"}>Reviews in Persentage:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
+                                            (this.game.thumbUp + this.game.thumbDown)}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
@@ -624,10 +687,10 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div>
                                             <p className={"bestShortCommentContent"}>
-                                                "{this.state.bestShort.commentText}"
+                                                "{this.state.bestShort.commentBody}"
                                             </p>
-                                            <p className={"bestShortCommentAuthor"}>
-                                                &mdash;{this.state.bestShort.username}
+                                            <p className={"bestShortCommentCommenter"}>
+                                                &mdash;{this.state.bestShort.commenter}
                                             </p>
                                         </div>
                                     </div>
@@ -657,26 +720,26 @@ class GamePageOverview extends Component {
                                         <ExpansionPanelDetails>
                                             <div className={"LongCommentContent"}>
                                                 {
-                                                    longComment.content.map(i => (
+                                                    longComment.commentBody.map(i => (
                                                         <p key={uid(i)}>{i}</p>
                                                     ))
                                                 }
-                                                <p>By {longComment.author}</p>
+                                                <p>By {longComment.commenter}, {longComment.time}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleLike.bind(this, longComment)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
-                                                    > Agree {longComment.likeNum}
+                                                    > Agree {longComment.thumbUp}
                                                     </Button>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleDislike.bind(this, longComment)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
-                                                    > Hmm, Nope {longComment.dislikeNum}
+                                                    > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
                                                         disabled
@@ -684,7 +747,7 @@ class GamePageOverview extends Component {
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
-                                                    > Funny! {longComment.funnyNum}
+                                                    > Funny! {longComment.funny}
                                                     </Button>
                                                 </div>
                                             </div>
@@ -697,17 +760,43 @@ class GamePageOverview extends Component {
                                     <div className={"ShortCommentList"}>
                                         <List>
                                             {
-                                                this.game.shortComments.map(i =>
-                                                    (<div key={uid(i)}>
-                                                        <ShortComment
-                                                            username={i.username}
-                                                            commentText={i.commentText}/>
+                                                this.game.shortComments.map(shortComment =>
+                                                {return <div key={uid(shortComment)}>
+                                                    <ShortComment
+                                                        username={shortComment.commenter}
+                                                        commentBody={shortComment.commentBody}/>
+                                                    <div className={"LikeButtons"}>
                                                         <Button
-                                                            onClick={this.handleShortCommentDelete.bind(this, i)}
-                                                            aria-label="delete"
-                                                            startIcon={<DeleteIcon/>}> Delete
+                                                            disabled
+                                                            onClick={this.handleThumbUp.bind(this, shortComment)}
+                                                            color="primary"
+                                                            aria-label="like"
+                                                            startIcon={<LikeIcon/>}
+                                                        > Agree {shortComment.thumbUp}
                                                         </Button>
-                                                    </div>))
+                                                        <Button
+                                                            disabled
+                                                            onClick={this.handleThumbDown.bind(this, shortComment)}
+                                                            aria-label="dislike"
+                                                            startIcon={<DislikeIcon/>}
+                                                        > Hmm, Nope {shortComment.thumbDown}
+                                                        </Button>
+                                                        <Button
+                                                            disabled
+                                                            onClick={this.handleFunny.bind(this, shortComment)}
+                                                            color="secondary"
+                                                            aria-label="funny"
+                                                            startIcon={<FunnyIcon/>}
+                                                        > Funny! {shortComment.funny}
+                                                        </Button>
+                                                    </div>
+                                                    <Button
+                                                        onClick={this.handleShortCommentDelete.bind(this, shortComment)}
+                                                        aria-label="delete"
+                                                        startIcon={<DeleteIcon/>}> Delete
+                                                    </Button>
+                                                </div>
+                                                })
                                             }
                                         </List>
                                     </div>
@@ -739,17 +828,18 @@ class GamePageOverview extends Component {
                                 <div id={"GameInfo"}>
                                     <div id={"GameDescription"}>
                                         <Typography variant={'h6'}>
-                                            {this.game.description}
+                                            {this.game.introductionText}
                                         </Typography>
                                     </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>Recent Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.recentReview}</div>
+                                            <div className={"GameReviews"}>Reviews:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
-                                            <div className={"GameReviews"}>All Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.allReview}</div>
+                                            <div className={"GameReviews"}>Reviews Data:</div>
+                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
+                                            (this.game.thumbUp + this.game.thumbDown)}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
@@ -767,10 +857,10 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div>
                                             <p className={"bestShortCommentContent"}>
-                                                "{this.state.bestShort.commentText}"
+                                                "{this.state.bestShort.commentBody}"
                                             </p>
-                                            <p className={"bestShortCommentAuthor"}>
-                                                &mdash;{this.state.bestShort.username}
+                                            <p className={"bestShortCommentCommenter"}>
+                                                &mdash;{this.state.bestShort.commenter}
                                             </p>
                                         </div>
                                     </div>
@@ -795,25 +885,25 @@ class GamePageOverview extends Component {
                                         <ExpansionPanelDetails>
                                             <div className={"LongCommentContent"}>
                                                 {
-                                                    longComment.content.map(i => (
+                                                    longComment.commentBody.map(i => (
                                                         <p key={uid(i)}>{i}</p>))
                                                 }
-                                                <p>By {longComment.author}</p>
+                                                <p>By {longComment.commenter}, {longComment.time}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleLike.bind(this, longComment)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
-                                                    > Agree {longComment.likeNum}
+                                                    > Agree {longComment.thumbUp}
                                                     </Button>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleDislike.bind(this, longComment)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
-                                                    > Hmm, Nope {longComment.dislikeNum}
+                                                    > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
                                                         disabled
@@ -821,7 +911,7 @@ class GamePageOverview extends Component {
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
-                                                    > Funny! {longComment.funnyNum}
+                                                    > Funny! {longComment.funny}
                                                     </Button>
                                                 </div>
                                             </div>
@@ -834,11 +924,38 @@ class GamePageOverview extends Component {
                                     <div className={"ShortCommentList"}>
                                         <List>
                                             {
-                                                this.game.shortComments.map(i =>
-                                                    (<ShortComment
-                                                        key={uid(i)}
-                                                        username={i.username}
-                                                        commentText={i.commentText}/>))
+                                                this.game.shortComments.map(shortComment =>
+                                                {return <div key={uid(shortComment)}>
+                                                    <ShortComment
+                                                        username={shortComment.commenter}
+                                                        commentBody={shortComment.commentBody}/>
+                                                    <div className={"LikeButtons"}>
+                                                        <Button
+                                                            disabled
+                                                            onClick={this.handleThumbUp.bind(this, shortComment)}
+                                                            color="primary"
+                                                            aria-label="like"
+                                                            startIcon={<LikeIcon/>}
+                                                        > Agree {shortComment.thumbUp}
+                                                        </Button>
+                                                        <Button
+                                                            disabled
+                                                            onClick={this.handleThumbDown.bind(this, shortComment)}
+                                                            aria-label="dislike"
+                                                            startIcon={<DislikeIcon/>}
+                                                        > Hmm, Nope {shortComment.thumbDown}
+                                                        </Button>
+                                                        <Button
+                                                            disabled
+                                                            onClick={this.handleFunny.bind(this, shortComment)}
+                                                            color="secondary"
+                                                            aria-label="funny"
+                                                            startIcon={<FunnyIcon/>}
+                                                        > Funny! {shortComment.funny}
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                })
                                             }
                                         </List>
                                     </div>
@@ -846,7 +963,7 @@ class GamePageOverview extends Component {
                                 <Card className={"NewCommentCard"}>
                                     <div className={"NewCommentContainer"}>
                                         <p className={"YourCommentText"}>
-                                            Leave Your Comment Here:
+                                            Sign in as User / Superuser so you can share your opinion!
                                         </p>
                                         <TextField
                                             label="Sign in as User/Superuser to leave a comment here."

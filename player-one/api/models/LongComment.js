@@ -1,8 +1,12 @@
 /* Long Comment mongoose model */
 const mongoose = require('mongoose')
 
-const LongComment = mongoose.model('LongComment', {
+const LongComment = mongoose.model('LongComment', new mongoose.Schema({
     commenter: {
+        type: String,
+        required: true
+    },
+    title: {
         type: String,
         required: true
     },
@@ -35,6 +39,6 @@ const LongComment = mongoose.model('LongComment', {
         type: Number,
         required: true
     }
-})
+}))
 
 module.exports = { LongComment }

@@ -21,7 +21,7 @@ const Game = mongoose.model('Game', new mongoose.Schema({
         type: String,
         required: true
     },
-    publishTime: {
+    releaseDate: {
         type: Date,
         default: Date.now,
         required: true
