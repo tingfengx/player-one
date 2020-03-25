@@ -1,3 +1,7 @@
+"use strict";
+
+const log = console.log;
+
 const express = require('express');
 const router = express.Router();
 
@@ -12,12 +16,12 @@ const { Comment } = require('../models/Comment')
 
 // authorizer
 const userChecker = (req, res, next) => {
-  const username = req.cookies.username
-
-  if (!username) {
+  const userId = req.cookies.userId
+  console.log(userId)
+  if (!userId) {
     res.status(401).send("Unauthorized")
   } else {
-    User.findOne({ username: username }).then((user) => {
+    User.findOne({ _id: userId }).then((user) => {
       if (!user) {
         return Promise.reject()
       } else {
@@ -33,12 +37,12 @@ const userChecker = (req, res, next) => {
 
 // authorizer for admin-only api
 const adminChecker = (req, res, next) => {
-  const username = req.cookies.username
+  const userId = req.cookies.userId
 
-  if (!username) {
+  if (!userId) {
     res.status(401).send("Unauthorized")
   } else {
-    User.findOne({ username: username }).then((user) => {
+    User.findOne({ _id: userId }).then((user) => {
       if (!user) {
         return Promise.reject()
       } else {
@@ -84,10 +88,18 @@ router.post('/', function (req, res) {
 });
 
 
-// get user by username
-router.get('/:username', userChecker, function (req, res) {
-  const username = req.params.username
-  User.findByUsername(username).then((user) => {
+// get user by userId
+router.get('/:userId', userChecker, function (req, res) {
+  const userId = req.params.userId
+
+  // check if userId is valid
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;
+  }
+  
+  // get user
+  User.findOne({ _id: userId }).then((user) => {
     if (!user) {
       res.status(404).send()
     } else {
@@ -100,10 +112,17 @@ router.get('/:username', userChecker, function (req, res) {
 
 
 // delete user by username
-router.delete('/:username', adminChecker, function (req, res) {
-  const username = req.params.username
+router.delete('/:userId', adminChecker, function (req, res) {
+  const userId = req.params.userId
 
-  User.findOneAndDelete({ username: username }).then((user) => {
+  // check if userId is valid
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;
+  }
+
+  //delete user
+  User.findOneAndDelete({ _id: userId }).then((user) => {
     if (!user) {
       res.status(404).send()
     } else {
@@ -116,24 +135,30 @@ router.delete('/:username', adminChecker, function (req, res) {
 
 
 // update user password
-router.patch('/:username/password', userChecker, function (req, res) {
-  const username = req.params.username
+router.patch('/:userId/password', userChecker, function (req, res) {
+  const userId = req.params.userId
   const password = req.body.password
   const authenticatedUser = req.user
+
+  // check if userId is valid
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;
+  }
 
   // check if caller is user himself/herself or admin
   if (!req.user) {
     res.status(401).send('Unauthorized')
     return
   } else {
-    if (authenticatedUser.username !== username && authenticatedUser.userType !== 'admin') {
+    if (authenticatedUser._id != userId && authenticatedUser.userType !== 'admin') {
       res.status(401).send('Unauthorized')
       return
     }
   }
 
   //update password
-  User.findOneAndUpdate({ username: username }, {
+  User.findOneAndUpdate({ _id: userId }, {
     $set: {
       password: password
     }
@@ -154,24 +179,30 @@ router.patch('/:username/password', userChecker, function (req, res) {
 
 
 // update user avatarId
-router.patch('/:username/avatar', userChecker, function (req, res) {
-  const username = req.params.username
+router.patch('/:userId/avatar', userChecker, function (req, res) {
+  const userId = req.params.userId
   const avatarId = req.body.avatarId
   const authenticatedUser = req.user
+
+  // check if userId is valid
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;
+  }
 
   // check if caller is user himself/herself
   if (!req.user) {
     res.status(401).send('Unauthorized')
     return
   } else {
-    if (authenticatedUser.username !== username) {
+    if (authenticatedUser._id != userId) {
       res.status(401).send('Unauthorized')
       return
     }
   }
 
   // update avatarId
-  User.findOneAndUpdate({ username: username }, {
+  User.findOneAndUpdate({ _id: userId }, {
     $set: {
       avatarId: avatarId
     }
@@ -192,24 +223,30 @@ router.patch('/:username/avatar', userChecker, function (req, res) {
 
 
 // update user bio
-router.patch('/:username/bio', userChecker, function (req, res) {
-  const username = req.params.username
+router.patch('/:userId/bio', userChecker, function (req, res) {
+  const userId = req.params.userId
   const bio = req.body.bio
   const authenticatedUser = req.user
+
+  // check if userId is valid
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;
+  }
 
   // check if caller is user himself/herself
   if (!req.user) {
     res.status(401).send('Unauthorized')
     return
   } else {
-    if (authenticatedUser.username !== username) {
+    if (authenticatedUser._id != userId) {
       res.status(401).send('Unauthorized')
       return
     }
   }
 
   // update bio
-  User.findOneAndUpdate({ username: username }, {
+  User.findOneAndUpdate({ _id: userId }, {
     $set: {
       bio: bio
     }
@@ -230,24 +267,30 @@ router.patch('/:username/bio', userChecker, function (req, res) {
 
 
 // update user tags
-router.patch('/:username/tags', userChecker, function (req, res) {
-  const username = req.params.username
+router.patch('/:userId/tags', userChecker, function (req, res) {
+  const userId = req.params.userId
   const tags = req.body.tags
   const authenticatedUser = req.user
+
+  // check if userId is valid
+	if (!ObjectID.isValid(userId)) {
+		res.status(404).send()
+		return;
+  }
 
   // check if caller is user himself/herself
   if (!req.user) {
     res.status(401).send('Unauthorized')
     return
   } else {
-    if (authenticatedUser.username !== username) {
+    if (authenticatedUser._id != userId) {
       res.status(401).send('Unauthorized')
       return
     }
   }
 
   // update tags
-  User.findOneAndUpdate({ username: username }, {
+  User.findOneAndUpdate({ _id: userId }, {
     $set: {
       tags: tags
     }
@@ -276,8 +319,9 @@ router.post('/login', function (req, res) {
     if (!user) {
       res.status(400).send()
     } else {
-      res.cookie('username', user.username, { expires: new Date(Date.now() + 60000), httpOnly: true})
-      res.cookie('userType', user.userType, { expires: new Date(Date.now() + 60000), httpOnly: true})
+      res.cookie('userId', user._id.toString(), { expires: new Date(Date.now() + 900000), httpOnly: true})
+      res.cookie('username', user.username, { expires: new Date(Date.now() + 900000), httpOnly: true})
+      res.cookie('userType', user.userType, { expires: new Date(Date.now() + 900000), httpOnly: true})
       res.send(user)
     }
   }).catch((error) => {

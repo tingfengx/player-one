@@ -85,27 +85,6 @@ UserSchema.pre("findOneAndUpdate", function(next) {
     }
 });
 
-// get user by username
-UserSchema.statics.findByUsername = function(username) {
-	const User = this // binds this to the User model
-
-	// First find the user by their username
-	return User.findOne({ username: username }).then((user) => {
-		if (!user) {
-			return Promise.reject()  // a rejected promise
-		} else {
-            return Promise.resolve(user)
-        }
-
-		// return new Promise((resolve, reject) => {
-        //     if (user) {
-        //         resolve(user)
-        //     } else {
-        //         reject()
-        //     }
-		// })
-	})
-}
 
 // get user by username and password when login
 UserSchema.statics.findByUsernamePassword = function(username, password) {
