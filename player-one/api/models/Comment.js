@@ -1,7 +1,7 @@
 /* Short Comment mongoose model */
 const mongoose = require('mongoose')
 
-const Comment = mongoose.model('Comment', {
+const Comment = mongoose.model('Comment', new mongoose.Schema({
     commenter: {
         type: String,
         required: true
@@ -35,6 +35,6 @@ const Comment = mongoose.model('Comment', {
         type: Number,
         required: true
     }
-})
+}))
 
 module.exports = { Comment }
