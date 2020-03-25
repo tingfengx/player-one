@@ -1,7 +1,7 @@
 /* Game mongoose model */
 const mongoose = require('mongoose')
 
-const Game = mongoose.model('Game', new mongoose.schema({
+const Game = mongoose.model('Game', new mongoose.Schema({
     gameName: {
         type: String,
         required: true,
