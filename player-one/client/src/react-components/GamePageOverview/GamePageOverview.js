@@ -24,6 +24,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import {Card, List} from "@material-ui/core";
 import ShortComment from '../ShortComment';
+import Divider from "@material-ui/core/Divider";
 
 const l = console.log;
 
@@ -359,6 +360,7 @@ class GamePageOverview extends Component {
                                                             > Funny! {shortComment.funny}
                                                             </Button>
                                                         </div>
+                                                        <Divider/>
                                                     </div>
                                                 })
                                             }
@@ -593,6 +595,7 @@ class GamePageOverview extends Component {
                                                         > Funny! {shortComment.funny}
                                                         </Button>
                                                     </div>
+                                                    <Divider/>
                                                 </div>
                                                 })
                                             }
@@ -795,6 +798,7 @@ class GamePageOverview extends Component {
                                                         aria-label="delete"
                                                         startIcon={<DeleteIcon/>}> Delete
                                                     </Button>
+                                                    <Divider/>
                                                 </div>
                                                 })
                                             }
@@ -954,6 +958,7 @@ class GamePageOverview extends Component {
                                                         > Funny! {shortComment.funny}
                                                         </Button>
                                                     </div>
+                                                    <Divider/>
                                                 </div>
                                                 })
                                             }
