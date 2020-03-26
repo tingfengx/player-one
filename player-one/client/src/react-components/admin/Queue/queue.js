@@ -20,27 +20,17 @@ class Queue extends React.Component{
     cookies = this.props;
 
     state = {
-        Username: "",
+        username: "",
         password: "",
+        id:"",
         users: [
-            { Username: "aaa", password: "1111" },
-            { Username: "bbb", password: "22222" },
-            { Username: "ccc", password: "1111" },
-            { Username: "ddd", password: "22222" },
-            { Username: "kkk", password: "1111" },
-            { Username: "eee", password: "22222" },
-            { Username: "ooo", password: "1111" },
-            { Username: "ttt", password: "22222" },
-            { Username: "mmm", password: "1111" },
-            { Username: "qqq", password: "22222" },
-            { Username: "eee", password: "1111" },
-            { Username: "ttt", password: "22222" },
-            { Username: "111", password: "1111" },
-            { Username: "mmmm", password: "22222" },
-            { Username: "hhhhhhhh", password: "1111" },
-            { Username: "ppp", password: "22222" },
-            { Username: "lll", password: "1111" },
-            { Username: "iii", password: "22222" }
+            { id: "1", username: "aaa", password: "1111" },
+            { id: "2", username: "bbb", password: "22222" },
+            { id: "3", username: "ccc", password: "1111" },
+            { id: "4", username: "ddd", password: "22222" },
+            { id: "5", username: "kkk", password: "1111" },
+            { id: "6", username: "eee", password: "22222" }
+
         ]
     };
 
@@ -65,7 +55,7 @@ class Queue extends React.Component{
 
 
                 <UserForm
-                    Username={this.state.Username}
+                    username={this.state.username}
                     password={this.state.password}
                     position={this.state.position}
                     handleChange={this.handleInputChange}

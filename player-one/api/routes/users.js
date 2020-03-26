@@ -310,7 +310,7 @@ router.patch('/:userId/tags', userChecker, function (req, res) {
 });
 
 
-// sign in: set cookie
+// sign in
 router.post('/login', function (req, res) {
   const username = req.body.username
   const password = req.body.password

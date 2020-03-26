@@ -7,30 +7,16 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import "./style.css";
 
-// hardcoded users
-const users = [];
+const log = console.log
+const baseURL = 'http://localhost:5000'
 
-class User {
-  constructor(username, password, type) {
-    this.username = username;
-    this.password = password;
-    this.type = type;
-  }
-}
-
-users.push(new User("user", "user", "user"));
-users.push(new User("superuser", "superuser", "superuser"));
-users.push(new User("admin", "admin", "admin"));
 
 class SignInForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       username: "",
-      password: "",
-      isLoggedIn: false,
-      type: ""
+      password: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,11 +30,8 @@ class SignInForm extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.isLoggedIn) {
+    if (this.props.cookies.cookies.isLoggedIn) {
       this.props.history.push("/");
-      this.props.cookies.set("username", this.state.username);
-      this.props.cookies.set("type", this.state.type);
-      this.props.cookies.set("isLoggedIn", this.state.isLoggedIn);
     }
   }
 
@@ -64,31 +47,68 @@ class SignInForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let status = false;
-    let userType = "";
-    for (let i = 0; i < users.length; i++) {
-      let user = users[i];
-      if (
-        this.state.username === user.username &&
-        this.state.password === user.password
-      ) {
-        status = true;
-        userType = user.type;
-        break;
-      }
+
+    // POST /users/login
+    const url = baseURL + '/users/login'
+    const data = {
+      username: this.state.username,
+      password: this.state.password
     }
 
-    this.setState({ isLoggedIn: status, type: userType }, () => {
-      let msg = status
-        ? "successfully signed in"
-        : "wrong username or password";
-      console.log(msg);
-      if (!status) {
-        alert("wrong username or password");
+    const request = new Request(url, {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+    })
+
+    fetch(request)
+    .then((res) => {
+      if (res.status === 200) {
+        log('Successfully signed in!')
+        return res.json()
+      } else if (res.status === 400) {
+        alert('Wrong username or password')
+      } else {
+        alert('Error occurred. Try again!')
       }
-      console.log("The form was submitted with the following data:");
-      console.log(this.state);
-    });
+    }).then((data) => {
+      log(data)
+      this.props.cookies.set("userId", data._id)
+      this.props.cookies.set("username", data.username)
+      this.props.cookies.set("type", data.userType)
+      this.props.cookies.set("isLoggedIn", true)      
+    })
+    .catch((error) => {
+      log(error)
+    })
+
+
+  //   let status = false;
+  //   let userType = "";
+  //   for (let i = 0; i < users.length; i++) {
+  //     let user = users[i];
+  //     if (
+  //       this.state.username === user.username &&
+  //       this.state.password === user.password
+  //     ) {
+  //       status = true;
+  //       userType = user.type;
+  //       break;
+  //     }
+  //   }
+
+  //   this.setState({ isLoggedIn: status, type: userType }, () => {
+  //     let msg = status
+  //       ? "successfully signed in"
+  //       : "wrong username or password";
+  //     console.log(msg);
+  //     if (!status) {
+  //       alert("wrong username or password");
+  //     }
+  //   });
   };
 
   // const classes = useStyles();

@@ -9,33 +9,106 @@ const { Game } = require('../models/Game')
 const { LongComment } = require('../models/LongComment')
 const { Comment } = require('../models/Comment')
 
+// implement DELETE
+
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser')
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
 
+// Expected Input req.body: {<game object properties>}
+// root: add a game
+// Expected Output: <added game object>
+router.post('/addGame', function(req, res) {
+    const body = req.body;
+    const game = new Game({
+        gameName: body.gameName,
+        gamPictures: body.gamPictures,
+        publisher: body.publisher,
+        developer: body.developer,
+        introductionText: body.introductionText,
+        releaseDate: body.releaseDate,
+        genre: body.genre,
+        thumbUp: body.thumbUp,
+        thumbDown: body.thumbDown
+    });
+    game.save().then((result) => {
+        res.send(result)
+    }, (error) => {
+        // 400 for bad request
+        res.status(400).send(error)
+    })
+});
+
+// Expected Input req.body: {isLong: Null if not LongComment
+//                          <comment object properties>}
+// root: add a comment
+// Expected Output: <added comment object>
+router.post('/addComment', function(req, res) {
+    const body = req.body;
+    const isLong = req.body.isLong;
+    let comment;
+    log(body.commentBody);
+    log(isLong);
+    log(typeof body.commentBody);
+    if (isLong) {
+        comment = new LongComment({
+            title: body.title,
+            commenter: body.commenter,
+            time: body.time,
+            gameCommented: body.gameCommented,
+            commentBody: body.commentBody,
+            thumbUp: body.thumbUp,
+            thumbDown: body.thumbDown,
+            funny: body.funny,
+        });
+    }
+    else{
+        comment = new Comment({
+            commenter: body.commenter,
+            time: body.time,
+            gameCommented: body.gameCommented,
+            commentBody: body.commentBody,
+            thumbUp: body.thumbUp,
+            thumbDown: body.thumbDown,
+            funny: body.funny,
+        });
+    }
+    comment.save().then((result) => {
+        log(result)
+        res.send(result)
+    }, (error) => {
+        // 400 for bad request
+        res.status(400).send(error)
+    })
+
+});
+
 // root: get all games
 // Expected Output: {hottestGamesForGenre: [[<5 games per Genre>]],
 //                  hottestGames: [<5 hottest games>],
 //                  allGames: [<all games with only name and _id>]}
-router.get('/', function(req, res) {
-    let allGames;
+router.get('/', async function(req, res) {
     // Find all games
-    Game.find().then((games) => {
-        allGames = games;
-    }, (error) => {
+    let allGames = await Game.find().then((games) => {return games;},
+        (error) =>
+    {
         res.status(500).send(error) // server error
     });
-
-    // Sort by like rate
-    allGames.sort(function(a, b) {
-        return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
-    });
+    if (!allGames)
+        allGames = [];
+    if (allGames.length >= 2)
+        // Sort by like rate
+        allGames.sort(function(a, b) {
+            return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
+        });
     let hottest5 = allGames.filter(i => i.thumbUp + i.thumbDown >= 100);
+    if (!hottest5)
+        hottest5 = [];
     // Ensure at least 5 elements in hottest5
     let index = 0;
-    while(hottest5.length < 5){
+    while(hottest5.length < 5 && hottest5.length > index){
         const thisGame = allGames[index];
         if (thisGame.thumbUp + thisGame.thumbDown < 100)
             hottest5.push(thisGame);
@@ -47,26 +120,34 @@ router.get('/', function(req, res) {
     let gamesByGenre = [];
     let lastGenre = allGames[0].genre;
 
+    index = 0;
     allGames.forEach(function (a){
         if (a.genre !== lastGenre){
             index += 1;
-            gamesByGenre[index] = [a];
+            gamesByGenre.push([]);
+            gamesByGenre[index].push(a);
             lastGenre = a.genre;
         }
         else {
+            if (!gamesByGenre[index])
+                gamesByGenre.push([]);
             gamesByGenre[index].push(a);
         }
     });
 
     let hottest5ForAllGenre = [];
     gamesByGenre.forEach(function (list){
-        list.sort(function (a, b) {
-            return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
-        });
-        let hottest5PerGenre = list.filter(i => i.thumbUp + i.thumbDown >= 100);
+        if (list.length > 1)
+            list.sort(function (a, b) {
+                return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
+            });
+        let hottest5PerGenre = list.filter((i) => i.thumbUp + i.thumbDown >= 100);
+
+        if (!hottest5PerGenre)
+            hottest5PerGenre = [];
         // Ensure at least 5 elements in hottest5PerGenre
         index = 0;
-        while(hottest5PerGenre.length < 5){
+        while(hottest5PerGenre.length < 5 && index < list.length){
             const thisGame = list[index];
             if (thisGame.thumbUp + thisGame.thumbDown < 100)
                 hottest5PerGenre.push(thisGame);
@@ -80,20 +161,26 @@ router.get('/', function(req, res) {
         allGamesOnlyNameId.push({_id: allGames[i]._id, gameName: allGames[i].gameName})
     }
 
+
     // Make Sure only 5 games for hottest5 and hottest5PerGenre
     res.send({hottestGamesForGenre: hottest5ForAllGenre,
         hottestGames: hottest5.slice(0, 5),
-        allGames: allGamesOnlyNameId.slice(0, 5)});
+        allGames: allGamesOnlyNameId});
 });
 
 // Game Page GET: find specific game and corresponding comments
 // Expected Output: {longComments: <long Comments of this game>,
 //                  shortComments: <short Comments of this game>,
 //                  game: <this game object>}
-router.get('/games/:game_id', function(req, res){
+router.get('/:game_id', async function(req, res){
     const id = req.params.game_id;
-    let thisGame = findGame(id);
-    let {longComments, shortComments} = findComments(thisGame.gameName);
+    let thisGame = await findGame(res, id);
+    if (!thisGame){
+        res.status(404).send('Game Not Found')
+        return;
+    }
+
+    let {longComments, shortComments} = await findComments(res, thisGame.gameName);
 
     res.send({longComments: longComments,
             shortComments: shortComments,
@@ -105,90 +192,83 @@ router.get('/games/:game_id', function(req, res){
 // Expected Output: {longComments: [<long Comments of this game>],
 //                  shortComments: [<short Comments of this game>],
 //                  game: <this game object>}
-router.delete('/<Game Manager Page>', function(req, res){
+router.delete('/:game_id', async function(req, res){
 
-    const id = req.body.id;
-    let thisGame = findGame(id);
+    const id = req.params.game_id;
+    let thisGame = await findGame(res, id);
 
+    if (!thisGame){
+        res.status(404).send('Game Not Found');
+        return;
+    }
     // Find (send these for debug perpose)
-    let {thisLongComments, thisShortComments} = findComments(thisGame.gameName);
+    let {thisLongComments, thisShortComments} = await findComments(res, thisGame.gameName);
 
     // Delete
-    Game.deleteOne(
+    await Game.deleteOne(
         {_id: id},
         function(err) {
             if (err)
                 res.send(err);
         }
     );
-    LongComment.deleteMany(
+    await LongComment.deleteMany(
         {gameCommented: thisGame.gameName},
-        function(err) {
+        function (err) {
             if (err)
                 res.send(err);
         }
     );
-    Comment.deleteMany(
+    await Comment.deleteMany(
         {gameCommented: thisGame.gameName},
-        function(err) {
+        function (err) {
             if (err)
                 res.send(err);
         }
     );
-
-    // Save modified Comment, LongComment and Game
-    Game.save().then(
-        (result) => {},
-        (error) => {res.status(400).send(error)}
-    );
-    LongComment.save().then(
-        (result) => {},
-        (error) => {res.status(400).send(error)}
-    );
-    Comment.save().then(
-        (result) => {},
-        (error) => {res.status(400).send(error)}
-    );
+    //
+    // // Save modified Comment, LongComment and Game
+    // Game.save().then(
+    //     (result) => {},
+    //     (error) => {res.status(400).send(error)}
+    // );
+    // LongComment.save().then(
+    //     (result) => {},
+    //     (error) => {res.status(400).send(error)}
+    // );
+    // Comment.save().then(
+    //     (result) => {},
+    //     (error) => {res.status(400).send(error)}
+    // );
 
     res.send({longComments: thisLongComments,
         shortComments: thisShortComments,
         game: thisGame})
 });
 
-// Expected req.body: {id: <Game id>,
-//                     isLongComment: <true for long comment, vise versa>}
+// Expected req.body: {isLong: <null if short comment>}
 // Game Page DELETE: delete a specific comment of a game
-// Expected Output: {longComment: <long Comment been deleted>,
-//                  shortComment: <short Comment been deleted>,
-//                  game: <this game object>}
-router.delete('/games/:game_id/', function(req, res){
-    let deletedLong = {};
-    let deletedShort = {};
+// Expected Output: {Comment: <Comment been deleted>}
+router.delete('/comments/:comm_id', async function(req, res){
 
-    const id = req.params.id;
-    const game_id = req.params.game_id;
-    const isLongComment = req.body.isLongComment;
+    const id = req.params.comm_id;
+    const isLongComment = req.body.isLong;
 
-    let thisGame = findGame(game_id);
-    // Validate id
     if (!ObjectID.isValid(id)) {
         // 404 not found
-        res.status(404).send();
+        res.status(404).send("Not A Valid Comment");
         return;
     }
 
-    let thisCommentModel = isLongComment ? LongComment : Comment;
+    const thisCommentModel = isLongComment ? LongComment : Comment;
     // Delete comment
     // Find it(for debug purpose)
-    thisCommentModel.findById(id).then((comment) => {
+    const deleted = await thisCommentModel.findById(id).then((comment) => {
         if (!comment) {
-            res.status(404).send();
+            res.status(404).send("Comment Not Found");
         }
         else{
-            if (isLongComment)
-                deletedLong = comment;
-            else
-                deletedShort = comment;
+            return comment;
         }
     }).catch((error) => {
         // 500 Server error
@@ -203,30 +283,21 @@ router.delete('/games/:game_id/', function(req, res){
             }
         }
     );
-    // Save LongComment
-    thisCommentModel.save().then(
-        (result) => {res.send({longComments: deletedLong,
-                               shortComments: deletedShort,
-                               game: thisGame})},
-        (error) => {
-            res.status(400).send(error);}
-    );
+
+    res.send(deleted);
 });
 
-// Expected req.body: {id: <Game id>,
-//                     isGame: <0: game, 1: long comment, 2: short comment>,
-//                     thumbUp: <number to be added to like>,
-//                     thumbDown: <number to be added to dislike>,
-//                     funny: <number to be added to funny>}
+// Expected req.body: {isLong : <null if not long comment>,
+//          (OPTIONAL) newCommentBody: string,
+//                     thumbUp: <number to be like>,
+//                     thumbDown: <number to be dislike>,
+//                     funny: <number to be funny>}
 // Game Page PATCH: respond to a thumb up/thumb down/funny
-// Expected Output: {beenPatched: <the object been liked/disliked/thought funny>,
-//                  game: <this game object>}
-router.patch('/games/:game_id/', function(req, res) {
-    const game_id = req.params.game_id;
-    const id = req.body.id;
-    const isGame = req.body.isGame;
-    let thisGame = findGame(game_id);
-    let toBeSaved = {};
+// Expected Output: <the object been liked/disliked/thought funny>
+router.patch('/comments/:comm_id/', function(req, res) {
+    const id = req.params.comm_id;
+    const isLong = req.body.isLong;
+    const newCommentBody = req.body.newCommentBody;
 
     // Validate id
     if (!ObjectID.isValid(id)) {
@@ -234,45 +305,69 @@ router.patch('/games/:game_id/', function(req, res) {
         return;
     }
 
-    if (isGame === 0){
-        thisGame.thumbUp += req.body.thumbUp;
-        thisGame.thumbDown += req.body.thumbDown;
-        toBeSaved = thisGame;
-    }
-    else if (isGame === 1){
-        LongComment.findById(id).then((thisLongComment) => {
-            if (!thisLongComment) {
-                res.status(404).send();
-            }
-            else{
-                thisLongComment.thumbUp += req.body.thumbUp;
-                thisLongComment.thumbDown += req.body.thumbDown;
-                thisLongComment.funny += req.body.funny;
-                toBeSaved = thisLongComment;
-            }
-        }).catch((error) => {
-            res.status(500).send();
-        });
-    }
-    else{
-        Comment.findById(id).then((thisShortComment) => {
-            if (!thisShortComment) {
-                res.status(404).send();
-            }
-            else{
-                thisShortComment.thumbUp += req.body.thumbUp;
-                thisShortComment.thumbDown += req.body.thumbDown;
-                thisShortComment.funny += req.body.funny;
-                toBeSaved = thisShortComment;
-            }
-        }).catch((error) => {
-            res.status(500).send();
-        });
+    if (isLong && newCommentBody){
+        res.status(400).send("Long comment's content cannot be modified!");
+        return;
     }
 
-    toBeSaved.save().then(
-        (result) => {res.send({beenPatched: result,
-                               game: thisGame})},
+    const thisModel = isLong ? LongComment : Comment;
+    thisModel.findById(id).then((thisComment) => {
+        if (!thisComment) {
+            res.status(404).send('Comment Not Found');
+            return;
+        }
+        else{
+            if (newCommentBody){
+                thisComment.commentBody = newCommentBody;
+                thisComment.thumbUp = 0;
+                thisComment.thumbDown = 0;
+                thisComment.funny = 0;
+            }
+            else{
+                thisComment.thumbUp = req.body.thumbUp;
+                thisComment.thumbDown = req.body.thumbDown;
+                thisComment.funny = req.body.funny;
+            }
+            thisComment.save().then(
+                (result) => {res.send(result)},
+                (error) => {res.status(400).send(error)}
+            );
+        }
+    }).catch((error) => {
+        res.status(500).send();
+    });
+
+});
+
+// Expected req.body: <new game object>
+// Game Page PATCH: respond to a thumb up/thumb down/funny
+// Expected Output: <Game object after modification>
+router.patch('/:game_id/', async function(req, res) {
+    const game_id = req.params.game_id;
+    const newGame = req.body;
+    let thisGame = await findGame(res, game_id);
+    if (!thisGame){
+        res.status(404).send("Game Not Found");
+        return;
+    }
+
+    // Validate id
+    if (!ObjectID.isValid(game_id)) {
+        res.status(404).send();
+        return;
+    }
+
+    thisGame.gamePictures = newGame.gamePictures;
+    thisGame.gameName = newGame.gameName;
+    thisGame.publisher = newGame.publisher;
+    thisGame.developer = newGame.developer;
+    thisGame.releaseDate = newGame.releaseDate;
+    thisGame.genre = newGame.genre;
+    thisGame.thumbUp = newGame.thumbUp;
+    thisGame.thumbDown = newGame.thumbDown;
+
+    thisGame.save().then(
+        (result) => {res.send(thisGame)},
         (error) => {res.status(400).send(error)}
     );
 });
@@ -282,40 +377,40 @@ router.patch('/games/:game_id/', function(req, res) {
 
 
 // Helper funciton - find the game
-function findGame(game_id) {
+async function findGame(res, game_id) {
     // Validate id
     if (!ObjectID.isValid(game_id)) {
         // 404 not found
         res.status(404).send();
-        return;
     }
 
     // Find game
-    Game.findById(game_id).then((game) => {
-        if (!game) {
-            // Can't find the game
-            res.status(404).send();
+    const game = await Game.find({
+        _id: game_id
+    }, function(err){
+        if(err){
+            res.send(err)
         }
-        else{
-            return game;
-        }
-    }).catch((error) => {
-        // 500 Server error
-        res.status(500).send();
     });
+
+    return game[0];
 }
 
-function findComments(gameName){
-    let longComments = [];
-    let shortComments = [];
-    LongComment.map((i) => {
-        if (i.gameCommented === gameName)
-            longComments.push(i);
+async function findComments(res, gameName){
+
+    const longComments = await LongComment.find({
+        gameCommented: gameName
+    }, function(err){
+        if(err)
+            res.send(err)
     });
-    Comment.map((i) => {
-        if (i.gameCommented === gameName)
-            shortComments.push(i);
+    const shortComments = await Comment.find({
+        gameCommented: gameName
+    }, function(err){
+        if(err)
+            res.send(err)
     });
+    log(longComments, shortComments)
     return {longComments, shortComments};
 }
 
