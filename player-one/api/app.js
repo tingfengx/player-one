@@ -36,12 +36,12 @@ app.use('/users', usersRouter);
 app.use('/games', gamesRouter);
 
 // Serve the build
-app.use(express.static(__dirname + "../../client/build"));
+app.use(express.static(path.resolve(__dirname + "../../client/build")));
 
 // All routes other than above will go to index.html
 // actually only serves for the root /
-app.get("*", (req, res) => {
-    res.sendFile(__dirname + "../../client/build/index.html");
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname + "../../client/build/index.html"));
 });
 
 // catch 404 and forward to error handler
