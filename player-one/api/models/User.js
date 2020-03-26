@@ -30,8 +30,12 @@ const UserSchema = new mongoose.Schema({
      * FIXME: ?should we delete this?
      */
     tags: {
-        type: [String],
+        type: [{type: String}],
         required: false // allow admin have no tags
+    },
+    likedGames: {
+        type: [{type: String}],
+        required: false
     },
     userType: {
         type: String,
