@@ -234,7 +234,7 @@ const slimeRancher = {
     publisher: "Monomi Park",
     developer: "Monomo Park",
     introductionText: "Slime Rancher is the tale of Beatrix LeBeau, a plucky, young rancher who sets out for a life a thousand light years away from Earth on the ‘Far, Far Range’ where she tries her hand at making a living wrangling slimes.",
-    releaseDate: "TODO: ",
+    releaseDate: "2017, 8, 1",
     genre: "adventure",
     thumbDown: 0,
     thumbUp: 0
