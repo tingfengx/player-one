@@ -40,10 +40,10 @@ class GameAd extends React.Component {
         const {user, queueComponent, password} = this.props;
 
         return (
-            <TableRow className="user" key={user.Username}>
+            <TableRow className="user" key={user.username}>
 
                 <TableCell component="th" scope="row">
-                    {user.Username}
+                    {user.username}
 
                 </TableCell>
                 <TableCell component="th" scope="row">

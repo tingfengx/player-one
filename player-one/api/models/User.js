@@ -29,7 +29,11 @@ const UserSchema = new mongoose.Schema({
     /**
      * FIXME: ?should we delete this?
      */
-    tags: {
+    profileTags: {
+        type: [{type: String}],
+        required: false // allow admin have no tags
+    },
+    gameTags: {
         type: [{type: String}],
         required: false // allow admin have no tags
     },

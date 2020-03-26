@@ -22,17 +22,22 @@ const { ObjectID } = require('mongodb')
 // Expected Output: <added game object>
 router.post('/addGame', function(req, res) {
     const body = req.body;
-    const game = new Game({
-        gameName: body.gameName,
-        gamPictures: body.gamPictures,
-        publisher: body.publisher,
-        developer: body.developer,
-        introductionText: body.introductionText,
-        releaseDate: body.releaseDate,
-        genre: body.genre,
-        thumbUp: body.thumbUp,
-        thumbDown: body.thumbDown
-    });
+    try {
+        const game = new Game({
+            gameName: body.gameName,
+            gamPictures: body.gamPictures,
+            publisher: body.publisher,
+            developer: body.developer,
+            introductionText: body.introductionText,
+            releaseDate: body.releaseDate,
+            genre: body.genre,
+            thumbUp: body.thumbUp,
+            thumbDown: body.thumbDown
+        });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
     game.save().then((result) => {
         res.send(result)
     }, (error) => {
@@ -50,33 +55,36 @@ router.post('/addComment', function(req, res) {
     const isLong = req.body.isLong;
     let comment;
     log(body.commentBody);
-    log(isLong);
-    log(typeof body.commentBody);
-    if (isLong) {
-        comment = new LongComment({
-            title: body.title,
-            commenter: body.commenter,
-            time: body.time,
-            gameCommented: body.gameCommented,
-            commentBody: body.commentBody,
-            thumbUp: body.thumbUp,
-            thumbDown: body.thumbDown,
-            funny: body.funny,
-        });
+    try{
+        if (isLong) {
+            comment = new LongComment({
+                title: body.title,
+                commenter: body.commenter,
+                time: body.time,
+                gameCommented: body.gameCommented,
+                commentBody: body.commentBody,
+                thumbUp: body.thumbUp,
+                thumbDown: body.thumbDown,
+                funny: body.funny,
+            });
+        }
+        else{
+            comment = new Comment({
+                commenter: body.commenter,
+                time: body.time,
+                gameCommented: body.gameCommented,
+                commentBody: body.commentBody,
+                thumbUp: body.thumbUp,
+                thumbDown: body.thumbDown,
+                funny: body.funny,
+            });
+        }
     }
-    else{
-        comment = new Comment({
-            commenter: body.commenter,
-            time: body.time,
-            gameCommented: body.gameCommented,
-            commentBody: body.commentBody,
-            thumbUp: body.thumbUp,
-            thumbDown: body.thumbDown,
-            funny: body.funny,
-        });
+    catch(err){
+        res.status(400).send(err);
     }
     comment.save().then((result) => {
-        log(result)
+        log(result);
         res.send(result)
     }, (error) => {
         // 400 for bad request
@@ -101,7 +109,13 @@ router.get('/', async function(req, res) {
     if (allGames.length >= 2)
         // Sort by like rate
         allGames.sort(function(a, b) {
-            return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
+            const a_total = a.thumbUp + a.thumbDown;
+            const b_total = b.thumbUp + b.thumbDown;
+            if (a_total === 0)
+                return 1;
+            if (b_total === 0)
+                return -1;
+            return b.thumbUp / b_total - a.thumbUp / a_total;
         });
     let hottest5 = allGames.filter(i => i.thumbUp + i.thumbDown >= 100);
     if (!hottest5)
@@ -139,7 +153,13 @@ router.get('/', async function(req, res) {
     gamesByGenre.forEach(function (list){
         if (list.length > 1)
             list.sort(function (a, b) {
-                return b.thumbUp / (b.thumbUp + b.thumbDown) - a.thumbUp / (a.thumbUp + a.thumbDown);
+                const a_total = a.thumbUp + a.thumbDown;
+                const b_total = b.thumbUp + b.thumbDown;
+                if (a_total === 0)
+                    return 1;
+                if (b_total === 0)
+                    return -1;
+                return b.thumbUp / b_total - a.thumbUp / a_total;
             });
         let hottest5PerGenre = list.filter((i) => i.thumbUp + i.thumbDown >= 100);
 
@@ -209,37 +229,23 @@ router.delete('/:game_id', async function(req, res){
         {_id: id},
         function(err) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
         }
     );
     await LongComment.deleteMany(
         {gameCommented: thisGame.gameName},
         function (err) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
         }
     );
     await Comment.deleteMany(
         {gameCommented: thisGame.gameName},
         function (err) {
             if (err)
-                res.send(err);
+                res.status(500).send(err);
         }
     );
-    //
-    // // Save modified Comment, LongComment and Game
-    // Game.save().then(
-    //     (result) => {},
-    //     (error) => {res.status(400).send(error)}
-    // );
-    // LongComment.save().then(
-    //     (result) => {},
-    //     (error) => {res.status(400).send(error)}
-    // );
-    // Comment.save().then(
-    //     (result) => {},
-    //     (error) => {res.status(400).send(error)}
-    // );
 
     res.send({longComments: thisLongComments,
         shortComments: thisShortComments,
@@ -272,14 +278,14 @@ router.delete('/comments/:comm_id', async function(req, res){
         }
     }).catch((error) => {
         // 500 Server error
-        res.status(500).send();
+        res.status(500).send(error);
     });
     // Delete it
     thisCommentModel.deleteOne(
         {_id: id},
         function(err) {
             if (err){
-                res.send(err);
+                res.status(500).send(err);
             }
         }
     );
@@ -317,16 +323,21 @@ router.patch('/comments/:comm_id/', function(req, res) {
             return;
         }
         else{
-            if (newCommentBody){
-                thisComment.commentBody = newCommentBody;
-                thisComment.thumbUp = 0;
-                thisComment.thumbDown = 0;
-                thisComment.funny = 0;
+            try{
+                if (newCommentBody){
+                    thisComment.commentBody = newCommentBody;
+                    thisComment.thumbUp = 0;
+                    thisComment.thumbDown = 0;
+                    thisComment.funny = 0;
+                }
+                else{
+                    thisComment.thumbUp = req.body.thumbUp;
+                    thisComment.thumbDown = req.body.thumbDown;
+                    thisComment.funny = req.body.funny;
+                }
             }
-            else{
-                thisComment.thumbUp = req.body.thumbUp;
-                thisComment.thumbDown = req.body.thumbDown;
-                thisComment.funny = req.body.funny;
+            catch(err){
+                res.status(400).send(err);
             }
             thisComment.save().then(
                 (result) => {res.send(result)},
@@ -334,7 +345,8 @@ router.patch('/comments/:comm_id/', function(req, res) {
             );
         }
     }).catch((error) => {
-        res.status(500).send();
+        // Server error
+        res.status(500).send(error);
     });
 
 });
@@ -356,16 +368,20 @@ router.patch('/:game_id/', async function(req, res) {
         res.status(404).send();
         return;
     }
-
-    thisGame.gamePictures = newGame.gamePictures;
-    thisGame.gameName = newGame.gameName;
-    thisGame.publisher = newGame.publisher;
-    thisGame.developer = newGame.developer;
-    thisGame.releaseDate = newGame.releaseDate;
-    thisGame.genre = newGame.genre;
-    thisGame.thumbUp = newGame.thumbUp;
-    thisGame.thumbDown = newGame.thumbDown;
-
+    try{
+        thisGame.gamePictures = newGame.gamePictures;
+        thisGame.gameName = newGame.gameName;
+        thisGame.publisher = newGame.publisher;
+        thisGame.developer = newGame.developer;
+        thisGame.releaseDate = newGame.releaseDate;
+        thisGame.genre = newGame.genre;
+        thisGame.thumbUp = newGame.thumbUp;
+        thisGame.thumbDown = newGame.thumbDown;
+    }
+    catch(err){
+        res.status(400).send(err);
+        return;
+    }
     thisGame.save().then(
         (result) => {res.send(thisGame)},
         (error) => {res.status(400).send(error)}

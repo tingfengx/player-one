@@ -74,7 +74,7 @@ class SignUpForm extends Component {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
-      },
+      }
     })
 
     fetch(request)

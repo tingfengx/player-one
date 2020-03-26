@@ -10,7 +10,7 @@ const { mongoose } = require('./db/mongoose')
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
-const bodyParser = require('body-parser') 
+const bodyParser = require('body-parser')
 
 
 var usersRouter = require('./routes/users');
@@ -22,7 +22,15 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT', 'OPTIONS']
+}))
+// app.options('*', cors({ origin: 'http://localhost:3000', credentials: true }))
+// app.patch('*', cors({ origin: 'http://localhost:3000', credentials: true }))
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,12 +53,12 @@ app.get("/", (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
