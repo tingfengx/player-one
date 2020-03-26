@@ -63,10 +63,10 @@ class App extends React.Component {
 
     return (
       <div>
-          <TopNavBar
-            sections={sections}
-            title="PLAYER ONE"
-          />
+        <TopNavBar
+          sections={sections}
+          title="PLAYER ONE"
+        />
 
         <Switch>
           {" "}
@@ -79,29 +79,24 @@ class App extends React.Component {
             render={() => <Game state={this.state} />}
           />
           <Route
-            exact
             path="/user_account"
             render={(props) => <Account {...props} state={this.state} />}
           />
           <Route
-            exact
             path="/Login"
             render={() => <Login state={this.state} />}
           />
           <Route
-            exact
             path="/Signup"
             render={() => <Signup state={this.state} />}
           />
           <Route
-              exact
-              path="/"
-              render={() => <Signup state={this.state} />}
+            path="/"
+            render={() => <Signup state={this.state} />}
           />
           <Route
-              exact
-              path="/Admin"
-              render={() => <Admin state={this.state} />}
+            path="/Admin"
+            render={() => <Admin state={this.state} />}
           />
 
         </Switch>
