@@ -10,18 +10,58 @@ import "./styles.css";
 
 import avatarImageSrc from "../../imgs/user_account/chocobo_avatar.jpg";
 
+const log = console.log
+const baseURL = 'http://localhost:5000'
+
+
 class UserProfile extends Component {
   constructor() {
     super();
     this.state = {
+      bio: "Love games! Big fan of RPG games!",
       name: "",
       editName: false,
-      nameInput: ""
+      nameInput: "Love games! Big fan of RPG games!",
+      membership: ""
     };
   }
 
-  componentWillMount() {
-    this.setState({ name: this.props.cookies.cookies.username });
+  componentDidMount() {
+    // GET /users/:userId
+    const userId = this.props.cookies.cookies.userId
+    const url = baseURL + '/users/' + userId
+
+    const request = new Request(url, {
+      method: 'get',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+
+    fetch(request)
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json()
+        } else {
+          log('Failed fetching user')
+        }
+      })
+      .then((data) => {
+        // const registerYear = data.registerTime.getYear()
+        this.setState({
+          bio: data.bio,
+          nameInput: data.bio,
+          membership: "player one member since 2020"
+        })
+      })
+      .catch((error) => {
+        log(error)
+      })
+    this.setState({
+      name: this.props.cookies.cookies.username
+    });
   }
 
   handleChange = e => {
@@ -39,11 +79,37 @@ class UserProfile extends Component {
   };
 
   handleFinishEditingName = e => {
-    if (this.state.nameInput.length > 0) {
-      this.setState({ name: this.state.nameInput, editName: false });
-    } else {
-      alert("handle name is too short");
-    }
+    const userId = this.props.cookies.cookies.userId
+    const url = baseURL + '/users/' + userId + '/bio'
+
+    this.setState({ 
+      bio: this.state.nameInput, 
+      editName: false }, () => {
+        const data = {
+          bio: this.state.bio
+        }
+
+        const request = new Request(url, {
+          method: 'patch',
+          credentials: 'include',
+          body: JSON.stringify(data),
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          }
+        })
+
+        fetch(request)
+        .then((res) => {
+          if (res.status === 200) {
+            log('Successfully edited bio!')
+          } else {
+            log('Failed editing bio.')
+          }
+        }).catch((error) => {
+          log(error)
+        })
+      });
   };
 
   render() {
@@ -66,16 +132,8 @@ class UserProfile extends Component {
                 <p>
                   <strong className="usernameText">{this.state.name}</strong>
                 </p>
-                <span className="iconContainer">
-                  <IconButton
-                    color="secondary"
-                    onClick={this.handleStartEditingName}
-                  >
-                    <CreateRoundedIcon fontSize="medium" />
-                  </IconButton>
-                </span>
               </div>
-              <p className="gamerText">gamer since 2000</p>
+              <p className="gamerText">{this.state.membership}</p>
               <div className="countsContainer">
                 <div className="likes">
                   <h2>123</h2>
@@ -93,11 +151,16 @@ class UserProfile extends Component {
             </div>
             <div className="userBioContainer">
               <p>
-                Love games! Big fan of RPG games! Play games for 12 hours every
-                day! Saved hundreds of interesting games to my collection! Check
-                it out! Don't forget to like me if you enjoy my collections or
-                reviews!
+                {this.state.bio}
               </p>
+              <span className="iconContainer">
+                <IconButton
+                  color="secondary"
+                  onClick={this.handleStartEditingName}
+                >
+                  <CreateRoundedIcon fontSize="medium" />
+                </IconButton>
+              </span>
             </div>
           </div>
         </div>
@@ -117,24 +180,11 @@ class UserProfile extends Component {
           <div className="rightSideBar">
             <div className="userInfoBar">
               <div className="username">
-                <TextField
-                  id="nameInput"
-                  size="small"
-                  color="secondary"
-                  onChange={this.handleChange}
-                  name="nameInput"
-                  defaultValue={this.state.name}
-                ></TextField>
-                <span className="iconContainer">
-                  <IconButton
-                    color="secondary"
-                    onClick={this.handleFinishEditingName}
-                  >
-                    <DoneIcon fontSize="medium" />
-                  </IconButton>
-                </span>
+                <p>
+                  <strong className="usernameText">{this.state.name}</strong>
+                </p>
               </div>
-              <p className="gamerText">gamer since 2000</p>
+              <p className="gamerText">{this.state.membership}</p>
               <div className="countsContainer">
                 <div className="likes">
                   <h2>123</h2>
@@ -151,12 +201,24 @@ class UserProfile extends Component {
               </div>
             </div>
             <div className="userBioContainer">
-              <p>
-                Love games! Big fan of RPG games! Play games for 12 hours every
-                day! Saved hundreds of interesting games to my collection! Check
-                it out! Don't forget to like me if you enjoy my collections or
-                reviews!
-              </p>
+              <TextField
+                id="nameInput"
+                multiline
+                size="small"
+                color="secondary"
+                variant="outlined"
+                onChange={this.handleChange}
+                name="nameInput"
+                defaultValue={this.state.bio}
+              ></TextField>
+              <span className="iconContainer">
+                <IconButton
+                  color="secondary"
+                  onClick={this.handleFinishEditingName}
+                >
+                  <DoneIcon fontSize="medium" />
+                </IconButton>
+              </span>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 const log = console.log;
 
 const express = require('express');
+var cors = require('cors');
 const router = express.Router();
 
 const { ObjectID } = require('mongodb')
@@ -13,6 +14,7 @@ const { Game } = require('../models/Game')
 const { LongComment } = require('../models/LongComment')
 const { Comment } = require('../models/Comment')
 
+router.options('*', cors({ origin: 'http://localhost:3000', credentials: true }))
 
 // authorizer
 const userChecker = (req, res, next) => {
@@ -267,9 +269,10 @@ router.patch('/:userId/bio', userChecker, function (req, res) {
 
 
 // update user tags
-router.patch('/:userId/tags', userChecker, function (req, res) {
+router.patch('/:userId/tags/:type', userChecker, function (req, res) {
   const userId = req.params.userId
   const tags = req.body.tags
+  const type = req.params.type
   const authenticatedUser = req.user
 
   // check if userId is valid
@@ -290,24 +293,44 @@ router.patch('/:userId/tags', userChecker, function (req, res) {
   }
 
   // update tags
-  User.findOneAndUpdate({ _id: userId }, {
-    $set: {
-      tags: tags
-    }
-  }, {
-    new: true
-  }).then(
-    (user) => {
-      if (!user) {
-        res.status(404).send()
-      } else {
-        res.send(user)
+  if (type === 'profile') {
+    User.findOneAndUpdate({ _id: userId }, {
+      $set: {
+        profileTags: tags
       }
-    }
-  ).catch((error) => {
-    res.status(400).send()
-  })
-});
+    }, {
+      new: true
+    }).then(
+      (user) => {
+        if (!user) {
+          res.status(404).send()
+        } else {
+          res.send(user)
+        }
+      }
+    ).catch((error) => {
+      res.status(400).send()
+    })
+  } else if (type === 'game') {
+    User.findOneAndUpdate({ _id: userId }, {
+      $set: {
+        gameTags: tags
+      }
+    }, {
+      new: true
+    }).then(
+      (user) => {
+        if (!user) {
+          res.status(404).send()
+        } else {
+          res.send(user)
+        }
+      }
+    ).catch((error) => {
+      res.status(400).send()
+    })
+  }
+})
 
 
 // sign in

@@ -108,11 +108,15 @@
 
 .userBioContainer {
     max-height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .userBioContainer p {
     font-family: Arial, Helvetica, sans-serif;
     color: gray;
+    width: 80%;
 }
 
 .activityContainer {
