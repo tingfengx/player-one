@@ -10,7 +10,7 @@ import "./GameForm.css";
 class GameForm extends React.Component {
     render() {
         const {
-            Username,
+            username,
             handleChange,
             password,
 
@@ -21,8 +21,8 @@ class GameForm extends React.Component {
             <Grid className="user-form" container spacing={4}>
                 {/* Inputs to add student */}
                 <Input
-                    name="Username"
-                    value={Username}
+                    name="username"
+                    value={username}
                     onChange={handleChange}
                     label="Game"
                 />

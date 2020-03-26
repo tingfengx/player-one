@@ -20,27 +20,14 @@ class Queue extends React.Component {
 
 
     state = {
-        Username: "",
+        username: "",
         password: "",
         users: [
-            {Username: "aaa", password: "1111"},
-            {Username: "bbb", password: "22222"},
-            {Username: "aaa", password: "1111"},
-            {Username: "bbb", password: "22222"},
-            {Username: "aaa", password: "1111"},
-            {Username: "bbb", password: "22222"},
-            {Username: "aaa", password: "1111"},
-            {Username: "bbb", password: "22222"},
-            {Username: "aaa", password: "1111"},
-            {Username: "bbb", password: "22222"},
-            {Username: "ccc", password: "1111"},
-            {Username: "ddd", password: "22222"},
-            {Username: "111", password: "1111"},
-            {Username: "mmm", password: "22222"},
-            {Username: "hhhhhhhh", password: "1111"},
-            {Username: "bbb", password: "22222"},
-            {Username: "aaa", password: "1111"},
-            {Username: "bbb", password: "22222"}
+            {username: "aaa", password: "1111"},
+            {username: "bbb", password: "22222"},
+            {username: "aaa", password: "1111"},
+            {username: "bbb", password: "22222"},
+            {username: "aaa", password: "1111"}
         ]
     };
 
@@ -71,7 +58,7 @@ class Queue extends React.Component {
 
 
                 <GameForm
-                    Username={this.state.Username}
+                    username={this.state.username}
                     password={this.state.password}
                     position={this.state.position}
                     handleChange={this.handleInputChange}
