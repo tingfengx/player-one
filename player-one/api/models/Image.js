@@ -14,7 +14,7 @@ const imageSchema = mongoose.Schema({
     // image id on cloudinary server
     image_id: {
         type: String,
-        required: true
+        required: false
     },
     // image url on cloudinary server
     image_url: {
