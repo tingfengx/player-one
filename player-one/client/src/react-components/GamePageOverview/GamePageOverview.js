@@ -242,6 +242,23 @@ class GamePageOverview extends Component {
                                             {this.game.introductionText}
                                         </Typography>
                                     </div>
+                                    <div id={"GameReviewsButtons"}>
+                                        <Button
+                                            onClick={this.handleThumbUp.bind(this, this.game)}
+                                            color="secondary"
+                                            variant="contained"
+                                            aria-label="like"
+                                            startIcon={<LikeIcon/>}
+                                        > My Type! {this.game.thumbUp}
+                                        </Button>
+                                        <Button
+                                            onClick={this.handleThumbDown.bind(this, this.game)}
+                                            aria-label="dislike"
+                                            variant="contained"
+                                            startIcon={<DislikeIcon/>}
+                                        > Hmm, Nope {this.game.thumbDown}
+                                        </Button>
+                                    </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
@@ -429,6 +446,23 @@ class GamePageOverview extends Component {
                                             {this.game.introductionText}
                                         </Typography>
                                     </div>
+                                    <div id={"GameReviewsButtons"}>
+                                        <Button
+                                            onClick={this.handleThumbUp.bind(this, this.game)}
+                                            color="secondary"
+                                            variant="contained"
+                                            aria-label="like"
+                                            startIcon={<LikeIcon/>}
+                                        > My Type! {this.game.thumbUp}
+                                        </Button>
+                                        <Button
+                                            onClick={this.handleThumbDown.bind(this, this.game)}
+                                            aria-label="dislike"
+                                            variant="contained"
+                                            startIcon={<DislikeIcon/>}
+                                        > Hmm, Nope {this.game.thumbDown}
+                                        </Button>
+                                    </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
@@ -457,9 +491,9 @@ class GamePageOverview extends Component {
                                             <p className={"bestShortCommentContent"}>
                                                 "{this.state.bestShort.commentBody}"
                                             </p>
-                                            <p className={"bestShortCommentCommenter"}>
+                                            <div className={"bestShortCommentCommenter"}>
                                                 &mdash;{this.state.bestShort.commenter}
-                                            </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -664,6 +698,25 @@ class GamePageOverview extends Component {
                                             {this.game.introductionText}
                                         </Typography>
                                     </div>
+                                    <div id={"GameReviewsButtons"}>
+                                        <Button
+                                            disabled
+                                            onClick={this.handleThumbUp.bind(this, this.game)}
+                                            color="secondary"
+                                            variant="contained"
+                                            aria-label="like"
+                                            startIcon={<LikeIcon/>}
+                                        > My Type! {this.game.thumbUp}
+                                        </Button>
+                                        <Button
+                                            disabled
+                                            onClick={this.handleThumbDown.bind(this, this.game)}
+                                            aria-label="dislike"
+                                            variant="contained"
+                                            startIcon={<DislikeIcon/>}
+                                        > Hmm, Nope {this.game.thumbDown}
+                                        </Button>
+                                    </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
@@ -834,6 +887,25 @@ class GamePageOverview extends Component {
                                         <Typography variant={'h6'}>
                                             {this.game.introductionText}
                                         </Typography>
+                                    </div>
+                                    <div id={"GameReviewsButtons"}>
+                                        <Button
+                                            disabled
+                                            onClick={this.handleThumbUp.bind(this, this.game)}
+                                            color="secondary"
+                                            variant="contained"
+                                            aria-label="like"
+                                            startIcon={<LikeIcon/>}
+                                        > My Type! {this.game.thumbUp}
+                                        </Button>
+                                        <Button
+                                            disabled
+                                            onClick={this.handleThumbDown.bind(this, this.game)}
+                                            aria-label="dislike"
+                                            variant="contained"
+                                            startIcon={<DislikeIcon/>}
+                                        > Hmm, Nope {this.game.thumbDown}
+                                        </Button>
                                     </div>
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
