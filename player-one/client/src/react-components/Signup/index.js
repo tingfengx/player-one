@@ -7,7 +7,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import "./style.css";
 
-const users = ["user", "admin"];
+const log = console.log
+const baseURL = 'http://localhost:5000'
+
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -15,9 +17,7 @@ class SignUpForm extends Component {
     this.state = {
       username: "",
       password: "",
-      repassword: "",
-      isLoggedIn: false,
-      type: ""
+      repassword: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,17 +26,14 @@ class SignUpForm extends Component {
 
   componentDidMount() {
     if (this.props.cookies.cookies.isLoggedIn) {
-        this.props.history.push("/");
-      }      
+      this.props.history.push("/");
+    }
   }
 
   componentDidUpdate() {
-      if (this.state.isLoggedIn) {
-        this.props.history.push("/");
-        this.props.cookies.set("username", this.state.username);
-        this.props.cookies.set("type", this.state.type);
-        this.props.cookies.set("isLoggedIn", this.state.isLoggedIn);
-      }
+    if (this.props.cookies.cookies.isLoggedIn) {
+      this.props.history.push("/");
+    }
   }
 
   handleChange = e => {
@@ -51,34 +48,59 @@ class SignUpForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let valid = true;
-    // check if username already exists
-    if (users.indexOf(this.state.username) >= 0) {
-        valid = false;
-        alert("username already exists")
-    }
 
     // check if password is valid
     if (this.state.password.length < 4) {
-        valid = false;
-        alert("password is too short")
+      alert("password is too short")
+      return
     }
 
     if (this.state.password !== this.state.repassword) {
-        valid = false;
-        alert("two passwords do not match")
+      alert("two passwords do not match")
+      return
     }
 
-    if (valid) {
-        this.setState({isLoggedIn: true, type: 'user'});
+    // POST /users
+    const url = baseURL + '/users'
+    const data = {
+      username: this.state.username,
+      password: this.state.password,
+      userType: 'user'
     }
-    console.log("The form was submitted with the following data:");
-    console.log(this.state);
+
+    const request = new Request(url, {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+    })
+
+    fetch(request)
+    .then((res) => {
+      if (res.status === 200) {
+        log('Successfully signed up!')
+        return res.json()
+      } else {
+        log('Error occurred. Try again!')
+      }
+      // log(res)
+    })
+    .then((data) => {
+      log(data)
+      this.props.cookies.set("userId", data._id)
+      this.props.cookies.set("username", data.username)
+      this.props.cookies.set("type", data.userType)
+      this.props.cookies.set("isLoggedIn", true)
+    })
+    .catch((error) => {
+      log(error)
+    })
   }
 
   render() {
     return (
-      // <div>component="main" maxWidth="xs"
       <div className={"MasterContainer"}>
         <div>
           <div className={"SignUpForm"}>
@@ -108,7 +130,7 @@ class SignUpForm extends Component {
                 type="password"
                 id="password"
                 onChange={this.handleChange}
-                // autoComplete="current-password"
+              // autoComplete="current-password"
               />
               <TextField
                 variant="outlined"
@@ -120,7 +142,7 @@ class SignUpForm extends Component {
                 type="password"
                 id="re-enter-password"
                 onChange={this.handleChange}
-                // autoComplete="current-password"
+              // autoComplete="current-password"
               />
               <Grid container className={"SignUpText"}>
                 <Grid item>
