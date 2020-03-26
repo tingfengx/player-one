@@ -12,7 +12,7 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser') 
 
-var indexRouter = require('./routes/index');
+
 var usersRouter = require('./routes/users');
 var gamesRouter = require('./routes/games');
 
@@ -31,9 +31,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/', indexRouter);
+// Routers
 app.use('/users', usersRouter);
 app.use('/games', gamesRouter);
+
+// Serve the build
+app.use(express.static(__dirname + "../../client/build"));
+
+// All routes other than above will go to index.html
+// actually only serves for the root /
+app.get("*", (req, res) => {
+    res.sendFile(__dirname + "../../client/build/index.html");
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
