@@ -3,8 +3,12 @@
 const log = console.log;
 
 // Function to add a student, needs to be exported
-export const addUser = (queue, dashboardComp) => {
+
+
+
+export const addUser = queue => {
     // the URL for the request
+
     const url = "/users";
     const userList = queue.state.users;
 
@@ -21,6 +25,7 @@ export const addUser = (queue, dashboardComp) => {
         body: user,
     });
     userList.unshift(user);
+
     queue.setState({
         users: userList,
         message: {
@@ -31,6 +36,7 @@ export const addUser = (queue, dashboardComp) => {
     // Send the request with fetch()
     fetch(request)
         .then(function (res) {
+
             // Handle response we get from the API.
             // Usually check the error codes to see what happened.
             log(`status is ${res.status}`)
@@ -47,7 +53,7 @@ export const addUser = (queue, dashboardComp) => {
             } else {
                 // If server couldn't add the image, tell the user.
                 // Here we are adding a generic message, but you could be more specific in your app.
-                dashboardComp.setState({
+                queue.setState({
                     message: {
                         body: "Error: Could not add image.",
                         type: "error"
