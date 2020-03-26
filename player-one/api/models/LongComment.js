@@ -23,10 +23,7 @@ const LongComment = mongoose.model('LongComment', new mongoose.Schema({
      * Short comments are just strings, long comments allow 
      * paragraphs, and hence is an array of strings. 
      */
-    commentBody: {
-        type: [String],
-        required: true
-    },
+    commentBody: [{type: String}],
     thumbUp: {
         type: Number,
         required: true
