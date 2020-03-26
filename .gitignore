@@ -3,4 +3,4 @@
 ../node_modules/
 node_modules
 .idea/
-*/mongo-data/
+mongo-data/
