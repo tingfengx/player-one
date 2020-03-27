@@ -2,19 +2,10 @@ import React from "react";
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import thumbnail1 from '../../imgs/w3.jpg';
-import thumbnail2 from '../../imgs/w3.jpg';
-import thumbnail3 from '../../imgs/w3.jpg';
-import thumbnail4 from '../../imgs/w3.jpg';
-import thumbnail5 from '../../imgs/w3.jpg';
 import { uid } from 'react-uid';
 
 
 class GameCategorySmallCarousel extends React.Component {
-    images = [
-        thumbnail1, thumbnail2, thumbnail3, thumbnail4, thumbnail5
-    ];
-
     state = {
         hottestGamesCurGenre: []
     }

@@ -22,6 +22,7 @@ const {ObjectID} = require('mongodb');
 // Expected Output: <added game object>
 router.post('/addGame', function(req, res) {
     const body = req.body;
+    console.log(body);
     let game;
     try {
         game = new Game({

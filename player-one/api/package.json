@@ -19,6 +19,7 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
     "morgan": "~1.9.1",
+    "node-fetch": "^2.6.0",
     "uglify-js": "^3.8.0"
   }
 }

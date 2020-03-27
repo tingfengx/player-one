@@ -4,3 +4,6 @@
 node_modules
 .idea/
 mongo-data/
+caching_data_base/
+database-data/
+database_data
