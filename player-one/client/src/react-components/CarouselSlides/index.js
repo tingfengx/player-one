@@ -3,18 +3,45 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './styles.css'
-// Featured Games Images, for front page display
-import game1 from '../../imgs/w3.jpg'
-import game2 from '../../imgs/w3.jpg'
-import game3 from '../../imgs/w3.jpg'
-import game4 from '../../imgs/w3.jpg'
-import game5 from '../../imgs/w3.jpg'
-
 
 export default class CarouselSlides extends Component {
-    imgs = [
-        game1, game2, game3, game4, game5
-    ];
+    state = {
+        hottestGames: undefined,
+        imgs: []
+    }
+
+    componentDidMount = () => {
+        const baseURL = "http://localhost:5000"
+        const url = baseURL + '/games'
+
+        const request = new Request(url, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        })
+        // fetch the request
+        fetch(request).then(res => {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                console.log(res)
+            }
+        }).then(data => {
+            this.setState({hottestGames: data.hottestGames});
+            console.log("Carousels Fetch States Set Complete")
+            console.log(this.state.hottestGames);
+            let imagesCache = [];
+            for (let i = 0; i < this.state.hottestGames.length; i++) {
+                imagesCache.push({
+                    urlToPush: "/games/" + this.state.hottestGames[i]._id,
+                    imageLink: this.state.hottestGames[i].gamePictures[0]
+                })
+            }
+            this.setState({imgs: imagesCache});
+        }).catch(e => console.log(e))
+    }
 
     render() {
         const settings = {
@@ -33,10 +60,9 @@ export default class CarouselSlides extends Component {
             <div>
                 <Slider {...settings}>
                     {
-                        this.imgs.map(img => (
+                        this.state.imgs.map(img => (
                             <div key={img}>
-                                <a href={"/the_witcher_3_wild_hunt"}><img id={"featuredGamesSlider"} src={img}
-                                                                          alt={"Home Page Images"}/></a>
+                                <a href={img.urlToPush}><img id={"featuredGamesSlider"} src={img.imageLink} alt={"Home Page Images"}/></a>
                             </div>
                         ))
                     }

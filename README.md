@@ -9,10 +9,22 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd team42/player-one
     ```
-3. install dependencies:
+3. install dependencies: (both client and api components)
     ```
-    npm install
+    cd client && npm install && cd ../api && npm install && cd ../
     ```
+4. running mongoDB
+    ```
+    cd api && mkdir database-data && mongod --dbpath ./database-data
+    ```
+5. pre populate the database with 26 games (assumes currently in ```team42/player-one/```)
+    ```
+    cd api/db/initial_data && node populate.js
+    ```
+## Important: Please do not refresh on the main page for many time, we have a very limited cloudinary quota
+
+# The information below is out of date, and needs to be updated... (TODO)
+
 ## Run
 This app is built with React, and in particular `create-react-app`, hence, to start you need to run
 ```
