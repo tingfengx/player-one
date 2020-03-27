@@ -18,7 +18,11 @@
 const bleedingEdge = {
     gameName: "Bleeding Edge",
     gamePictures: [
-        
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bleeding_edge5_qbwkra.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/bleeding_edge4_wk6lpj.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/bleeding_edge3_whvbkf.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/bleeding_edge2_atvpxo.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/bleeding_edge1_bneqny.jpg"
     ],
     publisher: "Ninja Theory",
     developer: "Ninja Theory",
@@ -32,7 +36,11 @@ const bleedingEdge = {
 const halfLifeAlyx = {
     gameName: "Half-Life: Alyx",
     gamePictures: [
-        
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/half_life_alyx5_eegnsb.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/half_life_alyx4_u36frv.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/half_life_alyx3_u25swn.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/half_life_alyx2_rjpji8.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/half_life_alyx1_e6zu5d.jpg"
     ],
     publisher: "Valve",
     developer: "Valve",
@@ -46,7 +54,11 @@ const halfLifeAlyx = {
 const doomEternal = {
     gameName: "DOOM Eternal",
     gamePictures:[
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/doom_eternal5_mibhar.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/doom_eternal4_oy66xf.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/doom_eternal3_mmz5io.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/doom_eternal2_wivlzl.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/doom_eternal1_nbeija.jpg"
     ],
     publisher: "Bethesda Softworks",
     developer: "id Software",
@@ -60,7 +72,11 @@ const doomEternal = {
 const monsterHunderWorld = {
     gameName: "MONSTER HUNTER: WORLD",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/monster_hunter_world5_aqo8it.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/monster_hunter_world4_aa7cjg.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/monster_hunter_world3_t0rsvr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/monster_hunter_world2_jdcpkc.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/monster_hunter_world1_hoaqra.jpg"
     ],
     publisher: "CAPCOM Co., Ltd.",
     developer: "CAPCOM Co., Ltd.",
@@ -72,9 +88,13 @@ const monsterHunderWorld = {
 }
 
 const oriAndTheWillOfTheWisps = {
-    gamaName: "Ori and the Will of the Wisps",
+    gameName: "Ori and the Will of the Wisps",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps5_zers2n.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps4_k4mx5e.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps3_mcqnop.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps2_soa2ea.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps1_zbf8c8.jpg"
     ],
     publisher: "Xbox Game Studios",
     developer: "Moon Studios GmbH",
@@ -86,9 +106,13 @@ const oriAndTheWillOfTheWisps = {
 }
 
 const theWitcher3WildHunt = {
-    gamaName: "The Witcher 3: Wild Hunt",
+    gameName: "The Witcher 3: Wild Hunt",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/image3_fnnu0i.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/image2_oq5whx.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/image0_fhrqhn.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/image1_ljtc3e.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/background_ux1v3m.jpg"
     ],
     publisher: "CD PROJEKT RED",
     developer: "CD PROJEKT RED",
@@ -102,7 +126,11 @@ const theWitcher3WildHunt = {
 const theElderScrollsVSkyrimSpecialEdition = {
     gameName: "The Elder Scrolls V: Skyrim Special Edition",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191981/Games/the_elder_scrolls_v_skyrim_special_edition5_datvs5.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/the_elder_scrolls_v_skyrim_special_edition3_ij4c3q.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/the_elder_scrolls_v_skyrim_special_edition4_jsndhr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/the_elder_scrolls_v_skyrim_special_edition2_q6cam4.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/the_elder_scrolls_v_skyrim_special_edition1_ut5rja.jpg"
     ],
     publisher: "Bethesda Softworks",
     developer: "Bethesda Game Studios",
@@ -117,7 +145,11 @@ const theElderScrollsVSkyrimSpecialEdition = {
 const assasinsCreedOdyssey = {
     gameName: "Assasin's Creed Odyssey",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585249752/Games/assasins_creed_odyssey1_xhoucr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585249752/Games/assasins_creed_odyssey3_r4gigw.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585249752/Games/assasins_creed_odyssey5_vdkdzk.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585249752/Games/assasins_creed_odyssey4_h5vyn3.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585249752/Games/assasins_creed_odyssey2_awjlew.jpg"
     ],
     publisher: "Ubisoft",
     developer: "Ubisoft",
@@ -131,7 +163,11 @@ const assasinsCreedOdyssey = {
 const darkSouls3 = {
     gameName: "DARK SOULS III",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/dark_souls3_5_pp5yob.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/dark_souls3_4_go4tmx.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/dark_souls3_3_yotyns.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/dark_souls3_2_lfh2sr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/dark_souls3_1_jz64m5.jpg"
     ],
     developer: "FromSoft, Inc",
     publisher: "FromSoft, Inc",
@@ -145,7 +181,11 @@ const darkSouls3 = {
 const boarderlands3 = {
     gameName: "Boarderland 3",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/boardland3_5_lmv7cb.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/boardland3_4_lwhi5j.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/boardland3_3_jsii54.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/boardland3_2_mrr8uw.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/boardland3_1_z4lypd.jpg"
     ],
     developer: "Gearbox Software",
     publisher: "2K",
@@ -159,7 +199,11 @@ const boarderlands3 = {
 const wolcenLordsOfMayhem = {
     gameName: "Wolcen: Lords of Mayhem",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/wolcen_lords_of_mayhem5_vj3sdi.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/wolcen_lords_of_mayhem4_ndxqd3.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/wolcen_lords_of_mayhem3_lv0mkm.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/wolcen_lords_of_mayhem2_qpe7ss.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/wolcen_lords_of_mayhem1_u1gx80.jpg"
     ],
     developer: "WOLCEN Studio",
     publisher: "WOLCEN Studio",
@@ -173,7 +217,11 @@ const wolcenLordsOfMayhem = {
 const grandTheftAuto = {
     gameName: "Grand Theft Auto V",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/grand_theft_auto5_5_otbxcy.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/grand_theft_auto5_4_pp63ko.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/grand_theft_auto5_3_vyjmnj.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/grand_theft_auto5_2_udtztg.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/grand_theft_auto5_1_bxwosf.jpg"
     ],
     developer: "Rockstar North",
     publisher: "Rockstar Games",
@@ -185,9 +233,13 @@ const grandTheftAuto = {
 }
 
 const brightMemory = {
-    gameName = "Bright Memory",
+    gameName: "Bright Memory",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory5_byilkr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory4_jveosk.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory3_bloqe9.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory2_e1cgup.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory1_e4wtdy.jpg"
     ],
     publisher: "FYQD-Studio; PLAYISM",
     developer: "FYQD-Studio",
@@ -199,9 +251,13 @@ const brightMemory = {
 }
 
 const totalLockdown = {
-    gameName = "Total Lockdown",
+    gameName: "Total Lockdown",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown5_nxgdc0.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown4_vmki8h.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown3_esclw4.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown2_bc1snt.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown1_oqhasd.jpg"
     ],
     publisher: "OVALIS INVESTMENTS LIMITED",
     developer: "Panzar Studio",
@@ -215,7 +271,11 @@ const totalLockdown = {
 const tombRaider = {
     gameName: "Tomb Raider",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/tomb_raider5_fnuxfw.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/tomb_raider4_sw73yw.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/tomb_raider3_llj3n3.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/tomb_raider2_vgffpn.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/tomb_raider1_xjijs4.jpg"
     ],
     publisher: "Square Enix",
     developer: "Crystal Dynamics",
@@ -229,7 +289,11 @@ const tombRaider = {
 const slimeRancher = {
     gameName: "Slime Rancher",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/slime_rancher5_ta5tf6.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/slime_rancher4_dktbed.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/slime_rancher3_gl9egw.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/slime_rancher2_fi3yjx.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/slime_rancher1_fdtyjy.jpg"
     ],
     publisher: "Monomi Park",
     developer: "Monomo Park",
@@ -243,7 +307,11 @@ const slimeRancher = {
 const blackMasa = {
     gameName: "Black Masa",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/black_mesa5_o7yequ.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/black_mesa4_cazlzq.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/black_mesa3_oiqksm.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/black_mesa2_p6s6rv.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/black_mesa1_oofsyc.jpg"
     ],
     developer: "Crowbar Collective",
     publisher: "Crowbar Collective",
@@ -257,7 +325,11 @@ const blackMasa = {
 const counterStrikeGlobalOffensive = {
     gameName: "Counter-Strike: Global Offensive",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/counter_strike__global_offensive5_ytxt6z.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/counter_strike__global_offensive4_qzbu4c.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/counter_strike__global_offensive3_klyalz.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/counter_strike__global_offensive2_bw1wg3.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/counter_strike__global_offensive1_qej9nl.jpg"
     ],
     developer: "Valve",
     publisher: "Valve",
@@ -271,7 +343,11 @@ const counterStrikeGlobalOffensive = {
 const tomClancysRainbowSixSiege = {
     gameName: "Tom Clancy's Rainbow Six Siege",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191982/Games/tom_clancys_rainbow_six_siege5_kcfpdr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191982/Games/tom_clancys_rainbow_six_siege4_refnnx.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191982/Games/tom_clancys_rainbow_six_siege3_gtpahp.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191982/Games/tom_clancys_rainbow_six_siege2_qcz6g3.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191982/Games/tom_clancys_rainbow_six_siege1_okkpk1.jpg"
     ],
     developer: "Ubisoft Montreal",
     publisher: "Ubisoft",
@@ -285,7 +361,11 @@ const tomClancysRainbowSixSiege = {
 const metroExodus = {
     gameName: "Metro Exodus",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/metro_exodus5_kf1ytz.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191976/Games/metro_exodus4_fuyeqo.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/metro_exodus3_wgq9am.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/metro_exodus2_pguyep.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191975/Games/metro_exodus1_ou7j2k.jpg"
     ],
     developer: "4A Games",
     publisher: "Deep Silver",
@@ -294,12 +374,16 @@ const metroExodus = {
     genre: "shooting",
     thumbDown: 0,
     thumbUp: 0
-},
+}
 
 const battleBlockTheatre = {
     gameName: "BattleBlock Theater",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/battleBlockTheater5_joxrsb.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/battleBlockTheater4_vy6uqm.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/battleBlockTheater3_skdw53.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/battleBlockTheater2_sz86ty.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/battleBlockTheater1_dmoodl.jpg"
     ],
     developer: "The Behemoth",
     publisher: "The Behemoth",
@@ -313,7 +397,11 @@ const battleBlockTheatre = {
 const battleRam = {
     gameName: "Battle Ram",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191972/Games/battle_ram5_yqsgsw.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191971/Games/battle_ram4_gdpiuk.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191971/Games/battle_ram3_yqcygv.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191971/Games/battle_ram2_pnxh91.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191971/Games/battle_ram1_gjrjkb.jpg"
     ],
     developer: "Wloop777",
     publisher: "khukhrovr",
@@ -327,7 +415,11 @@ const battleRam = {
 const stardewValley = {
     gameName: "Stardew Valley",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/stardew_valley5_tf1pcj.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/stardew_valley4_zzy4ad.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/stardew_valley3_a2sch4.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/stardew_valley2_gjoyjo.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191980/Games/stardew_valley1_ilmqyt.jpg"
     ],
     developer: "ConcernedApe",
     publisher: "ConcernedApe",
@@ -341,7 +433,11 @@ const stardewValley = {
 const drawful2 = {
     gameName: "Drawful 2",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/drawful2_5_hl8ipc.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/drawful2_4_o89ya1.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/drawful2_3_fqnse0.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/drawful2_2_xhdfk0.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191974/Games/drawful2_1_jgmrfx.jpg"
     ],
     developer: "Jackbox Games, Inc.",
     publisher: "Jackbox Games, Inc.",
@@ -355,7 +451,11 @@ const drawful2 = {
 const overcooked2 = {
     gameName: "Overcooked! 2",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/overcooked5_n8wybr.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/overcooked4_tv6xuy.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/overcooked3_tinmgz.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/overcooked2_exssof.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/overcooked1_wxv6el.jpg"
     ],
     publisher: "Team 17 Deigital Ltd",
     developer: "Ghost Town Games Ltd.",
@@ -369,7 +469,11 @@ const overcooked2 = {
 const citiesSkylines = {
     gameName: "Cities: Skylines",
     gamePictures: [
-
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines5_ihohqj.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines4_eyxbyu.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines3_w4pyi8.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines2_mpg0bu.jpg",
+        "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines1_vjkvvh.jpg"
     ],
     publisher: "Paradox Interactive",
     developer: "Colossal Order Ltd.",
@@ -407,6 +511,7 @@ const allGames = [
     stardewValley,
     drawful2,
     overcooked2,
+    battleBlockTheatre,
     citiesSkylines
 ]
 

@@ -26,7 +26,7 @@ router.post('/addGame', function(req, res) {
     try {
         game = new Game({
             gameName: body.gameName,
-            gamPictures: body.gamPictures,
+            gamePictures: body.gamePictures,
             publisher: body.publisher,
             developer: body.developer,
             introductionText: body.introductionText,
@@ -35,16 +35,16 @@ router.post('/addGame', function(req, res) {
             thumbUp: body.thumbUp,
             thumbDown: body.thumbDown
         });
+        game.save().then((result) => {
+            res.send(result)
+        }, (error) => {
+            // 400 for bad request
+            res.status(400).send(error)
+        })
     }
     catch(err){
         res.status(400).send(err);
     }
-    game.save().then((result) => {
-        res.send(result)
-    }, (error) => {
-        // 400 for bad request
-        res.status(400).send(error)
-    })
 });
 
 // Expected Input req.body: {isLong: Null if not LongComment

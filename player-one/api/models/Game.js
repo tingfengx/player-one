@@ -1,5 +1,5 @@
 /* Game mongoose model */
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const Game = mongoose.model('Game', new mongoose.Schema({
     gameName: {
@@ -8,8 +8,8 @@ const Game = mongoose.model('Game', new mongoose.Schema({
         minlegth: 1,
         trim: true
     },
-    gamPictures: {
-        type: [String]
+    gamePictures: {
+        type: [{type: String}]
     },
     publisher: {
         type: String
