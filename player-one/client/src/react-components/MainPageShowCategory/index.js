@@ -4,7 +4,7 @@ import './styles.css';
 
 
 export default function MainPageShowCategory(props) {
-    const { GameCategory, CategoryDescription, Images } = props;
+    const { GameCategory, CategoryDescription } = props;
 
     return (
         <div className={"GameShowCaseContainer"}>
@@ -15,7 +15,7 @@ export default function MainPageShowCategory(props) {
                 </div>
             </div>
             <div className={"GameCategorySmallCarousel"}>
-                <GameCategorySmallCarousel Images={Images}/>
+                <GameCategorySmallCarousel GameCategory={GameCategory}/>
             </div>
         </div>
     );
