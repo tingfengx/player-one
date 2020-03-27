@@ -5,26 +5,26 @@ const log = console.log;
 const express = require('express');
 const router = express.Router();
 
-const { Game } = require('../models/Game')
-const { LongComment } = require('../models/LongComment')
-const { Comment } = require('../models/Comment')
+const {Game} = require('../models/Game');
+const {LongComment} = require('../models/LongComment');
+const {Comment} = require('../models/Comment');
 
 // implement DELETE
 
 // body-parser: middleware for parsing HTTP JSON body into a usable object
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 // to validate object IDs
-const { ObjectID } = require('mongodb')
+const {ObjectID} = require('mongodb');
 
 // Expected Input req.body: {<game object properties>}
 // root: add a game
 // Expected Output: <added game object>
 router.post('/addGame', function(req, res) {
     const body = req.body;
-    console.log(body.gamePictures);
+    let game;
     try {
-        const game = new Game({
+        game = new Game({
             gameName: body.gameName,
             gamePictures: body.gamePictures,
             publisher: body.publisher,
@@ -123,7 +123,7 @@ router.get('/', async function(req, res) {
         hottest5 = [];
     // Ensure at least 5 elements in hottest5
     let index = 0;
-    while(hottest5.length < 5 && hottest5.length > index){
+    while (hottest5.length < 5 && allGames.length > index) {
         const thisGame = allGames[index];
         if (thisGame.thumbUp + thisGame.thumbDown < 100)
             hottest5.push(thisGame);
@@ -197,7 +197,7 @@ router.get('/:game_id', async function(req, res){
     const id = req.params.game_id;
     let thisGame = await findGame(res, id);
     if (!thisGame){
-        res.status(404).send('Game Not Found')
+        res.status(404).send('Game Not Found');
         return;
     }
 
@@ -321,7 +321,6 @@ router.patch('/comments/:comm_id/', function(req, res) {
     thisModel.findById(id).then((thisComment) => {
         if (!thisComment) {
             res.status(404).send('Comment Not Found');
-            return;
         }
         else{
             try{
@@ -427,7 +426,7 @@ async function findComments(res, gameName){
         if(err)
             res.send(err)
     });
-    log(longComments, shortComments)
+    log(longComments, shortComments);
     return {longComments, shortComments};
 }
 
