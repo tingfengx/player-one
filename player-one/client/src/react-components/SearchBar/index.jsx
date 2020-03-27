@@ -1,5 +1,6 @@
 import Select from 'react-select'
 import React from "react";
+import {withRouter} from 'react-router-dom';
 
 import './styles.css'
 
@@ -14,7 +15,9 @@ class SearchBar extends React.Component{
         this.setState({ selectedOption });
         if (selectedOption) {
             console.log(selectedOption);
-            alert("selected Game " + selectedOption.label + " with id " + selectedOption.value);
+            const redirectURL = "/games/" + selectedOption.value;
+            this.props.history.push(redirectURL);
+            // alert("selected Game " + selectedOption.label + " with id " + selectedOption.value);
             // code to make something happen after selecting an option
         }
     };
@@ -75,4 +78,4 @@ class SearchBar extends React.Component{
     }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);
