@@ -88,7 +88,7 @@ const monsterHunderWorld = {
 }
 
 const oriAndTheWillOfTheWisps = {
-    gamaName: "Ori and the Will of the Wisps",
+    gameName: "Ori and the Will of the Wisps",
     gamePictures: [
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps5_zers2n.jpg",
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191979/Games/ori_and_the_will_of_the_wisps4_k4mx5e.jpg",
@@ -106,7 +106,7 @@ const oriAndTheWillOfTheWisps = {
 }
 
 const theWitcher3WildHunt = {
-    gamaName: "The Witcher 3: Wild Hunt",
+    gameName: "The Witcher 3: Wild Hunt",
     gamePictures: [
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/image3_fnnu0i.jpg",
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585150054/Games/TheWitcher3WildHunt/image2_oq5whx.jpg",
@@ -233,7 +233,7 @@ const grandTheftAuto = {
 }
 
 const brightMemory = {
-    gameName = "Bright Memory",
+    gameName: "Bright Memory",
     gamePictures: [
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory5_byilkr.jpg",
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/bright_memory4_jveosk.jpg",
@@ -251,7 +251,7 @@ const brightMemory = {
 }
 
 const totalLockdown = {
-    gameName = "Total Lockdown",
+    gameName: "Total Lockdown",
     gamePictures: [
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown5_nxgdc0.jpg",
         "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191983/Games/total_lockdown4_vmki8h.jpg",
@@ -374,7 +374,7 @@ const metroExodus = {
     genre: "shooting",
     thumbDown: 0,
     thumbUp: 0
-},
+}
 
 const battleBlockTheatre = {
     gameName: "BattleBlock Theater",

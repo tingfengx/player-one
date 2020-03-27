@@ -5,6 +5,29 @@ import BottomInfo from "../BottomInfo";
 
 /* Component for the Home page */
 export default function Home() {
+    const baseURL = "http://localhost:5000"
+    const url = baseURL + '/games'
+
+    const request = new Request(url, {
+      method: 'get',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+    })
+    // fetch the request
+    fetch(request).then(res => {
+        if (res.status === 200) {
+            return res.json()
+        } else {
+            console.log(res)
+        }
+    }).then(data => {
+        console.log(data.hottestGamesForGenre);
+        console.log(data.hottestGames);
+        console.log(data.allGames);
+    }).catch(e => console.log(e))
+
     return (
         <div>
             <CarouselSlides/>
