@@ -29,18 +29,17 @@ class GameCategorySmallCarousel extends React.Component {
                 console.log(res)
             }
         }).then(data => {
-            // console.log("shit, look at me")
             console.log(data);
             if (this.props.GameCategory === "Action Games") {
-                this.setState({hottestGamesCurGenre: data.hottestGamesForGenre[0]});
+                this.setState({ hottestGamesCurGenre: data.hottestGamesForGenre[0] });
             } else if (this.props.GameCategory === "Shooting Games") {
-                this.setState({hottestGamesCurGenre: data.hottestGamesForGenre[4]});
+                this.setState({ hottestGamesCurGenre: data.hottestGamesForGenre[4] });
             } else if (this.props.GameCategory === "Role Playing") {
-                this.setState({hottestGamesCurGenre: data.hottestGamesForGenre[3]});
+                this.setState({ hottestGamesCurGenre: data.hottestGamesForGenre[3] });
             } else if (this.props.GameCategory === "Adventure") {
-                this.setState({hottestGamesCurGenre: data.hottestGamesForGenre[1]});
+                this.setState({ hottestGamesCurGenre: data.hottestGamesForGenre[1] });
             } else if (this.props.GameCategory === "Casual Games") {
-                this.setState({hottestGamesCurGenre: data.hottestGamesForGenre[2]});
+                this.setState({ hottestGamesCurGenre: data.hottestGamesForGenre[2] });
             } else {
                 alert("Novel Game Category Received!" + this.props.GameCategory);
             }
@@ -63,12 +62,12 @@ class GameCategorySmallCarousel extends React.Component {
                     {
                         this.state.hottestGamesCurGenre.map(item => (
                             <a href={"/games/" + item._id}
-                               className={"ClickableImage"}
-                               key={uid(item)}>
+                                className={"ClickableImage"}
+                                key={uid(item)}>
                                 <img className={"ThumbNailImage"}
-                                     src={item.gamePictures[0]}
-                                     alt={"Game Thumbnail Failed to Load"}
-                                     key={uid(item)}
+                                    src={item.gamePictures[0]}
+                                    alt={"Game Thumbnail Failed to Load"}
+                                    key={uid(item)}
                                 /></a>
                         ))
                     }
