@@ -1,10 +1,11 @@
-import React from "react";
-import {useHistory} from 'react-router-dom';
-import {useCookies} from "react-cookie";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 import PropTypes from "prop-types";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
+import { uid } from 'react-uid'
 import Link from "@material-ui/core/Link";
 import SearchBar from "../SearchBar";
 import Typography from "@material-ui/core/Typography";
@@ -25,8 +26,46 @@ export default function TopNavBar(props) {
     const classes = useStyles();
     const history = useHistory();
     const [cookies, , removeCookie] = useCookies();
+    const [sections, setSections] = useState([]);
 
-    const {sections, title} = props;
+    const { title } = props;
+
+    /**
+     * React functional version of ComponentDidMount, 
+     * Notice that have to be useEffect(()=>{}, []), i.e. 
+     * second argument has to be an emty array for it to load only once
+     */
+    useEffect(() => {
+        const baseURL = "http://localhost:5000"
+        const url = baseURL + '/games'
+
+        const request = new Request(url, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        })
+        // fetch the request
+        fetch(request).then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                console.log(res);
+            }
+        }).then((data) => {
+            const sections = [
+                { title: "Featured", games: data.hottestGames },
+                { title: "Action", games: data.hottestGamesForGenre[0] },
+                { title: "Adventure", games: data.hottestGamesForGenre[1] },
+                { title: "Casual", games: data.hottestGamesForGenre[2] },
+                { title: "Role Playing", games: data.hottestGamesForGenre[3] },
+                { title: "Shooting", games: data.hottestGamesForGenre[4] }
+            ];
+            setSections(sections);
+        }).catch(e => console.log(e));
+    }, []);
+
 
     const handleLogin = () => {
         history.push("/Login")
@@ -69,14 +108,18 @@ export default function TopNavBar(props) {
                             <div className="dropdown" key={section.title}>
                                 <button className="dropbtn">{section.title}</button>
                                 <div className="dropdown-content">
-                                    <a href="/the_witcher_3_wild_hunt">The Witcher 3: Wild Hunt</a>
-                                    <a href="/">Game 2</a>
-                                    <a href="/">Game 3</a>
+                                    {
+                                        section.games.map(function (game) {
+                                            const gameName = game.gameName;
+                                            const gameUrl = "/games/" + game._id;
+                                            return <a href={gameUrl} key={uid(gameUrl)}>{gameName}</a>
+                                        })
+                                    }
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <SearchBar/>
+                    <SearchBar />
                     <Typography>
 
                         <Button variant="outlined" size="large" onClick={handleLogin}>
@@ -117,14 +160,18 @@ export default function TopNavBar(props) {
                                 <div className="dropdown" key={section.title}>
                                     <button className="dropbtn">{section.title}</button>
                                     <div className="dropdown-content">
-                                        <a href="/the_witcher_3_wild_hunt">The Witcher 3: Wild Hunt</a>
-                                        <a href="/">Game 2</a>
-                                        <a href="/">Game 3</a>
+                                        {
+                                            section.games.map(function (game) {
+                                                const gameName = game.gameName;
+                                                const gameUrl = "/games/" + game._id;
+                                                return <a href={gameUrl} key={uid(gameUrl)}>{gameName}</a>
+                                            })
+                                        }
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <SearchBar/>
+                        <SearchBar />
                         <div>
 
                             <div className={"dropdown"}>
@@ -167,14 +214,18 @@ export default function TopNavBar(props) {
                                 <div className="dropdown" key={section.title}>
                                     <button className="dropbtn">{section.title}</button>
                                     <div className="dropdown-content">
-                                        <a href="/the_witcher_3_wild_hunt">The Witcher 3: Wild Hunt</a>
-                                        <a href="/">Game 2</a>
-                                        <a href="/">Game 3</a>
+                                        {
+                                            section.games.map(function (game) {
+                                                const gameName = game.gameName;
+                                                const gameUrl = "/games/" + game._id;
+                                                return <a href={gameUrl} key={uid(gameUrl)}>{gameName}</a>
+                                            })
+                                        }
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <SearchBar/>
+                        <SearchBar />
                         <div>
                             <div className={"dropdown"}>
                                 <Button className={"dropbtn"}>{cookies.username}</Button>
