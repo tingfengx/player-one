@@ -9,7 +9,8 @@ import Login from "./react-components/Login";
 import Signup from "./react-components/Signup";
 import TopNavBar from "./react-components/TopNavBar";
 import Admin from './react-components/admin/tabs/tabs';
-import DummyGamePage from './react-components/DummyGamePage';
+import GamePageOverview from './react-components/GamePageOverview/GamePageOverview';
+// import DummyGamePage from './react-components/DummyGamePage';
 
 class App extends React.Component {
     // can use this to store the current user
@@ -66,11 +67,11 @@ class App extends React.Component {
                     <Route exact path="/" render={() => <Home state={this.state} />} />
                     <Route 
                         path={`/games/:gameId`}
-                        component={DummyGamePage}
+                        component={GamePageOverview}
                     />
                     <Route
                         exact
-                        path="/the_witcher_3_wild_hunt"
+                        path="/w3"
                         render={() => <Game state={this.state} />}
                     />
                     <Route

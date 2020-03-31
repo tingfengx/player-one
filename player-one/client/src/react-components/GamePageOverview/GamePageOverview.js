@@ -15,10 +15,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EmotionIcon from '@material-ui/icons/EmojiSymbols'
 import Button from '@material-ui/core/Button'
 import game from "./the_withcher_3_wild_hunt"
-import game0 from '../../imgs/the_witcher_3_wild_hunt/image0.jpg';
-import game1 from '../../imgs/the_witcher_3_wild_hunt/image1.jpg';
-import game2 from '../../imgs/the_witcher_3_wild_hunt/image2.jpg';
-import game3 from '../../imgs/the_witcher_3_wild_hunt/image3.jpg';
+// import game0 from '../../imgs/the_witcher_3_wild_hunt/image0.jpg';
+// import game1 from '../../imgs/the_witcher_3_wild_hunt/image1.jpg';
+// import game2 from '../../imgs/the_witcher_3_wild_hunt/image2.jpg';
+// import game3 from '../../imgs/the_witcher_3_wild_hunt/image3.jpg';
 import {uid} from 'react-uid'
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -35,18 +35,71 @@ for (let i = 0; i < game.shortComments.length; i++){
 }
 
 class GamePageOverview extends Component {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         imgs: [
+    //             game0, game1, game2, game3
+    //         ],
+    //         longCommentContent: '',
+    //         longCommentTitle: '',
+    //         shortCommentContent: '',
+    //         bestShort: bestShort
+    //     };
+    //     this.game = game;
+    // }
+
     constructor(props) {
         super(props);
         this.state = {
-            imgs: [
-                game0, game1, game2, game3
-            ],
+            imgs: [],
             longCommentContent: '',
             longCommentTitle: '',
             shortCommentContent: '',
             bestShort: bestShort
         };
-        this.game = game;
+        // "game" used in this page; 
+        this.game = {
+            gamePictures: [], 
+            gameName: "", 
+            publisher:"", 
+            developer: "", 
+            introductionText: "",
+            releaseDate: "",
+            genre: "",
+            thumbUp: 0,
+            thumbDown: 0,
+            longComments: [],
+            shortComments: []
+        };
+    }
+
+    componentDidMount = () => {
+        const baseURL = "http://localhost:5000"
+        const url = baseURL + '/games/' + this.props.match.params.gameId
+
+        const request = new Request(url, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        })
+        // fetch the request
+        fetch(request).then(res => {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                console.log("something wrong happened");
+                console.log(res);
+            }
+        }).then(data => {
+            /*** full game ***/
+            this.game = data.game;
+            this.game.longComments = data.longComments;
+            this.game.shortComments = data.shortComments;
+            this.setState({imgs: data.game.gamePictures.slice(-4)});
+        }).catch(e => console.log(e))
     }
 
     handleLongCommentDelete(longComment) {
@@ -194,6 +247,33 @@ class GamePageOverview extends Component {
         l(this.state.longCommentContent);
     }
 
+    round(num) {
+        return Math.round((num + Number.EPSILON) * 100) / 100
+    }
+
+    reviewTier() {
+        const rating = this.game.thumbUp / (this.game.thumbUp + this.game.thumbDown);
+        if (!rating) {
+            return "N/A";
+        }
+        if (0.8 <= rating && rating <= 1) {
+            return "Overwhelmingly Positive"
+        } else if (0.6 <= rating && rating < 0.8) {
+            return "Mostly Positive"
+        } else if (0.4 <= rating && rating < 0.6) {
+            return "Mixed"
+        } else if (0.2 <= rating && rating < 0.4) {
+            return "Mostly Negative"
+        } else {
+            return "Negative"
+        }
+    }
+
+    reviewPercentage() {
+        return (this.game.thumbUp + this.game.thumbDown) ? 
+        this.round(this.game.thumbUp * 100 / (this.game.thumbUp + this.game.thumbDown)) : "N/A"
+    }
+
     render() {
         let hasShortComment = false;
         const {cookies} = this.props;
@@ -218,13 +298,18 @@ class GamePageOverview extends Component {
             fade: true,
             arrows: false
         };
+
+        const backgroundPictureStyle = {
+            backgroundImage: "url(" + this.game.gamePictures[0] + ")"
+        }
+
         if (cookies.cookies.type === 'user') {
             return (
                 <div>
                     <div id={"GamePage"}>
-                        <div id={"GameOverviewBlockBackground"}>
+                        <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
-                                <h2 id={"GameName"}> The Witcher 3&reg;    : Wild Hunt</h2>
+                                <h2 id={"GameName"}>{this.game.gameName}</h2>
                                 <div id={"SliderBlock"}>
                                     <Slider {...settings}>
                                         {
@@ -262,16 +347,17 @@ class GamePageOverview extends Component {
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewTier()}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews in Persentage:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
-                                            (this.game.thumbUp + this.game.thumbDown)}</div>
+                                            <div className={"GameReviewPersentage"}>
+                                                {this.reviewPercentage()}%
+                                            </div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Release date: {this.game.releaseDate}
+                                                <p>Release date: {new Date(this.game.releaseDate).toDateString()}
                                                 </p>
                                             </div>
                                         </div>
@@ -426,9 +512,9 @@ class GamePageOverview extends Component {
             return (
                 <div>
                     <div id={"GamePage"}>
-                        <div id={"GameOverviewBlockBackground"}>
+                        <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
-                                <h2 id={"GameName"}> The Witcher 3&reg;    : Wild Hunt</h2>
+                                <h2 id={"GameName"}>this.game.gameName</h2>
                                 <div id={"SliderBlock"}>
                                     <Slider {...settings}>
                                         {
@@ -466,7 +552,7 @@ class GamePageOverview extends Component {
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewTier()}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews in Persentage:</div>
@@ -475,7 +561,7 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Release date: {this.game.releaseDate}
+                                                <p>Release date: {new Date(this.game.releaseDate).toDateString()}
                                                 </p>
                                             </div>
                                         </div>
@@ -678,7 +764,7 @@ class GamePageOverview extends Component {
             return (
                 <div>
                     <div id={"GamePage"}>
-                        <div id={"GameOverviewBlockBackground"}>
+                        <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
                                 <h2 id={"GameName"}> The Witcher 3&reg; : Wild Hunt</h2>
                                 <div id={"SliderBlock"}>
@@ -729,7 +815,7 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Release date: {this.game.releaseDate}
+                                                <p>Release date: {new Date(this.game.releaseDate).toDateString()}
                                                 </p>
                                             </div>
                                         </div>
@@ -868,7 +954,7 @@ class GamePageOverview extends Component {
             return (
                 <div>
                     <div id={"GamePage"}>
-                        <div id={"GameOverviewBlockBackground"}>
+                        <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
                                 <h2 id={"GameName"}> The Witcher 3&reg; : Wild Hunt</h2>
                                 <div id={"SliderBlock"}>
@@ -910,16 +996,15 @@ class GamePageOverview extends Component {
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewTier()}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews Data:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
-                                            (this.game.thumbUp + this.game.thumbDown)}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewPercentage()}%</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
-                                                <p>Release date: {this.game.releaseDate}
+                                                <p>Release date: {new Date(this.game.releaseDate).toDateString()}
                                                 </p>
                                             </div>
                                         </div>

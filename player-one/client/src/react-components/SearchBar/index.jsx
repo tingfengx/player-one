@@ -42,10 +42,10 @@ class SearchBar extends React.Component{
                 console.log(res)
             }
         }).then(data => {
-            console.log("setting state...")
+            // console.log("setting state...")
             this.setState({game_list: data.allGames});
-            console.log("set state complete")
-            console.log(this.state.game_list);
+            // console.log("set state complete")
+            // console.log(this.state.game_list);
             const searchList = this.state.game_list.map(
                 ({ gameName, _id }) => {
                     return{
@@ -55,8 +55,8 @@ class SearchBar extends React.Component{
                 }
             );
             this.setState({search_list: searchList});
-            console.log("parsed search list")
-            console.log(this.state.search_list);
+            // console.log("parsed search list")
+            // console.log(this.state.search_list);
         }).catch(e => console.log(e))
     }
 
