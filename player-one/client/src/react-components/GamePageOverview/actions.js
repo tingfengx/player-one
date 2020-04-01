@@ -59,7 +59,7 @@ export function serverUpdateButtons(item) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    thumbUp: item.thumbUp, // already implemented
+                    thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
                     funny: item.funny
                 })
@@ -80,7 +80,33 @@ export function serverUpdateButtons(item) {
          * Long Comments
          */
         } else {
-            alert("unimplemented!");
+            const url = baseURL + "/games/comments/" + item._id;
+            
+            const request = new Request(url, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    isLong: true,
+                    thumbUp: item.thumbUp,
+                    thumbDown: item.thumbDown,
+                    funny: item.funny
+                })
+            });
+            fetch(request).then(res => {
+                if (! res.status === 200) {
+                    console.log(res);
+                    return;
+                } else {
+                    return res.json();
+                }
+            }).then(res => {
+                // l(res)
+            }).catch(e => {
+                l(e);
+            });
         }
     }
 }
@@ -149,4 +175,92 @@ export function addShortCommentRequest(username, gameName, shortCommentContent) 
             return res.json()
         }
     }).then(res => l(res));
+}
+
+export function addLongCommentRequest(newLongComment, gameName, commenter) {
+    // const newLongComment = {
+    //     title: title,
+    //     commentBody: this.state.longCommentContent.split(/\r?\n/),
+    //     thumbUp: 0,
+    //     thumbDown: 0,
+    //     funny: 0,
+    //     commenter: username,
+    //     time: Date.now()
+    // };
+    const url = baseURL + "/games/addComment";
+    
+    const request = new Request(url, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            // mark as long comment
+            isLong: true,
+            title: newLongComment.title,
+            time: newLongComment.time, 
+            gameCommented: gameName,
+            commenter: commenter,
+            commentBody: newLongComment.commentBody,
+            thumbUp: 0,
+            thumbDown: 0,
+            funny: 0
+        })
+    });
+    fetch(request).then(res => {
+        if (! res.status === 200) {
+            console.log(res);
+        } else {
+            return res.json()
+        }
+    }).then(res => l(res)).catch(e => l(e));
+}
+
+export function requestShortCommentDelete(shortComment) {
+    console.log(shortComment);
+    const url = baseURL + "/games/comments/" + shortComment._id;
+
+    const request = new Request(url, {
+        method: 'delete',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            
+        })
+    })
+
+    fetch(request).then(res => {
+        if (res.ok) {
+            return res.json();
+        } else {
+            console.log(res)
+        }
+    }).then(res => l(res)).catch(e => l(e));
+}
+
+export function requestLongCommentDelete(longComment) {
+    console.log(longComment);
+    const url = baseURL + "/games/comments/" + longComment._id;
+
+    const request = new Request(url, {
+        method: 'delete',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            isLong: true
+        })
+    })
+
+    fetch(request).then(res => {
+        if (res.ok) {
+            return res.json();
+        } else {
+            console.log(res)
+        }
+    }).then(res => l(res)).catch(e => l(e));
 }

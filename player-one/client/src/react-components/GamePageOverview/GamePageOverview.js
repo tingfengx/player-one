@@ -23,8 +23,11 @@ import ShortComment from '../ShortComment';
 import Divider from "@material-ui/core/Divider";
 import { 
     serverUpdateButtons, 
-    editShortCommentRequest ,
-    addShortCommentRequest
+    editShortCommentRequest,
+    addShortCommentRequest,
+    addLongCommentRequest,
+    requestShortCommentDelete,
+    requestLongCommentDelete
 } from "./actions";
 
 const l = console.log;
@@ -97,6 +100,7 @@ class GamePageOverview extends Component {
         if (index > -1) {
             this.game.longComments.splice(index, 1);
             this.forceUpdate();
+            requestLongCommentDelete(longComment);
             return;
         }
         alert("Long comment not found!");
@@ -108,6 +112,7 @@ class GamePageOverview extends Component {
         if (index > -1) {
             this.game.shortComments.splice(index, 1);
             this.forceUpdate();
+            requestShortCommentDelete(shortComment);
             return;
         }
         alert("Short comment not found!");
@@ -161,11 +166,10 @@ class GamePageOverview extends Component {
                 this.forceUpdate();
                 editShortCommentRequest(currrentShortComment);
                 return;
-            } else {
-                alert('Review not found!');
-                return;
             }
         }
+        alert('Review not found!');
+        return;
     }
 
     handleAddShortComment(username) {
@@ -225,6 +229,10 @@ class GamePageOverview extends Component {
             };
             l(this.game.longComments.commentBody);
             this.game.longComments.push(newLongComment);
+
+            // server request
+            addLongCommentRequest(newLongComment, this.game.gameName, username);
+
             this.setState({longCommentContent: ''});
             this.setState({longCommentTitle: ''});
             this.forceUpdate();
@@ -509,7 +517,7 @@ class GamePageOverview extends Component {
                     <div id={"GamePage"}>
                         <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
-                                <h2 id={"GameName"}>this.game.gameName</h2>
+                                <h2 id={"GameName"}>{this.game.gameName}</h2>
                                 <div id={"SliderBlock"}>
                                     <Slider {...settings}>
                                         {
@@ -551,8 +559,7 @@ class GamePageOverview extends Component {
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews in Persentage:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
-                                            (this.game.thumbUp + this.game.thumbDown)}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewPercentage()}%</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
@@ -601,7 +608,7 @@ class GamePageOverview extends Component {
                                                     longComment.commentBody.map(i => (
                                                         <p className={"LongCommentContent"} key={uid(i)}>{i}</p>))
                                                 }
-                                                <p className={"LongCommentContent"}>By {longComment.commenter}, {longComment.time}</p>
+                                                <p className={"LongCommentContent"}>By {longComment.commenter}, {new Date(longComment.time).toDateString()}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
                                                         onClick={this.handleThumbUp.bind(this, longComment)}
@@ -761,7 +768,7 @@ class GamePageOverview extends Component {
                     <div id={"GamePage"}>
                         <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
-                                <h2 id={"GameName"}> The Witcher 3&reg; : Wild Hunt</h2>
+                                <h2 id={"GameName"}>{this.game.gameName}</h2>
                                 <div id={"SliderBlock"}>
                                     <Slider {...settings}>
                                         {
@@ -801,12 +808,11 @@ class GamePageOverview extends Component {
                                     <div id={"GameReviewsBlock"}>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.review}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewTier()}</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>Reviews in Persentage:</div>
-                                            <div className={"GameReviewPersentage"}>{this.game.thumbUp /
-                                            (this.game.thumbUp + this.game.thumbDown)}</div>
+                                            <div className={"GameReviewPersentage"}>{this.reviewPercentage()}%</div>
                                         </div>
                                         <div className={"GameReviewsRow"}>
                                             <div className={"GameReviews"}>
