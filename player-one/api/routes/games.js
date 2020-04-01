@@ -17,6 +17,14 @@ const bodyParser = require('body-parser');
 // to validate object IDs
 const {ObjectID} = require('mongodb');
 
+// // get the game by game id, outputs a game object
+// router.get('/:gameId', function(req, res) {
+//     const gameId = req.params.gameId;
+//     Game.findById(gameId).then(res => {
+
+//     })
+// })
+
 // Expected Input req.body: {<game object properties>}
 // root: add a game
 // Expected Output: <added game object>
@@ -204,7 +212,7 @@ router.get('/:game_id', async function(req, res){
 
     let {longComments, shortComments} = await findComments(res, thisGame.gameName);
 
-    res.send({longComments: longComments,
+    res.status(200).send({longComments: longComments,
             shortComments: shortComments,
             game: thisGame})
 });
