@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 
 import './styles.css'
 
+
 class SearchBar extends React.Component{
     state = {
         selectedOption: null,
@@ -16,7 +17,14 @@ class SearchBar extends React.Component{
         if (selectedOption) {
             console.log(selectedOption);
             const redirectURL = "/games/" + selectedOption.value;
-            this.props.history.push(redirectURL);
+            // this.props.history.push(redirectURL);
+            /**
+             * FORCE to absolute position
+             * Since this component is used quite a lot, and 
+             * while it is accessed on different pages, it *has* 
+             * to redirect to the exact correct place.
+             */
+            window.location = redirectURL;
             // alert("selected Game " + selectedOption.label + " with id " + selectedOption.value);
             // code to make something happen after selecting an option
         }
