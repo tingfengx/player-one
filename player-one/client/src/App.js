@@ -3,7 +3,6 @@ import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.css";
 import Home from "./react-components/Home";
-import Game from "./react-components/Game";
 import Account from "./react-components/Account";
 import Login from "./react-components/Login";
 import Signup from "./react-components/Signup";
@@ -69,32 +68,36 @@ class App extends React.Component {
                         path={`/games/:gameId`}
                         component={GamePageOverview}
                     />
-                    <Route
+                    {/* !! DEPRECATED !! */}
+                    {/* <Route
                         exact
                         path="/w3"
                         render={() => <Game state={this.state} />}
-                    />
+                    /> */}
                     <Route
+                        exact
                         path="/user_account"
                         render={(props) => <Account {...props} state={this.state} />}
                     />
                     <Route
+                        exact
                         path="/Login"
                         render={() => <Login state={this.state} />}
                     />
                     <Route
+                        exact
                         path="/Signup"
                         render={() => <Signup state={this.state} />}
+                    />
+                    <Route
+                        exact
+                        path="/admin"
+                        render={() => <Admin state={this.state} />}
                     />
                     <Route
                         path="/"
                         render={() => <Signup state={this.state} />}
                     />
-                    <Route
-                        path="/Admin"
-                        render={() => <Admin state={this.state} />}
-                    />
-
                 </Switch>
             </div>
         );
