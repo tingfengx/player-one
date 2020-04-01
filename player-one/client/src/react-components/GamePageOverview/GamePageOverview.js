@@ -957,7 +957,7 @@ class GamePageOverview extends Component {
                     <div id={"GamePage"}>
                         <div id={"GameOverviewBlockBackground"} style={backgroundPictureStyle}>
                             <div id={"GameOverviewBlock"}>
-                                <h2 id={"GameName"}> The Witcher 3&reg; : Wild Hunt</h2>
+                                <h2 id={"GameName"}>{this.game.gameName}</h2>
                                 <div id={"SliderBlock"}>
                                     <Slider {...settings}>
                                         {
