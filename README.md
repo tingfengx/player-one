@@ -17,13 +17,13 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd api && mkdir database-data && mongod --dbpath ./database-data
     ```
-5. pre populate the database with 26 games (assumes currently in ```team42/player-one/```)
-    ```
-    cd api/db/initial_data && node populate.js
-    ```
-6. start the server (keep it running)
+5. start the server (keep it running) **You must do this before step 6**
     ```
     cd api/ && npm start
+    ```
+6. pre populate the database with 26 games (assumes currently in ```team42/player-one/```)
+    ```
+    cd api/db/initial_data && node populate.js
     ```
 7. start react (keep it running)
     ```
