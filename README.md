@@ -13,13 +13,21 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd client && npm install && cd ../api && npm install && cd ../
     ```
-4. running mongoDB
+4. running mongoDB (keep it running)
     ```
     cd api && mkdir database-data && mongod --dbpath ./database-data
     ```
 5. pre populate the database with 26 games (assumes currently in ```team42/player-one/```)
     ```
     cd api/db/initial_data && node populate.js
+    ```
+6. start the server (keep it running)
+    ```
+    cd api/ && npm start
+    ```
+7. start react (keep it running)
+    ```
+    cd client/ && npm start
     ```
 ## Important: Please do not refresh on the main page for many time, we have a very limited cloudinary quota
 
