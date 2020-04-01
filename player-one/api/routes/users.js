@@ -137,7 +137,7 @@ router.delete('/:userId', adminChecker, function (req, res) {
 
 
 // update user password
-router.patch('/:userId/password', userChecker, function (req, res) {
+router.put('/:userId/password', userChecker, function (req, res) {
   const userId = req.params.userId
   const password = req.body.password
   const authenticatedUser = req.user
@@ -181,7 +181,7 @@ router.patch('/:userId/password', userChecker, function (req, res) {
 
 
 // update user avatarId
-router.patch('/:userId/avatar', userChecker, function (req, res) {
+router.put('/:userId/avatar', userChecker, function (req, res) {
   const userId = req.params.userId
   const avatarId = req.body.avatarId
   const authenticatedUser = req.user
@@ -225,7 +225,7 @@ router.patch('/:userId/avatar', userChecker, function (req, res) {
 
 
 // update user bio
-router.patch('/:userId/bio', userChecker, function (req, res) {
+router.put('/:userId/bio', userChecker, function (req, res) {
   const userId = req.params.userId
   const bio = req.body.bio
   const authenticatedUser = req.user
@@ -269,7 +269,7 @@ router.patch('/:userId/bio', userChecker, function (req, res) {
 
 
 // update user tags
-router.patch('/:userId/tags/:type', userChecker, function (req, res) {
+router.put('/:userId/tags/:type', userChecker, function (req, res) {
   const userId = req.params.userId
   const tags = req.body.tags
   const type = req.params.type

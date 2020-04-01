@@ -79,7 +79,7 @@ class UserSideBar extends Component {
       }
 
       const request = new Request(url, {
-        method: 'patch',
+        method: 'put',
         credentials: 'include',
         body: JSON.stringify(data),
         headers: {
@@ -118,7 +118,7 @@ class UserSideBar extends Component {
       }
 
       const request = new Request(url, {
-        method: 'patch',
+        method: 'put',
         credentials: 'include',
         body: JSON.stringify(data),
         headers: {

@@ -90,7 +90,7 @@ class UserProfile extends Component {
         }
 
         const request = new Request(url, {
-          method: 'patch',
+          method: 'put',
           credentials: 'include',
           body: JSON.stringify(data),
           headers: {
