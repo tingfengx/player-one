@@ -15,18 +15,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EmotionIcon from '@material-ui/icons/EmojiSymbols'
 import Button from '@material-ui/core/Button'
 import game from "./the_withcher_3_wild_hunt"
-// import game0 from '../../imgs/the_witcher_3_wild_hunt/image0.jpg';
-// import game1 from '../../imgs/the_witcher_3_wild_hunt/image1.jpg';
-// import game2 from '../../imgs/the_witcher_3_wild_hunt/image2.jpg';
-// import game3 from '../../imgs/the_witcher_3_wild_hunt/image3.jpg';
 import {uid} from 'react-uid'
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import {Card, List} from "@material-ui/core";
 import ShortComment from '../ShortComment';
 import Divider from "@material-ui/core/Divider";
+import { 
+    serverUpdateButtons, 
+    editShortCommentRequest ,
+    addShortCommentRequest
+} from "./actions";
 
 const l = console.log;
+/**
+ * TODO: Change this before deployment
+ */
+const baseURL = "http://localhost:5000"
 
 let bestShort = {};
 for (let i = 0; i < game.shortComments.length; i++){
@@ -35,20 +40,6 @@ for (let i = 0; i < game.shortComments.length; i++){
 }
 
 class GamePageOverview extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         imgs: [
-    //             game0, game1, game2, game3
-    //         ],
-    //         longCommentContent: '',
-    //         longCommentTitle: '',
-    //         shortCommentContent: '',
-    //         bestShort: bestShort
-    //     };
-    //     this.game = game;
-    // }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -75,7 +66,6 @@ class GamePageOverview extends Component {
     }
 
     componentDidMount = () => {
-        const baseURL = "http://localhost:5000"
         const url = baseURL + '/games/' + this.props.match.params.gameId
 
         const request = new Request(url, {
@@ -127,16 +117,19 @@ class GamePageOverview extends Component {
     handleThumbUp(Comment) {
         Comment.thumbUp += 1;
         this.forceUpdate();
+        serverUpdateButtons(Comment);
     }
 
     handleThumbDown(Comment) {
         Comment.thumbDown += 1;
         this.forceUpdate();
+        serverUpdateButtons(Comment);
     }
 
     handleFunny(Comment) {
         Comment.funny += 1;
         this.forceUpdate();
+        serverUpdateButtons(Comment);
     }
 
     handleTypeShortComment(event) {
@@ -160,14 +153,15 @@ class GamePageOverview extends Component {
                     alert("Edited review should not have the same content!");
                     return;
                 }
-                this.game.shortComments[i].commentBody = this.state.shortCommentContent;
-                this.game.shortComments[i].thumbUp = 0;
-                this.game.shortComments[i].thumbDown = 0;
-                this.game.shortComments[i].funny = 0;
+                const currrentShortComment = this.game.shortComments[i];
+                currrentShortComment.commentBody = this.state.shortCommentContent;
+                currrentShortComment.thumbUp = 0;
+                currrentShortComment.thumbDown = 0;
+                currrentShortComment.funny = 0;
                 this.forceUpdate();
+                editShortCommentRequest(currrentShortComment);
                 return;
-            }
-            else {
+            } else {
                 alert('Review not found!');
                 return;
             }
@@ -202,6 +196,7 @@ class GamePageOverview extends Component {
         });
         l(this.game.shortComments);
         this.forceUpdate();
+        addShortCommentRequest(username, this.game.gameName, this.state.shortCommentContent);
     }
 
     handleAddLongComment(username) {
