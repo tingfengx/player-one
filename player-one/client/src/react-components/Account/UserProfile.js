@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
@@ -8,7 +9,6 @@ import DoneIcon from "@material-ui/icons/Done";
 import TextField from "@material-ui/core/TextField";
 import "./styles.css";
 
-import avatarImageSrc from "../../imgs/user_account/chocobo_avatar.jpg";
 
 const log = console.log
 const baseURL = 'http://localhost:5000'
@@ -22,7 +22,8 @@ class UserProfile extends Component {
       name: "",
       editName: false,
       nameInput: "Love games! Big fan of RPG games!",
-      membership: ""
+      membership: "",
+      avatar: null
     };
   }
 
@@ -53,7 +54,8 @@ class UserProfile extends Component {
         this.setState({
           bio: data.bio,
           nameInput: data.bio,
-          membership: "player one member since 2020"
+          avatar: data.avatarId,
+          membership: "PLAYER ONE member since 2020"
         })
       })
       .catch((error) => {
@@ -74,6 +76,63 @@ class UserProfile extends Component {
     });
   };
 
+  handleUpload = e => {
+    const userId = this.props.cookies.cookies.userId
+    const cloudinaryURL = "https://api.cloudinary.com/v1_1/dzld6bb6y/image/upload"
+
+    const formData = new FormData();
+    formData.append('file', e.target.files[0])
+    formData.append('upload_preset', 'wzgg2ljz')
+    formData.append('folder', 'user_account')
+    // formData.append('use_filename', true)
+    // formData.append('unique_filename', false)
+
+    const uploadRequest = new Request(cloudinaryURL, {
+      method: "post",
+      body: formData
+    })
+
+    let imageURL;
+
+    fetch(uploadRequest)
+      .then((res) => {
+        if (res.status === 200) {
+          log('Successfully uploaded avatar!')
+          return res.json()
+        } else {
+          log('Failed uploading avatar.')
+        }
+      }).then((data) => {
+        imageURL = data.url
+        this.setState({ avatar: data.url })
+
+        const updateURL = baseURL + '/users/' + userId + '/avatar'
+        const updateRequest = new Request(updateURL, {
+          method: 'put',
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 'avatarId': imageURL })
+        })
+
+        fetch(updateRequest)
+          .then((res) => {
+            if (res.status === 200) {
+              log('Successfully updated avatar!')
+            } else {
+              log('Failed updating avatar')
+            }
+          }).catch((error) => {
+            log(error)
+          })
+      })
+      .catch((error) => {
+        log(error)
+      })
+  }
+
   handleStartEditingName = e => {
     this.setState({ editName: true });
   };
@@ -82,24 +141,25 @@ class UserProfile extends Component {
     const userId = this.props.cookies.cookies.userId
     const url = baseURL + '/users/' + userId + '/bio'
 
-    this.setState({ 
-      bio: this.state.nameInput, 
-      editName: false }, () => {
-        const data = {
-          bio: this.state.bio
+    this.setState({
+      bio: this.state.nameInput,
+      editName: false
+    }, () => {
+      const data = {
+        bio: this.state.bio
+      }
+
+      const request = new Request(url, {
+        method: 'put',
+        credentials: 'include',
+        body: JSON.stringify(data),
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
         }
+      })
 
-        const request = new Request(url, {
-          method: 'put',
-          credentials: 'include',
-          body: JSON.stringify(data),
-          headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-          }
-        })
-
-        fetch(request)
+      fetch(request)
         .then((res) => {
           if (res.status === 200) {
             log('Successfully edited bio!')
@@ -109,7 +169,7 @@ class UserProfile extends Component {
         }).catch((error) => {
           log(error)
         })
-      });
+    });
   };
 
   render() {
@@ -121,10 +181,24 @@ class UserProfile extends Component {
             <div className="avatarImageContainer">
               <img
                 className="avatarImage"
-                src={avatarImageSrc}
+                src={this.state.avatar}
                 alt="user avatar"
               />
             </div>
+            <Button
+              variant="contained"
+              component="label"
+              color="secondary"
+              size="small"
+              onChange={this.handleUpload}
+            >
+              Upload Avatar
+  <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+              />
+            </Button>
           </div>
           <div className="rightSideBar">
             <div className="userInfoBar">
@@ -172,10 +246,24 @@ class UserProfile extends Component {
             <div className="avatarImageContainer">
               <img
                 className="avatarImage"
-                src={avatarImageSrc}
+                src={this.state.avatar}
                 alt="user avatar"
               />
             </div>
+            <Button
+              variant="contained"
+              component="label"
+              color="secondary"
+              size="small"
+              onChange={this.handleUpload}
+            >
+              Upload Avatar
+  <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+              />
+            </Button>
           </div>
           <div className="rightSideBar">
             <div className="userInfoBar">
