@@ -23,13 +23,14 @@ class Queue extends React.Component{
         username: "",
         password: "",
         id:"",
+        userType:"",
         users: [
-            { id: "1", username: "aaa", password: "1111" },
-            { id: "2", username: "bbb", password: "22222" },
-            { id: "3", username: "ccc", password: "1111" },
-            { id: "4", username: "ddd", password: "22222" },
-            { id: "5", username: "kkk", password: "1111" },
-            { id: "6", username: "eee", password: "22222" }
+            { id: "1", username: "aaa", password: "1111", userType:"user" },
+            { id: "2", username: "bbb", password: "22222" , userType:"user" },
+            { id: "3", username: "ccc", password: "1111" , userType:"user" },
+            { id: "4", username: "ddd", password: "22222" , userType:"user" },
+            { id: "5", username: "kkk", password: "1111" , userType:"user" },
+            { id: "6", username: "eee", password: "22222", userType:"user"  }
 
         ]
     };
