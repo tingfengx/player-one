@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
      */
     avatarId: {
         type: String,
+        default: "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585790658/user_account/default-avatar_itqie5.png",
         required: false
     },
     bio: {
