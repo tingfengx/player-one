@@ -18,13 +18,6 @@ const bodyParser = require('body-parser');
 // to validate object IDs
 const {ObjectID} = require('mongodb');
 
-// // get the game by game id, outputs a game object
-// router.get('/:gameId', function(req, res) {
-//     const gameId = req.params.gameId;
-//     Game.findById(gameId).then(res => {
-
-//     })
-// })
 
 // Expected Input req.body: {<game object properties>}
 // root: add a game
@@ -362,23 +355,19 @@ router.patch('/comments/:comm_id/', function(req, res) {
 
 });
 
-// Expected req.body: <new game object>
+// Expected req.body: {user_id: <user_id>, game: <new game object>}
 // Game Page PATCH: respond to a thumb up/thumb down/funny
 // Expected Output: <Game object after modification>
 router.patch('/:game_id/', async function(req, res) {
     const game_id = req.params.game_id;
-    const newGame = req.body;
+    const newGame = req.body.game;
+    const user_id = req.body.user_id;
     let thisGame = await findGame(res, game_id);
     if (!thisGame){
         res.status(404).send("Game Not Found");
         return;
     }
 
-    // Validate id
-    if (!ObjectID.isValid(game_id)) {
-        res.status(404).send();
-        return;
-    }
     try{
         thisGame.gamePictures = newGame.gamePictures;
         thisGame.gameName = newGame.gameName;
@@ -393,8 +382,25 @@ router.patch('/:game_id/', async function(req, res) {
         res.status(400).send(err);
         return;
     }
+
+    if (!ObjectID.isValid(user_id)) {
+        res.status(404).send();
+    }
+    let thisUser = await User.find({
+        _id: user_id
+    }, function (err) {
+        if (err) {
+            res.send(err)
+        }
+    });
+    thisUser.likedGames.push(game_id);
+    thisUser.save().then(
+        (result) => {res.send(result)},
+        (error) => {res.status(400).send(error)}
+    );
+
     thisGame.save().then(
-        (result) => {res.send(thisGame)},
+        (result) => {res.send(result)},
         (error) => {res.status(400).send(error)}
     );
 });
