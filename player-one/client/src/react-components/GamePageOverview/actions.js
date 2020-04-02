@@ -3,9 +3,16 @@ const baseURL = "http://localhost:5000";
 
 /**
  * @param Union({Comment}, {LongComment}, {Game}) item 
+ * @param short: the short comment returned from server, should contain the id
+ * @param long: the long commnet returned from server, should contain the id
+ * 
+ * ## short and long should be used eactly on the condition that
+ *      1. item is a LongComment/Comment
+ *      2. item._id is undefined.
+ * 
  * Updates thumbup/thumbdown/funny numbers on the server.
  */
-export function serverUpdateButtons(item) {
+export function serverUpdateButtons(item, short, long) {
     const isGame = item.publisher ? true : false;
     /**
      * Handle Games
@@ -50,7 +57,7 @@ export function serverUpdateButtons(item) {
          * Short Comments
          */
         if (!isLong) {
-            const url = baseURL + "/games/comments/" + item._id;
+            const url = item._id ? baseURL + "/games/comments/" + item._id : baseURL + "/games/comments/" + short._id;
             
             const request = new Request(url, {
                 method: 'PATCH',
@@ -80,7 +87,7 @@ export function serverUpdateButtons(item) {
          * Long Comments
          */
         } else {
-            const url = baseURL + "/games/comments/" + item._id;
+            const url = item._id ? baseURL + "/games/comments/" + item._id : baseURL + "/games/comments/" + long._id;
             
             const request = new Request(url, {
                 method: 'PATCH',
@@ -146,7 +153,7 @@ export function editShortCommentRequest(comment) {
     });
 }
 
-export function addShortCommentRequest(username, gameName, shortCommentContent) {
+export async function addShortCommentRequest(username, gameName, shortCommentContent) {
     /**
      * Request
      */
@@ -168,16 +175,16 @@ export function addShortCommentRequest(username, gameName, shortCommentContent) 
             funny: 0
         })
     });
-    fetch(request).then(res => {
-        if (! res.status === 200) {
-            console.log(res);
-        } else {
-            return res.json()
-        }
-    }).then(res => l(res));
+    const response = await fetch(request);
+    if (! response.ok) {
+        l(response);
+    } else {
+        const data = await response.json();
+        return data;
+    }
 }
 
-export function addLongCommentRequest(newLongComment, gameName, commenter) {
+export async function addLongCommentRequest(newLongComment, gameName, commenter) {
     // const newLongComment = {
     //     title: title,
     //     commentBody: this.state.longCommentContent.split(/\r?\n/),
@@ -208,13 +215,13 @@ export function addLongCommentRequest(newLongComment, gameName, commenter) {
             funny: 0
         })
     });
-    fetch(request).then(res => {
-        if (! res.status === 200) {
-            console.log(res);
-        } else {
-            return res.json()
-        }
-    }).then(res => l(res)).catch(e => l(e));
+    const response = await fetch(request);
+    if (! response.ok) {
+        l(response);
+    } else {
+        const data = await response.json();
+        return data;
+    }
 }
 
 export function requestShortCommentDelete(shortComment) {

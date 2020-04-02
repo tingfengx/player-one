@@ -66,6 +66,17 @@ class GamePageOverview extends Component {
             longComments: [],
             shortComments: []
         };
+        /**
+         * used to cache returned new comments that the user has just addded,
+         * especially used to cache the id of the comment that the user just added.
+         * 
+         * Should be used in the following two cases:
+         *  1. the user just left the comment and tries to click like/unlike/funny button
+         *  2. the user just left the comment and modified it and then tries 
+         *      to click like/unlike/funny button
+         */
+        this.serverRetNewShortComment = undefined;
+        this.serverRetNewLongComment = undefined;
     }
 
     componentDidMount = () => {
@@ -122,19 +133,19 @@ class GamePageOverview extends Component {
     handleThumbUp(Comment) {
         Comment.thumbUp += 1;
         this.forceUpdate();
-        serverUpdateButtons(Comment);
+        serverUpdateButtons(Comment, this.serverRetNewShortComment, this.serverRetNewLongComment);
     }
 
     handleThumbDown(Comment) {
         Comment.thumbDown += 1;
         this.forceUpdate();
-        serverUpdateButtons(Comment);
+        serverUpdateButtons(Comment, this.serverRetNewShortComment, this.serverRetNewLongComment);
     }
 
     handleFunny(Comment) {
         Comment.funny += 1;
         this.forceUpdate();
-        serverUpdateButtons(Comment);
+        serverUpdateButtons(Comment, this.serverRetNewShortComment, this.serverRetNewLongComment);
     }
 
     handleTypeShortComment(event) {
@@ -172,7 +183,7 @@ class GamePageOverview extends Component {
         return;
     }
 
-    handleAddShortComment(username) {
+    async handleAddShortComment(username) {
         for (let i = 0; i < this.game.shortComments.length; i++) {
             if (this.game.shortComments[i].commenter === username) {
                 alert("Every player can only submit ONE review per game!");
@@ -200,10 +211,13 @@ class GamePageOverview extends Component {
         });
         l(this.game.shortComments);
         this.forceUpdate();
-        addShortCommentRequest(username, this.game.gameName, this.state.shortCommentContent);
+        // await the return value, otherwise will be a unresolved promise
+        const newShortComment = await addShortCommentRequest(username, this.game.gameName, this.state.shortCommentContent);
+        // save this new comment state
+        this.serverRetNewShortComment = newShortComment;
     }
 
-    handleAddLongComment(username) {
+    async handleAddLongComment(username) {
         for (let i = 0; i < this.game.longComments.length; i++) {
             if (this.game.longComments[i].commenter === username) {
                 alert("Every professional agency can only submit ONE long review per game!");
@@ -231,7 +245,9 @@ class GamePageOverview extends Component {
             this.game.longComments.push(newLongComment);
 
             // server request
-            addLongCommentRequest(newLongComment, this.game.gameName, username);
+            const returnedNewLongComment = await addLongCommentRequest(newLongComment, this.game.gameName, username);
+            // cache the return value
+            this.serverRetNewLongComment = returnedNewLongComment;
 
             this.setState({longCommentContent: ''});
             this.setState({longCommentTitle: ''});
