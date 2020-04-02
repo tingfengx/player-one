@@ -4,9 +4,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
-import {removeUser} from "./../actions/queue";
+
 // import {withStyles} from '@material-ui/core';
 import "./User.css";
+import {removeUser,
+        changePassword,
+        getAllusers} from "./../actions/queue";
+// import {queue} from "../Queue/queue"
 
 
 // class PasswordInput extends React.Component {
@@ -18,6 +22,7 @@ import "./User.css";
 // const styles = theme => ({});
 
 // PasswordInput = withStyles(styles)(PasswordInput);
+const baseURL = "http://localhost:5000"
 
 class User extends React.Component {
 
@@ -28,12 +33,14 @@ class User extends React.Component {
         //     seconds: 0
         // };
         this.state = {};
-        this.handleChange = this.handleChange.bind(this);
+        this.userList = getAllusers();
+        this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+
     }
 
 
-    handleChange(event) {
+    handleChangePassword(event) {
         const tableRow = event.target.parentElement.parentElement.parentElement.parentElement;
         const nameToChangePassword = tableRow.firstElementChild.innerHTML;
         console.log(nameToChangePassword);
@@ -42,12 +49,24 @@ class User extends React.Component {
     }
 
     handleUpdate(event) {
+
         const tableRow = event.target.parentElement.parentElement.parentElement;
         const nameToChangePassword = tableRow.firstElementChild.innerHTML;
         console.log(nameToChangePassword);
-        alert("Requires server call! Changing user "
-            + nameToChangePassword + "'s password to "
-            + this.state[nameToChangePassword])
+        let tochangeId;
+        this.userList = getAllusers();
+        // log("userList" + this.userList);
+        let users = this.userList;
+        console.log("users are " + users);
+        for (let i = 0; i < users.length; i ++){
+            if (this.userList[i].username === nameToChangePassword){
+                tochangeId = this.userList[i]._id;
+
+            }
+        }
+        changePassword(tochangeId, event.target.value);
+        // const index = userList.indexOf(shortComment);
+
     }
 
 
@@ -73,7 +92,7 @@ class User extends React.Component {
                         label="NewPassword"
                         type="password"
                         id="password"
-                        onChange={this.handleChange}
+                        onChange={this.handleChangePassword}
                     />
                 </TableCell>
 

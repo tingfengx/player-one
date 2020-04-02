@@ -13,7 +13,6 @@ class UserForm extends React.Component {
       username,
       handleChange,
       password,
-
       addUser
     } = this.props;
 
