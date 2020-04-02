@@ -8,6 +8,7 @@ const router = express.Router();
 const {Game} = require('../models/Game');
 const {LongComment} = require('../models/LongComment');
 const {Comment} = require('../models/Comment');
+const {User} = require('../models/User');
 
 // implement DELETE
 
@@ -55,6 +56,7 @@ router.post('/addGame', function(req, res) {
         res.status(400).send(err);
     }
 });
+
 
 // Expected Input req.body: {isLong: Null if not LongComment
 //                          <comment object properties>}
@@ -398,6 +400,23 @@ router.patch('/:game_id/', async function(req, res) {
 });
 
 
+// Expected Input: user_id
+// GET: get all comments the specified user commented
+router.get('/comments/byUser/:user_id', async function (req, res) {
+    const user_id = req.params.user_id;
+    const user = await User.findById(user_id).then((user) => {
+        if (!user) {
+            res.status(404).send("User Not Found");
+        } else {
+            return user;
+        }
+    });
+    const username = user.username;
+    const {longComments, shortComments} = await findCommentsByUser(username);
+    return {longComments, shortComments}
+});
+
+
 /////////////////////////////////////////////////////////////////////////////////
 
 
@@ -412,8 +431,8 @@ async function findGame(res, game_id) {
     // Find game
     const game = await Game.find({
         _id: game_id
-    }, function(err){
-        if(err){
+    }, function (err) {
+        if (err) {
             res.send(err)
         }
     });
@@ -421,18 +440,36 @@ async function findGame(res, game_id) {
     return game[0];
 }
 
-async function findComments(res, gameName){
+async function findComments(res, gameName) {
 
     const longComments = await LongComment.find({
         gameCommented: gameName
-    }, function(err){
-        if(err)
+    }, function (err) {
+        if (err)
             res.send(err)
     });
     const shortComments = await Comment.find({
         gameCommented: gameName
-    }, function(err){
-        if(err)
+    }, function (err) {
+        if (err)
+            res.send(err)
+    });
+    log(longComments, shortComments);
+    return {longComments, shortComments};
+}
+
+async function findCommentsByUser(res, username) {
+
+    const longComments = await LongComment.find({
+        commenter: username
+    }, function (err) {
+        if (err)
+            res.send(err)
+    });
+    const shortComments = await Comment.find({
+        commenter: username
+    }, function (err) {
+        if (err)
             res.send(err)
     });
     log(longComments, shortComments);
