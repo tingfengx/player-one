@@ -266,7 +266,7 @@ router.delete('/:game_id', async function (req, res) {
     log(thisUsers);
     thisUsers.map((user) => {
         for (let i = 0; i < user.likedGames.length; i++){
-            if (user.likedGames[i] == id)
+            if (user.likedGames[i] === id)
                 user.likedGames.splice(i, 1);
         }
         user.save().then(
@@ -372,26 +372,30 @@ router.patch('/comments/:comm_id/', async function (req, res) {
                     thisComment.funny = 0;
                 } else {
                     // Update who likes/dislikes the game
-                    if (thisComment.thumbUp < req.body.thumbUp && username != 'admin')
+                    if (thisComment.thumbUp < req.body.thumbUp && username !== 'admin')
                     {
-                        if (thisComment.likedUsers.includes(thisUser._id))
+                        if (thisComment.likedUsers.includes(thisUser._id)){
+                            res.send(thisComment);
                             return;
+                        }
                         thisComment.likedUsers.push(thisUser._id);
                         // remove from dislikedUsers
                         for (let i = 0; i < thisComment.dislikedUsers.length; i++){
-                            if (thisComment.dislikedUsers[i] == thisUser._id){
+                            if (thisComment.dislikedUsers[i] === thisUser._id){
                                 req.body.thumbDown -= 1;
                                 thisComment.dislikedUsers.slice(i, 1);
                             }
                         }
                     }
-                    else if (thisComment.thumbDown < req.body.thumbDown && username != 'admin') {
-                        if (thisComment.dislikedUsers.includes(thisUser._id))
+                    else if (thisComment.thumbDown < req.body.thumbDown && username !== 'admin') {
+                        if (thisComment.dislikedUsers.includes(thisUser._id)){
+                            res.send(thisComment);
                             return;
+                        }
                         thisComment.dislikedUsers.push(thisUser._id);
                         // remove from likedUsers
                         for (let i = 0; i < thisComment.likedUsers.length; i++) {
-                            if (thisComment.likedUsers[i] == thisUser._id) {
+                            if (thisComment.likedUsers[i] === thisUser._id) {
                                 req.body.thumbUp -= 1;
                                 thisComment.likedUsers.slice(i, 1);
                             }
@@ -406,7 +410,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
             }
             thisComment.save().then(
                 (result) => {
-                    res.send(result)
+                    res.send(thisComment)
                 },
                 (error) => {
                     res.status(400).send(error)
@@ -442,37 +446,40 @@ router.patch('/:game_id/', async function (req, res) {
     });
 
     // User only need liked games
-    if (thisGame.thumbUp < newGame.thumbUp && thisUser.username != 'admin')
+    if (thisGame.thumbUp < newGame.thumbUp && thisUser.username !== 'admin')
     {
         // check if already liked
-        if (thisGame.likedUsers.includes(thisUser._id))
+        if (thisGame.likedUsers.includes(thisUser._id)){
+            res.send(thisGame);
             return;
+        }
         thisGame.likedUsers.push(thisUser._id);
         thisUser.likedGames.push(game_id);
         thisUser.save().then(
-            (result) => {
-                res.send(result)
-            },
+            (result) => {log(result)},
             (error) => {
                 res.status(400).send(error)
             }
         );
         // remove from dislikedUsers
         for (let i = 0; i < thisGame.dislikedUsers.length; i++){
-            if (thisGame.dislikedUsers[i] == thisUser._id){
+            if (thisGame.dislikedUsers[i] === thisUser._id){
                 newGame.thumbDown -= 1;
                 thisGame.dislikedUsers.slice(i, 1);
             }
         }
     }
-    else if (thisGame.thumbDown < newGame.thumbDown && thisUser.username != 'admin')
+    else if (thisGame.thumbDown < newGame.thumbDown && thisUser.username !== 'admin')
     {
         if (thisGame.dislikedUsers.includes(thisUser._id))
+        {
+            res.send(thisGame);
             return;
+        }
         thisGame.dislikedUsers.push(thisUser._id);
         // remove from likedUsers
         for (let i = 0; i < thisGame.likedUsers.length; i++){
-            if (thisGame.likedUsers[i] == thisUser._id){
+            if (thisGame.likedUsers[i] === thisUser._id){
                 newGame.thumbUp -= 1;
                 thisGame.likedUsers.slice(i, 1);
             }
@@ -495,7 +502,7 @@ router.patch('/:game_id/', async function (req, res) {
 
     thisGame.save().then(
         (result) => {
-            res.send(result)
+            res.send(thisGame)
         },
         (error) => {
             res.status(400).send(error)
