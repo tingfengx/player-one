@@ -11,7 +11,8 @@ class GameCategorySmallCarousel extends React.Component {
     }
 
     componentDidMount = () => {
-        const baseURL = "http://localhost:5000"
+        // const baseURL = "http://localhost:5000"
+        const baseURL = "";
         const url = baseURL + '/games'
 
         const request = new Request(url, {
@@ -61,7 +62,7 @@ class GameCategorySmallCarousel extends React.Component {
                 <Slider {...settings}>
                     {
                         this.state.hottestGamesCurGenre.map(item => (
-                            <a href={"/games/" + item._id}
+                            <a href={"/viewgames/" + item._id}
                                 className={"ClickableImage"}
                                 key={uid(item)}>
                                 <img className={"ThumbNailImage"}

@@ -13,7 +13,8 @@ class DummyGamePage extends React.Component {
     }
 
     componentDidMount = () => {
-        const baseURL = "http://localhost:5000"
+        // const baseURL = "http://localhost:5000"
+        const baseURL = "";
         const url = baseURL + '/games/' + this.props.match.params.gameId
 
         const request = new Request(url, {

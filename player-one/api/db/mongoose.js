@@ -15,7 +15,7 @@ const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/PlayerOne
 
 const mongoATLAS = "mongodb+srv://player-one:player-one@cluster0-icowb.mongodb.net/test";
 
-mongoose.connect(mongoURI, 
+mongoose.connect(mongoATLAS, 
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 
 module.exports = { mongoose }  // Export the active connection.
