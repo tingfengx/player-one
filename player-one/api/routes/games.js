@@ -367,6 +367,8 @@ router.patch('/comments/:comm_id/', async function (req, res) {
             try {
                 if (newCommentBody) {
                     thisComment.commentBody = newCommentBody;
+                    thisComment.likedUsers = [];
+                    thisComment.dislikedUsers = [];
                     thisComment.thumbUp = 0;
                     thisComment.thumbDown = 0;
                     thisComment.funny = 0;

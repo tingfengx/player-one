@@ -106,9 +106,9 @@ class GamePageOverview extends Component {
             this.game.longComments = data.longComments;
             this.game.shortComments = data.shortComments;
             this.setState({imgs: data.game.gamePictures.slice(-4)});
-
-            console.log("full game loaded!");
-            console.log(data.game);
+            
+            // console.log("full game loaded!");
+            // console.log(data.game);
         }).catch(e => console.log(e))
     }
 
@@ -147,9 +147,13 @@ class GamePageOverview extends Component {
         const serverRet = await serverUpdateButtons(itemClone, 
             this.serverRetNewShortComment, 
             this.serverRetNewLongComment, username);
-        item.thumbUp = serverRet.thumbUp;
-        item.thumbDown = serverRet.thumbDown;
-        this.forceUpdate();
+        if (!serverRet) {
+            alert("Something wrong happened...");
+        } else {
+            item.thumbUp = serverRet.thumbUp;
+            item.thumbDown = serverRet.thumbDown;
+            this.forceUpdate();
+        }
         
         l("handling thumbs up, server returned ", serverRet);
     }
@@ -164,10 +168,13 @@ class GamePageOverview extends Component {
             this.serverRetNewShortComment, 
             this.serverRetNewLongComment, username);
         // update the numbers
-        item.thumbDown = serverRet.thumbDown;
-        item.thumbUp = serverRet.thumbUp;
-        this.forceUpdate();
-        
+        if (!serverRet) {
+            alert("Something wrong happened...");
+        } else {
+            item.thumbDown = serverRet.thumbDown;
+            item.thumbUp = serverRet.thumbUp;
+            this.forceUpdate();
+        }
         l("handling thumbs down, server returned ", serverRet);
     }
 
@@ -245,7 +252,7 @@ class GamePageOverview extends Component {
         l(this.game.shortComments);
         this.forceUpdate();
         // await the return value, otherwise will be a unresolved promise
-        const newShortComment = await addShortCommentRequest(username, this.game.gameName, this.state.shortCommentContent);
+        const newShortComment = await addShortCommentRequest(username, this.game._id, this.state.shortCommentContent);
         // save this new comment state
         this.serverRetNewShortComment = newShortComment;
     }
@@ -278,7 +285,7 @@ class GamePageOverview extends Component {
             this.game.longComments.push(newLongComment);
 
             // server request
-            const returnedNewLongComment = await addLongCommentRequest(newLongComment, this.game.gameName, username);
+            const returnedNewLongComment = await addLongCommentRequest(newLongComment, this.game._id, username);
             // cache the return value
             this.serverRetNewLongComment = returnedNewLongComment;
 

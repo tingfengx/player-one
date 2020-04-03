@@ -93,7 +93,7 @@ export async function serverUpdateButtons(item, short, long, username) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    newCommentBody: long,
+                    // newCommentBody: long,
                     thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
                     funny: item.funny,
@@ -147,7 +147,8 @@ export function editShortCommentRequest(comment) {
     });
 }
 
-export async function addShortCommentRequest(username, gameName, shortCommentContent) {
+export async function addShortCommentRequest(username, gameId, shortCommentContent) {
+    l("inside addShortCommnetRequest, received shortCommentConent", shortCommentContent);
     /**
      * Request
      */
@@ -162,7 +163,8 @@ export async function addShortCommentRequest(username, gameName, shortCommentCon
         body: JSON.stringify({
             commenter: username,
             time: Date.now(),
-            gameCommented: gameName,
+            // changed to game id
+            gameCommented: gameId,
             commentBody: shortCommentContent,
             thumbUp: 0,
             thumbDown: 0,
@@ -178,7 +180,7 @@ export async function addShortCommentRequest(username, gameName, shortCommentCon
     }
 }
 
-export async function addLongCommentRequest(newLongComment, gameName, commenter) {
+export async function addLongCommentRequest(newLongComment, gameId, commenter) {
     // const newLongComment = {
     //     title: title,
     //     commentBody: this.state.longCommentContent.split(/\r?\n/),
@@ -200,8 +202,9 @@ export async function addLongCommentRequest(newLongComment, gameName, commenter)
             // mark as long comment
             isLong: true,
             title: newLongComment.title,
-            time: newLongComment.time, 
-            gameCommented: gameName,
+            time: newLongComment.time,
+            // changed to gameId 
+            gameCommented: gameId,
             commenter: commenter,
             commentBody: newLongComment.commentBody,
             thumbUp: 0,
