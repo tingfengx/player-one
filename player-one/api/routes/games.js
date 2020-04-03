@@ -351,7 +351,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
         return;
     }
 
-    let thisUser = await User.find({
+    let thisUser = await User.findOne({
         username: username
     }, function (err) {
         if (err) {
@@ -383,7 +383,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
                         thisComment.likedUsers.push(thisUser._id);
                         // remove from dislikedUsers
                         for (let i = 0; i < thisComment.dislikedUsers.length; i++){
-                            if (thisComment.dislikedUsers[i] === thisUser._id){
+                            if (thisComment.dislikedUsers[i] === thisUser._id.toString()){
                                 req.body.thumbDown -= 1;
                                 thisComment.dislikedUsers.splice(i, 1);
                             }
@@ -397,7 +397,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
                         thisComment.dislikedUsers.push(thisUser._id);
                         // remove from likedUsers
                         for (let i = 0; i < thisComment.likedUsers.length; i++) {
-                            if (thisComment.likedUsers[i] === thisUser._id) {
+                            if (thisComment.likedUsers[i] === thisUser._id.toString()) {
                                 req.body.thumbUp -= 1;
                                 thisComment.likedUsers.splice(i, 1);
                             }
