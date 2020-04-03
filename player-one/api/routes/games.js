@@ -439,7 +439,8 @@ router.patch('/:game_id/', async function (req, res) {
         if (err) {
             res.send(err)
         }
-    });
+        }
+    );
 
     // User only need liked games
     if (thisGame.thumbUp < newGame.thumbUp && thisUser.username != 'admin')
@@ -456,7 +457,7 @@ router.patch('/:game_id/', async function (req, res) {
             (error) => {
                 res.status(400).send(error)
             }
-        );
+        ).catch(e => log(e));
         // remove from dislikedUsers
         for (let i = 0; i < thisGame.dislikedUsers.length; i++){
             if (thisGame.dislikedUsers[i] == thisUser._id){

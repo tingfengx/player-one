@@ -12,7 +12,7 @@ const baseURL = "http://localhost:5000";
  * 
  * Updates thumbup/thumbdown/funny numbers on the server.
  */
-export function serverUpdateButtons(item, short, long) {
+export async function serverUpdateButtons(item, short, long, username) {
     const isGame = item.publisher ? true : false;
     /**
      * Handle Games
@@ -26,28 +26,28 @@ export function serverUpdateButtons(item, short, long) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                gamePictures: item.gamePictures,
-                gameName: item.gameName,
-                publisher: item.publisher,
-                developer: item.developer,
-                releaseDate: item.releaseDate,
-                genre: item.genre,
-                thumbUp: item.thumbUp,
-                thumbDown: item.thumbDown
+                game: {
+                    gamePictures: item.gamePictures,
+                    gameName: item.gameName,
+                    publisher: item.publisher,
+                    developer: item.developer,
+                    releaseDate: item.releaseDate,
+                    genre: item.genre,
+                    thumbUp: item.thumbUp,
+                    thumbDown: item.thumbDown
+                },
+                username: username
             })
         });
-        fetch(request).then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                console.log(res);
-                return;
-            }
-        }).then(res => {
-            // l(res)
-        }).catch(e => {
-            l(e);
-        })
+        const response = await fetch(request);
+        if (response.ok) {
+            const data = await response.json();
+            l("after game like, data returned from server side!")
+            l(data);
+            return data;
+        } else {
+            l(response);
+        }
     /**
      * Handle Updates in Comments...
      */
@@ -66,23 +66,20 @@ export function serverUpdateButtons(item, short, long) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    newCommentBody: short,
                     thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
-                    funny: item.funny
+                    funny: item.funny,
+                    username: username
                 })
             });
-            fetch(request).then(res => {
-                if (! res.status === 200) {
-                    console.log(res);
-                    return;
-                } else {
-                    return res.json();
-                }
-            }).then(res => {
-                // l(res)
-            }).catch(e => {
-                l(e);
-            });
+            const response = await fetch(request);
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                l(response);
+            }
         /**
          * Long Comments
          */
@@ -96,24 +93,21 @@ export function serverUpdateButtons(item, short, long) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    isLong: true,
+                    newCommentBody: long,
                     thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
-                    funny: item.funny
+                    funny: item.funny,
+                    username: username,
+                    isLong: true
                 })
             });
-            fetch(request).then(res => {
-                if (! res.status === 200) {
-                    console.log(res);
-                    return;
-                } else {
-                    return res.json();
-                }
-            }).then(res => {
-                // l(res)
-            }).catch(e => {
-                l(e);
-            });
+            const response = await fetch(request);
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                l(response);
+            }
         }
     }
 }

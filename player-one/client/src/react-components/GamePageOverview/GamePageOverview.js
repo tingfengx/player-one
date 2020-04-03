@@ -54,7 +54,10 @@ class GamePageOverview extends Component {
         };
         // "game" used in this page; 
         this.game = {
-            gamePictures: [], 
+            gamePictures: [],
+            // liked and disliked users;
+            likedUsers: [],
+            dislikedUsers: [], 
             gameName: "", 
             publisher:"", 
             developer: "", 
@@ -103,6 +106,9 @@ class GamePageOverview extends Component {
             this.game.longComments = data.longComments;
             this.game.shortComments = data.shortComments;
             this.setState({imgs: data.game.gamePictures.slice(-4)});
+
+            console.log("full game loaded!");
+            console.log(data.game);
         }).catch(e => console.log(e))
     }
 
@@ -131,26 +137,32 @@ class GamePageOverview extends Component {
     }
 
     /////////////// handle buttons //////////////
-    // not limited to comments
-    handleThumbUp(Comment, username) {
-        l(username);
-        Comment.thumbUp += 1;
+    // item cloud be Long Comment / Short Comment / Game
+    async handleThumbUp(item, username) {
+        item.thumbUp += 1;
         this.forceUpdate();
-        serverUpdateButtons(Comment, this.serverRetNewShortComment, this.serverRetNewLongComment);
+        const serverRet = await serverUpdateButtons(item, 
+            this.serverRetNewShortComment, 
+            this.serverRetNewLongComment, username);
+        l("handling thumbs up, server returned ", serverRet);
     }
 
-    handleThumbDown(Comment, username) {
-        l(username);
-        Comment.thumbDown += 1;
+    async handleThumbDown(item, username) {
+        item.thumbDown += 1;
         this.forceUpdate();
-        serverUpdateButtons(Comment, this.serverRetNewShortComment, this.serverRetNewLongComment);
+        const serverRet = await serverUpdateButtons(item, 
+            this.serverRetNewShortComment, 
+            this.serverRetNewLongComment, username);
+        l("handling thumbs down, server returned ", serverRet);
     }
 
-    handleFunny(Comment, username) {
-        l(username);
-        Comment.funny += 1;
+    async handleFunny(item, username) {
+        item.funny += 1;
         this.forceUpdate();
-        serverUpdateButtons(Comment, this.serverRetNewShortComment, this.serverRetNewLongComment);
+        const serverRet = await serverUpdateButtons(item, 
+            this.serverRetNewShortComment, 
+            this.serverRetNewLongComment, username);
+        l("handling funny, server returned ", serverRet);
     }
     /////////////////////////////////////////////
 
