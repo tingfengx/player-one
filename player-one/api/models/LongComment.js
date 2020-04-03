@@ -35,7 +35,17 @@ const LongComment = mongoose.model('LongComment', new mongoose.Schema({
     funny: {
         type: Number,
         required: true
-    }
+    },
+    likedUsers: {
+        type: [{type: String}],
+        default: [],
+        required: false
+    },
+    dislikedUsers: {
+        type: [{type: String}],
+        default: [],
+        required: false
+    },
 }))
 
 module.exports = { LongComment }
