@@ -38,6 +38,16 @@ const Game = mongoose.model('Game', new mongoose.Schema({
         type: Number,
         required: true
     },
+    likedUsers: {
+        type: [{type: String}],
+        default: [],
+        required: false
+    },
+    dislikedUsers: {
+        type: [{type: String}],
+        default: [],
+        required: false
+    },
 }));
 
 module.exports = { Game }

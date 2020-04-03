@@ -34,7 +34,17 @@ const Comment = mongoose.model('Comment', new mongoose.Schema({
     funny: {
         type: Number,
         required: true
-    }
+    },
+    likedUsers: {
+        type: [{type: String}],
+        default: [],
+        required: false
+    },
+    dislikedUsers: {
+        type: [{type: String}],
+        default: [],
+        required: false
+    },
 }))
 
 module.exports = { Comment }
