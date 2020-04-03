@@ -4,7 +4,9 @@ const baseURL = "http://localhost:5000";
 /**
  * @param Union({Comment}, {LongComment}, {Game}) item 
  * @param short: the short comment returned from server, should contain the id
+ *      (id should be the only thing used in this object)
  * @param long: the long commnet returned from server, should contain the id
+ *      (id should be the only thing used in this object)
  * 
  * ## short and long should be used eactly on the condition that
  *      1. item is a LongComment/Comment
@@ -12,7 +14,7 @@ const baseURL = "http://localhost:5000";
  * 
  * Updates thumbup/thumbdown/funny numbers on the server.
  */
-export function serverUpdateButtons(item, short, long) {
+export async function serverUpdateButtons(item, short, long, username) {
     const isGame = item.publisher ? true : false;
     /**
      * Handle Games
@@ -26,28 +28,28 @@ export function serverUpdateButtons(item, short, long) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                gamePictures: item.gamePictures,
-                gameName: item.gameName,
-                publisher: item.publisher,
-                developer: item.developer,
-                releaseDate: item.releaseDate,
-                genre: item.genre,
-                thumbUp: item.thumbUp,
-                thumbDown: item.thumbDown
+                game: {
+                    gamePictures: item.gamePictures,
+                    gameName: item.gameName,
+                    publisher: item.publisher,
+                    developer: item.developer,
+                    releaseDate: item.releaseDate,
+                    genre: item.genre,
+                    thumbUp: item.thumbUp,
+                    thumbDown: item.thumbDown
+                },
+                username: username
             })
         });
-        fetch(request).then(res => {
-            if (res.ok) {
-                return res.json();
-            } else {
-                console.log(res);
-                return;
-            }
-        }).then(res => {
-            // l(res)
-        }).catch(e => {
-            l(e);
-        })
+        const response = await fetch(request);
+        if (response.ok) {
+            const data = await response.json();
+            l("after game like, data returned from server side!")
+            l(data);
+            return data;
+        } else {
+            l(response);
+        }
     /**
      * Handle Updates in Comments...
      */
@@ -68,21 +70,17 @@ export function serverUpdateButtons(item, short, long) {
                 body: JSON.stringify({
                     thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
-                    funny: item.funny
+                    funny: item.funny,
+                    username: username
                 })
             });
-            fetch(request).then(res => {
-                if (! res.status === 200) {
-                    console.log(res);
-                    return;
-                } else {
-                    return res.json();
-                }
-            }).then(res => {
-                // l(res)
-            }).catch(e => {
-                l(e);
-            });
+            const response = await fetch(request);
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                l(response);
+            }
         /**
          * Long Comments
          */
@@ -96,24 +94,21 @@ export function serverUpdateButtons(item, short, long) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    isLong: true,
+                    // newCommentBody: long,
                     thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
-                    funny: item.funny
+                    funny: item.funny,
+                    username: username,
+                    isLong: true
                 })
             });
-            fetch(request).then(res => {
-                if (! res.status === 200) {
-                    console.log(res);
-                    return;
-                } else {
-                    return res.json();
-                }
-            }).then(res => {
-                // l(res)
-            }).catch(e => {
-                l(e);
-            });
+            const response = await fetch(request);
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                l(response);
+            }
         }
     }
 }
@@ -153,7 +148,8 @@ export function editShortCommentRequest(comment) {
     });
 }
 
-export async function addShortCommentRequest(username, gameName, shortCommentContent) {
+export async function addShortCommentRequest(username, gameId, shortCommentContent) {
+    l("inside addShortCommnetRequest, received shortCommentConent", shortCommentContent);
     /**
      * Request
      */
@@ -168,7 +164,8 @@ export async function addShortCommentRequest(username, gameName, shortCommentCon
         body: JSON.stringify({
             commenter: username,
             time: Date.now(),
-            gameCommented: gameName,
+            // changed to game id
+            gameCommented: gameId,
             commentBody: shortCommentContent,
             thumbUp: 0,
             thumbDown: 0,
@@ -184,7 +181,7 @@ export async function addShortCommentRequest(username, gameName, shortCommentCon
     }
 }
 
-export async function addLongCommentRequest(newLongComment, gameName, commenter) {
+export async function addLongCommentRequest(newLongComment, gameId, commenter) {
     // const newLongComment = {
     //     title: title,
     //     commentBody: this.state.longCommentContent.split(/\r?\n/),
@@ -206,8 +203,9 @@ export async function addLongCommentRequest(newLongComment, gameName, commenter)
             // mark as long comment
             isLong: true,
             title: newLongComment.title,
-            time: newLongComment.time, 
-            gameCommented: gameName,
+            time: newLongComment.time,
+            // changed to gameId 
+            gameCommented: gameId,
             commenter: commenter,
             commentBody: newLongComment.commentBody,
             thumbUp: 0,
