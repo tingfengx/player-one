@@ -383,7 +383,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
                         for (let i = 0; i < thisComment.dislikedUsers.length; i++){
                             if (thisComment.dislikedUsers[i] === thisUser._id){
                                 req.body.thumbDown -= 1;
-                                thisComment.dislikedUsers.slice(i, 1);
+                                thisComment.dislikedUsers.splice(i, 1);
                             }
                         }
                     }
@@ -397,7 +397,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
                         for (let i = 0; i < thisComment.likedUsers.length; i++) {
                             if (thisComment.likedUsers[i] === thisUser._id) {
                                 req.body.thumbUp -= 1;
-                                thisComment.likedUsers.slice(i, 1);
+                                thisComment.likedUsers.splice(i, 1);
                             }
                         }
                     }
@@ -437,7 +437,7 @@ router.patch('/:game_id/', async function (req, res) {
         return;
     }
 
-    let thisUser = await User.find({
+    let thisUser = await User.findOne({
         username: username
     }, function (err) {
         if (err) {
@@ -456,16 +456,18 @@ router.patch('/:game_id/', async function (req, res) {
         thisGame.likedUsers.push(thisUser._id);
         thisUser.likedGames.push(game_id);
         thisUser.save().then(
-            (result) => {log(result)},
+            (result) => {},
             (error) => {
                 res.status(400).send(error)
             }
         );
         // remove from dislikedUsers
         for (let i = 0; i < thisGame.dislikedUsers.length; i++){
-            if (thisGame.dislikedUsers[i] === thisUser._id){
+            if (thisGame.dislikedUsers[i] === thisUser._id.toString()){
+                log("find it!")
                 newGame.thumbDown -= 1;
-                thisGame.dislikedUsers.slice(i, 1);
+                thisGame.dislikedUsers.splice(i, 1);
+                log(thisGame.dislikedUsers)
             }
         }
     }
@@ -479,9 +481,11 @@ router.patch('/:game_id/', async function (req, res) {
         thisGame.dislikedUsers.push(thisUser._id);
         // remove from likedUsers
         for (let i = 0; i < thisGame.likedUsers.length; i++){
-            if (thisGame.likedUsers[i] === thisUser._id){
+            if (thisGame.likedUsers[i] === thisUser._id.toString()){
+                log("find it!")
                 newGame.thumbUp -= 1;
-                thisGame.likedUsers.slice(i, 1);
+                thisGame.likedUsers.splice(i, 1);
+                log(thisGame.likedUsers)
             }
         }
     }
