@@ -27,3 +27,27 @@ for (let i = 0; i < allGames.allGames.length; i++) {
        
     }).catch(e => console.log(e))
 }
+
+const allUsers = require('./user_info_start')
+
+for (let i = 0; i < allUsers.allUsers.length; i++) {
+    const user = allUsers.allUsers[i];
+
+    fetch("http://localhost:5000/users", {
+        method: 'post',
+        body: JSON.stringify(user),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+    }).then(res => {
+        console.log(res);
+        if (res.status === 200) {
+            return res.json()
+        } else {
+            console.log(res)
+        }
+    }).then(data => {
+       
+    }).catch(e => console.log(e))
+}

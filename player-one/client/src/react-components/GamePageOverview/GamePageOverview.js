@@ -150,8 +150,6 @@ class GamePageOverview extends Component {
         if (!serverRet) {
             alert("Something wrong happened...");
         } else {
-            l("server returned")
-            l(serverRet);
             item.thumbUp = serverRet.thumbUp;
             item.thumbDown = serverRet.thumbDown;
             this.forceUpdate();
