@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
-import Input from "../../Input";
+// import Input from "../../Input";
 
 import "./GameForm.css";
 
@@ -20,19 +20,19 @@ class GameForm extends React.Component {
         return (
             <Grid className="user-form" container spacing={4}>
                 {/* Inputs to add student */}
-                <Input
-                    name="username"
-                    value={username}
-                    onChange={handleChange}
-                    label="Game"
-                />
+                {/*<Input*/}
+                {/*    name="username"*/}
+                {/*    value={username}*/}
+                {/*    onChange={handleChange}*/}
+                {/*    label="Game"*/}
+                {/*/>*/}
 
-                <Input
-                    name="password"
-                    value={password}
-                    onChange={handleChange}
-                    label="description"
-                />
+                {/*<Input*/}
+                {/*    name="password"*/}
+                {/*    value={password}*/}
+                {/*    onChange={handleChange}*/}
+                {/*    label="description"*/}
+                {/*/>*/}
 
 
 

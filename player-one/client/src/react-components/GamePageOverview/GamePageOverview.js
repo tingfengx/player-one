@@ -150,8 +150,6 @@ class GamePageOverview extends Component {
         if (!serverRet) {
             alert("Something wrong happened...");
         } else {
-            l("server returned")
-            l(serverRet);
             item.thumbUp = serverRet.thumbUp;
             item.thumbDown = serverRet.thumbDown;
             this.forceUpdate();
@@ -432,14 +430,14 @@ class GamePageOverview extends Component {
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <p className={"bestShortCommentContent"}>
                                                 "{this.state.bestShort.commentBody}"
                                             </p>
                                             <p className={"bestShortCommentCommenter"}>
                                                 &mdash;{this.state.bestShort.commenter}
                                             </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -635,14 +633,14 @@ class GamePageOverview extends Component {
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <p className={"bestShortCommentContent"}>
                                                 "{this.state.bestShort.commentBody}"
                                             </p>
                                             <div className={"bestShortCommentCommenter"}>
                                                 &mdash;{this.state.bestShort.commenter}
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -888,14 +886,14 @@ class GamePageOverview extends Component {
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <p className={"bestShortCommentContent"}>
                                                 "{this.state.bestShort.commentBody}"
                                             </p>
                                             <p className={"bestShortCommentCommenter"}>
                                                 &mdash;{this.state.bestShort.commenter}
                                             </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -1077,14 +1075,14 @@ class GamePageOverview extends Component {
                                             <div className={"GameReviews"}>Publisher:</div>
                                             <div className={"GameCompany"}>{this.game.publisher}</div>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <p className={"bestShortCommentContent"}>
                                                 "{this.state.bestShort.commentBody}"
                                             </p>
                                             <p className={"bestShortCommentCommenter"}>
                                                 &mdash;{this.state.bestShort.commenter}
                                             </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
