@@ -516,7 +516,7 @@ router.get('/comments/byUser/:user_id', async function (req, res) {
         }
     });
     const username = user.username;
-    const {longComments, shortComments} = await findCommentsByUser(username);
+    const {longComments, shortComments} = await findCommentsByUser(res, username);
     return {longComments, shortComments}
 });
 
