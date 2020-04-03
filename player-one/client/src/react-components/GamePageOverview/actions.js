@@ -4,7 +4,9 @@ const baseURL = "http://localhost:5000";
 /**
  * @param Union({Comment}, {LongComment}, {Game}) item 
  * @param short: the short comment returned from server, should contain the id
+ *      (id should be the only thing used in this object)
  * @param long: the long commnet returned from server, should contain the id
+ *      (id should be the only thing used in this object)
  * 
  * ## short and long should be used eactly on the condition that
  *      1. item is a LongComment/Comment
@@ -66,7 +68,6 @@ export async function serverUpdateButtons(item, short, long, username) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    newCommentBody: short,
                     thumbUp: item.thumbUp,
                     thumbDown: item.thumbDown,
                     funny: item.funny,

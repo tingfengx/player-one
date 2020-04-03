@@ -106,7 +106,7 @@ class GamePageOverview extends Component {
             this.game.longComments = data.longComments;
             this.game.shortComments = data.shortComments;
             this.setState({imgs: data.game.gamePictures.slice(-4)});
-            
+
             // console.log("full game loaded!");
             // console.log(data.game);
         }).catch(e => console.log(e))
@@ -150,6 +150,8 @@ class GamePageOverview extends Component {
         if (!serverRet) {
             alert("Something wrong happened...");
         } else {
+            l("server returned")
+            l(serverRet);
             item.thumbUp = serverRet.thumbUp;
             item.thumbDown = serverRet.thumbDown;
             this.forceUpdate();
@@ -255,6 +257,8 @@ class GamePageOverview extends Component {
         const newShortComment = await addShortCommentRequest(username, this.game._id, this.state.shortCommentContent);
         // save this new comment state
         this.serverRetNewShortComment = newShortComment;
+        l("server returned the following new short comment:")
+        l(this.serverRetNewShortComment);
     }
 
     async handleAddLongComment(username) {
