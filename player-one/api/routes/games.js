@@ -544,6 +544,7 @@ async function findGame(res, game_id) {
     if (!ObjectID.isValid(game_id)) {
         // 404 not found
         res.status(404).send();
+        return;
     }
 
     // Find game
@@ -552,6 +553,7 @@ async function findGame(res, game_id) {
     }, function (err) {
         if (err) {
             res.send(err)
+            return;
         }
     });
 
