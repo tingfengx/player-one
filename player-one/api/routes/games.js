@@ -206,7 +206,7 @@ router.get('/:game_id', async function (req, res) {
         return;
     }
 
-    let {longComments, shortComments} = await findComments(res, thisGame.gameName);
+    let {longComments, shortComments} = await findComments(res, id);
 
     res.status(200).send({
         longComments: longComments,
@@ -231,7 +231,7 @@ router.delete('/:game_id', async function (req, res) {
         return;
     }
     // Find (send these for debug perpose)
-    let {thisLongComments, thisShortComments} = await findComments(res, thisGame.gameName);
+    let {thisLongComments, thisShortComments} = await findComments(res, id);
 
     // Delete
     await Game.deleteOne(
@@ -242,14 +242,14 @@ router.delete('/:game_id', async function (req, res) {
         }
     );
     await LongComment.deleteMany(
-        {gameCommented: thisGame.gameName},
+        {gameCommented: id},
         function (err) {
             if (err)
                 res.status(500).send(err);
         }
     );
     await Comment.deleteMany(
-        {gameCommented: thisGame.gameName},
+        {gameCommented: id},
         function (err) {
             if (err)
                 res.status(500).send(err);
@@ -555,16 +555,16 @@ async function findGame(res, game_id) {
     return game[0];
 }
 
-async function findComments(res, gameName) {
+async function findComments(res, game_id) {
 
     const longComments = await LongComment.find({
-        gameCommented: gameName
+        gameCommented: game_id
     }, function (err) {
         if (err)
             res.send(err)
     });
     const shortComments = await Comment.find({
-        gameCommented: gameName
+        gameCommented: game_id
     }, function (err) {
         if (err)
             res.send(err)
