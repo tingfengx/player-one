@@ -139,20 +139,35 @@ class GamePageOverview extends Component {
     /////////////// handle buttons //////////////
     // item cloud be Long Comment / Short Comment / Game
     async handleThumbUp(item, username) {
-        item.thumbUp += 1;
-        this.forceUpdate();
-        const serverRet = await serverUpdateButtons(item, 
+        // clone the item
+        const itemClone = JSON.parse(JSON.stringify(item));
+        // increment the item's thumbUp
+        itemClone.thumbUp += 1;
+        // call server to increment the thumbUps
+        const serverRet = await serverUpdateButtons(itemClone, 
             this.serverRetNewShortComment, 
             this.serverRetNewLongComment, username);
+        item.thumbUp = serverRet.thumbUp;
+        item.thumbDown = serverRet.thumbDown;
+        this.forceUpdate();
+        
         l("handling thumbs up, server returned ", serverRet);
     }
 
     async handleThumbDown(item, username) {
-        item.thumbDown += 1;
-        this.forceUpdate();
-        const serverRet = await serverUpdateButtons(item, 
+        // clone the item
+        const itemClone = JSON.parse(JSON.stringify(item));
+        // increment the item's thumbDown
+        itemClone.thumbDown += 1;
+        // call server to increment the thumbDowns
+        const serverRet = await serverUpdateButtons(itemClone, 
             this.serverRetNewShortComment, 
             this.serverRetNewLongComment, username);
+        // update the numbers
+        item.thumbDown = serverRet.thumbDown;
+        item.thumbUp = serverRet.thumbUp;
+        this.forceUpdate();
+        
         l("handling thumbs down, server returned ", serverRet);
     }
 
@@ -290,7 +305,7 @@ class GamePageOverview extends Component {
 
     reviewTier() {
         const rating = this.game.thumbUp / (this.game.thumbUp + this.game.thumbDown);
-        if (!rating) {
+        if (isNaN(rating)) {
             return "N/A";
         }
         if (0.8 <= rating && rating <= 1) {
