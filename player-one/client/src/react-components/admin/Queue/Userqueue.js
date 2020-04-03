@@ -1,7 +1,7 @@
 import React from "react";
 
 // import UserList from "../UserList";
-import UserForm from "../UserForm";
+// import UserForm from "../UserForm";
 import { withCookies } from "react-cookie";
 
 
@@ -16,15 +16,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
-import User from "../User/User"
-import {uid} from "react-uid";
+// import User from "../User/User"
+// import {uid} from "react-uid";
 
-import "../UserList.css"
-import Input from "../Input";
+// import "../UserList.css"
+// import Input from "../Input";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {addLongCommentRequest} from "../../GamePageOverview/actions";
+
 import DeleteIcon from "@material-ui/core/SvgIcon/SvgIcon";
 let log = console.log;
 const baseURL = "http://localhost:5000";
