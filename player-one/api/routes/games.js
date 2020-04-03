@@ -206,7 +206,7 @@ router.get('/:game_id', async function (req, res) {
         return;
     }
 
-    let {longComments, shortComments} = await findComments(res, thisGame.gameName);
+    let {longComments, shortComments} = await findComments(res, id);
 
     res.status(200).send({
         longComments: longComments,
@@ -231,7 +231,7 @@ router.delete('/:game_id', async function (req, res) {
         return;
     }
     // Find (send these for debug perpose)
-    let {thisLongComments, thisShortComments} = await findComments(res, thisGame.gameName);
+    let {thisLongComments, thisShortComments} = await findComments(res, id);
 
     // Delete
     await Game.deleteOne(
@@ -242,14 +242,14 @@ router.delete('/:game_id', async function (req, res) {
         }
     );
     await LongComment.deleteMany(
-        {gameCommented: thisGame.gameName},
+        {gameCommented: id},
         function (err) {
             if (err)
                 res.status(500).send(err);
         }
     );
     await Comment.deleteMany(
-        {gameCommented: thisGame.gameName},
+        {gameCommented: id},
         function (err) {
             if (err)
                 res.status(500).send(err);
@@ -266,7 +266,7 @@ router.delete('/:game_id', async function (req, res) {
     log(thisUsers);
     thisUsers.map((user) => {
         for (let i = 0; i < user.likedGames.length; i++){
-            if (user.likedGames[i] == id)
+            if (user.likedGames[i] === id)
                 user.likedGames.splice(i, 1);
         }
         user.save().then(
@@ -351,7 +351,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
         return;
     }
 
-    let thisUser = await User.find({
+    let thisUser = await User.findOne({
         username: username
     }, function (err) {
         if (err) {
@@ -367,33 +367,39 @@ router.patch('/comments/:comm_id/', async function (req, res) {
             try {
                 if (newCommentBody) {
                     thisComment.commentBody = newCommentBody;
+                    thisComment.likedUsers = [];
+                    thisComment.dislikedUsers = [];
                     thisComment.thumbUp = 0;
                     thisComment.thumbDown = 0;
                     thisComment.funny = 0;
                 } else {
                     // Update who likes/dislikes the game
-                    if (thisComment.thumbUp < req.body.thumbUp && username != 'admin')
+                    if (thisComment.thumbUp < req.body.thumbUp && username !== 'admin')
                     {
-                        if (thisComment.likedUsers.includes(thisUser._id))
+                        if (thisComment.likedUsers.includes(thisUser._id)){
+                            res.send(thisComment);
                             return;
+                        }
                         thisComment.likedUsers.push(thisUser._id);
                         // remove from dislikedUsers
                         for (let i = 0; i < thisComment.dislikedUsers.length; i++){
-                            if (thisComment.dislikedUsers[i] == thisUser._id){
+                            if (thisComment.dislikedUsers[i] === thisUser._id.toString()){
                                 req.body.thumbDown -= 1;
-                                thisComment.dislikedUsers.slice(i, 1);
+                                thisComment.dislikedUsers.splice(i, 1);
                             }
                         }
                     }
-                    else if (thisComment.thumbDown < req.body.thumbDown && username != 'admin') {
-                        if (thisComment.dislikedUsers.includes(thisUser._id))
+                    else if (thisComment.thumbDown < req.body.thumbDown && username !== 'admin') {
+                        if (thisComment.dislikedUsers.includes(thisUser._id)){
+                            res.send(thisComment);
                             return;
+                        }
                         thisComment.dislikedUsers.push(thisUser._id);
                         // remove from likedUsers
                         for (let i = 0; i < thisComment.likedUsers.length; i++) {
-                            if (thisComment.likedUsers[i] == thisUser._id) {
+                            if (thisComment.likedUsers[i] === thisUser._id.toString()) {
                                 req.body.thumbUp -= 1;
-                                thisComment.likedUsers.slice(i, 1);
+                                thisComment.likedUsers.splice(i, 1);
                             }
                         }
                     }
@@ -406,7 +412,7 @@ router.patch('/comments/:comm_id/', async function (req, res) {
             }
             thisComment.save().then(
                 (result) => {
-                    res.send(result)
+                    res.send(thisComment)
                 },
                 (error) => {
                     res.status(400).send(error)
@@ -433,48 +439,56 @@ router.patch('/:game_id/', async function (req, res) {
         return;
     }
 
-    let thisUser = await User.find({
+    let thisUser = await User.findOne({
         username: username
     }, function (err) {
         if (err) {
             res.send(err)
         }
-    });
+        }
+    );
 
     // User only need liked games
-    if (thisGame.thumbUp < newGame.thumbUp && thisUser.username != 'admin')
+    if (thisGame.thumbUp < newGame.thumbUp && thisUser.username !== 'admin')
     {
         // check if already liked
-        if (thisGame.likedUsers.includes(thisUser._id))
+        if (thisGame.likedUsers.includes(thisUser._id)){
+            res.send(thisGame);
             return;
+        }
         thisGame.likedUsers.push(thisUser._id);
         thisUser.likedGames.push(game_id);
         thisUser.save().then(
-            (result) => {
-                res.send(result)
-            },
+            (result) => {},
             (error) => {
                 res.status(400).send(error)
             }
-        );
+        ).catch(e => log(e));
         // remove from dislikedUsers
         for (let i = 0; i < thisGame.dislikedUsers.length; i++){
-            if (thisGame.dislikedUsers[i] == thisUser._id){
+            if (thisGame.dislikedUsers[i] === thisUser._id.toString()){
+                log("find it!")
                 newGame.thumbDown -= 1;
-                thisGame.dislikedUsers.slice(i, 1);
+                thisGame.dislikedUsers.splice(i, 1);
+                log(thisGame.dislikedUsers)
             }
         }
     }
-    else if (thisGame.thumbDown < newGame.thumbDown && thisUser.username != 'admin')
+    else if (thisGame.thumbDown < newGame.thumbDown && thisUser.username !== 'admin')
     {
         if (thisGame.dislikedUsers.includes(thisUser._id))
+        {
+            res.send(thisGame);
             return;
+        }
         thisGame.dislikedUsers.push(thisUser._id);
         // remove from likedUsers
         for (let i = 0; i < thisGame.likedUsers.length; i++){
-            if (thisGame.likedUsers[i] == thisUser._id){
+            if (thisGame.likedUsers[i] === thisUser._id.toString()){
+                log("find it!")
                 newGame.thumbUp -= 1;
-                thisGame.likedUsers.slice(i, 1);
+                thisGame.likedUsers.splice(i, 1);
+                log(thisGame.likedUsers)
             }
         }
     }
@@ -495,7 +509,7 @@ router.patch('/:game_id/', async function (req, res) {
 
     thisGame.save().then(
         (result) => {
-            res.send(result)
+            res.send(thisGame)
         },
         (error) => {
             res.status(400).send(error)
@@ -544,16 +558,16 @@ async function findGame(res, game_id) {
     return game[0];
 }
 
-async function findComments(res, gameName) {
+async function findComments(res, game_id) {
 
     const longComments = await LongComment.find({
-        gameCommented: gameName
+        gameCommented: game_id
     }, function (err) {
         if (err)
             res.send(err)
     });
     const shortComments = await Comment.find({
-        gameCommented: gameName
+        gameCommented: game_id
     }, function (err) {
         if (err)
             res.send(err)

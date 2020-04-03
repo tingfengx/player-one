@@ -41,7 +41,8 @@ const UserSchema = new mongoose.Schema({
     },
     likedGames: {
         type: [{type: String}],
-        required: false
+        required: false,
+        default: []
     },
     userType: {
         type: String,

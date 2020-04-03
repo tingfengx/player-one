@@ -5,6 +5,8 @@ const fetch = require('node-fetch');
 
 for (let i = 0; i < allGames.allGames.length; i++) {
     const game = allGames.allGames[i];
+    game.likedUsers = [];
+    game.dislikedUsers = [];
     // console.log(game);
     // fetch the request
     fetch("http://localhost:5000/games/addGame/", {
