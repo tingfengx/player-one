@@ -1,7 +1,23 @@
 {
-  "name": "player-one",
+  "name": "team42",
   "version": "1.0.0",
+  "description": "Game Platform",
+  "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd player-one && cd client && npm install && npm run build && cd ../api && npm install && npm start"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-winter-2020/team42.git"
+  },
+  "keywords": [
+    "GAME"
+  ],
+  "author": "team042",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-winter-2020/team42/issues"
+  },
+  "homepage": "https://github.com/csc309-winter-2020/team42#readme"
 }
