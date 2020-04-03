@@ -51,7 +51,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ScrollableTabsButtonPrevent() {
+export default function ScrollableTabsButtonPrevent(props) {
+  const { comments } = props
+  console.log(comments)
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -89,37 +91,37 @@ export default function ScrollableTabsButtonPrevent() {
       <TabPanel value={value} index={0}>
         <div className="recentLikes">
           <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game1"/>
+            <img src={gameCoverImageSrc} alt="game1" />
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game2"/>
+            <img src={gameCoverImageSrc} alt="game2" />
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game3"/>
+            <img src={gameCoverImageSrc} alt="game3" />
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game4"/>
+            <img src={gameCoverImageSrc} alt="game4" />
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game5"/>
+            <img src={gameCoverImageSrc} alt="game5" />
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
           </div>
           <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game6"/>
+            <img src={gameCoverImageSrc} alt="game6" />
             <Link href="/the_witcher_3_wild_hunt" color="primary">
               The Witcher 3: Wild Hunt
             </Link>
@@ -128,13 +130,25 @@ export default function ScrollableTabsButtonPrevent() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div className="recentReviews">
-          <div className="recentReview">
+          {comments.map(comment => (
+            <div className="recentReview">
+              <p className="recentReviewTime">{comment.time}</p>
+              <p className="recentReviewText">{comment.commentBody}</p>
+              <div className="recentReviewGame">
+                <img src={comment.gameInfo ? comment.gameInfo.gamePicture : null} alt="review1" />
+                <Link href={comment.gameInfo ? comment.gameInfo.gameURL : null} color="primary">
+                  {comment.gameInfo ? comment.gameInfo.gameName : null}
+                </Link>
+              </div>
+            </div>
+          ))}
+          {/* <div className="recentReview">
             <p className="recentReviewTime">2020-3-2 12:34:56</p>
             <p className="recentReviewText">I love this game! The Witcher 3 is the best!</p>
             <div className="recentReviewGame">
-              <img src={gameCoverImageSrc} alt="review1"/>
+              <img src={gameCoverImageSrc} alt="review1" />
               <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
+                The Witcher 3: Wild Hunt
             </Link>
             </div>
           </div>
@@ -142,12 +156,12 @@ export default function ScrollableTabsButtonPrevent() {
             <p className="recentReviewTime">2020-3-2 12:34:56</p>
             <p className="recentReviewText">This game is so great that I have been playing it like everyday! I highly recommend you guys take a look! It won't disappoint you!</p>
             <div className="recentReviewGame">
-              <img src={gameCoverImageSrc} alt="review2"/>
+              <img src={gameCoverImageSrc} alt="review2" />
               <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
+                The Witcher 3: Wild Hunt
             </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </TabPanel>
       {/* <TabPanel value={value} index={2}>
