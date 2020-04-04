@@ -10,14 +10,19 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd team42/
     ```
-3. Build client and start the server using 
+3. Install dependencies and build client and start the local server using
     ```
-    npm local-start
+    sh local-start.sh
     ```
+    or alternatively, you can do this manuelly by 
+    ```
+    cd player-one/client/ && npm install && npm run build && cd ../api/ && npm install && npm start
+    ```
+    to invoke the shell script and start the server. 
 4. The app should be available at ```localhost:5000```, have fun. (We will refer to ```localhost:5000/``` as root from now on)
 
 ## Viewing the deployed app
-The app is deployed via heroku, and it is available at [```http://player-1.herokuapp.com/```](http://player-1.herokuapp.com/). (as before, we will refer to ```http://player-1.herokuapp.com/``` as our root)
+The app is deployed via heroku, and it is available at [```https://player-1.herokuapp.com/```](https://player-1.herokuapp.com/). (as before, we will refer to ```https://player-1.herokuapp.com/``` as our root)
 
 # Overview of functionalities
 
