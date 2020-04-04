@@ -11,25 +11,66 @@ import "./styles.css";
 
 
 const log = console.log
-const baseURL = 'http://localhost:5000'
+const baseURL = ''
 
 
 class UserProfile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       bio: "Love games! Big fan of RPG games!",
       name: "",
       editName: false,
       nameInput: "Love games! Big fan of RPG games!",
       membership: "",
-      avatar: null
+      avatar: null,
+      numOfComments: 0,
+      numOfLikes: 0
     };
   }
 
   componentDidMount() {
-    // GET /users/:userId
+    console.log(this.props)
     const userId = this.props.cookies.cookies.userId
+    const commentsURL = baseURL + '/games/comments/byUser/' + userId
+
+    const commentsRequest = new Request(commentsURL, {
+      method: 'get',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+
+    fetch(commentsRequest)
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json()
+      } else {
+        log('Failed fetching comments')
+      }
+    })
+    .then((data) => {
+      let likes = 0
+      let num = 0
+      for (let i = 0; i < data.longComments.length; i++) {
+        likes = likes + data.longComments[i].thumbUp
+        num = num + 1
+      }
+      for (let i = 0; i < data.shortComments.length; i++) {
+        likes = likes + data.shortComments[i].thumbUp
+        num = num + 1
+      }
+      this.setState({
+        numOfComments: num,
+        numOfLikes: likes
+      })
+    })
+    .catch((error) => {
+      log(error)
+    })
+
+    // GET /users/:userId
     const url = baseURL + '/users/' + userId
 
     const request = new Request(url, {
@@ -210,13 +251,13 @@ class UserProfile extends Component {
               <p className="gamerText">{this.state.membership}</p>
               <div className="countsContainer">
                 <div className="likes">
-                  <h2>123</h2>
+                  <h2>{this.state.numOfComments}</h2>
                   <div className="iconContainer">
                     <LibraryBooksIcon fontSize="medium" />
                   </div>
                 </div>
                 <div className="likes">
-                  <h2>12345</h2>
+                  <h2>{this.state.numOfLikes}</h2>
                   <div className="iconContainer">
                     <ThumbUpAltOutlinedIcon fontSize="medium" />
                   </div>
