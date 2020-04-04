@@ -42,19 +42,68 @@ class Userqueue extends React.Component{
             userType:"",
             page: 0,
             setPage: 0,
-            users: [
-                { id: "1", username: "aaa", password: "1111", userType:"user" },
-                { id: "2", username: "bbb", password: "22222" , userType:"user" },
-                { id: "3", username: "ccc", password: "1111" , userType:"user" },
-                { id: "4", username: "ddd", password: "22222" , userType:"user" },
-                { id: "5", username: "kkk", password: "1111" , userType:"user" },
-                { id: "6", username: "eee", password: "22222", userType:"user"  }
-
-            ]
+            users: []
+            // users: [
+            //                    { id: "1", username: "aaa", password: "1111", userType:"user" },
+            //     { id: "2", username: "bbb", password: "22222" , userType:"user" },
+            //     { id: "3", username: "ccc", password: "1111" , userType:"user" },
+            //     { id: "4", username: "ddd", password: "22222" , userType:"user" },
+            //     { id: "5", username: "kkk", password: "1111" , userType:"user" },
+            //     { id: "6", username: "eee", password: "22222", userType:"user"  }
+            //
+            // ]
         };
 
 
     }
+
+    componentDidMount = () => {
+        const url = baseURL + "/users"
+
+        const request = new Request(url, {
+            method: 'get',
+            credentials: "include",
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        })
+        // fetch the request
+        fetch(request).then(res => {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                console.log("something wrong happened");
+                console.log(res);
+            }
+        }).then(data => {
+            /*** full game ***/
+            // this.state.users = data.users;
+            let userList = [];
+            // log("hhhhhhhh" + data.users[0].username);
+            for (let i = 0; i < data.users.length; i++){
+                let userObj = {username:"", password:""};
+                userObj.username = data.users[i].username;
+                userObj.password = data.users[i].password;
+                userList.push(userObj);
+                // this.state.users.push(userObj)
+            }
+            console.log("this state users" + userList.length);
+
+            // this.state.users.username = data.allGames.gameName;
+            // this.state.games.introductionText = data.allGames.introductionText;
+            // this.game.longComments = data.longComments;
+            // this.game.shortComments = data.shortComments;
+            // this.setState({imgs: data.game.gamePictures.slice(-4)});
+            this.setState({
+                users: userList
+            });
+
+            // console.log("full game loaded!");
+            // console.log(data.game);
+        }).catch(e => console.log(e))
+    }
+
 
 
     handleChange = (event, newValue) => {
@@ -207,6 +256,18 @@ class Userqueue extends React.Component{
                             label="password"
                             id="margin-normal"
                             defaultValue={this.state.password|| ""}
+                            className="input"
+                            margin="normal"
+                            onChange={this.handleInputChange}
+                        />
+                    </Grid>
+
+                    <Grid item xl={3} lg={3} md={4} s={12} xs={12}>
+                        <TextField
+                            name="userType"
+                            label="userType"
+                            id="margin-normal"
+                            defaultValue={this.state.userType|| ""}
                             className="input"
                             margin="normal"
                             onChange={this.handleInputChange}

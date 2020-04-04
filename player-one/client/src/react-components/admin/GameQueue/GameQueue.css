@@ -1,0 +1,14 @@
+.game {
+    margin-bottom: 5px;
+    font-size: 150%;
+}
+
+.game .MuiTableCell-root {
+    font-size: 0.75em;
+    color: darkslategray;
+}
+
+
+.App {
+    width: 100%;
+}

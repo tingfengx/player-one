@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import GameAd from "../../GameAd"
 import {uid} from "react-uid";
 
-import "./GameList.css"
+
 
 
 export default function GameList(props) {
@@ -33,8 +33,7 @@ export default function GameList(props) {
 
 
     const {users, queueComponent} = props;
-    console.log("user " + users);
-    console.log("queue " + queueComponent);
+
     // console.log(users);
 
     /* Our student list.  We use the state to iterate through the
@@ -57,7 +56,8 @@ export default function GameList(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
+                    {/*{users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (*/}
+                    {users.map(user => (
 
                         <GameAd
                             key={uid(

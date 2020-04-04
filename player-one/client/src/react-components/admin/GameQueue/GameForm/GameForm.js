@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 // import Input from "../../Input";
 
-import "./GameForm.css";
+
 
 /* Component for the Student Form */
 class GameForm extends React.Component {
@@ -20,6 +20,7 @@ class GameForm extends React.Component {
         return (
             <Grid className="user-form" container spacing={4}>
                 {/* Inputs to add student */}
+
                 {/*<Input*/}
                 {/*    name="username"*/}
                 {/*    value={username}*/}
@@ -33,7 +34,6 @@ class GameForm extends React.Component {
                 {/*    onChange={handleChange}*/}
                 {/*    label="description"*/}
                 {/*/>*/}
-
 
 
                 <Grid
