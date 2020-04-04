@@ -47,7 +47,7 @@ class GameQueue extends React.Component {
 
 
     componentDidMount = () => {
-        const url = baseURL + "/games"
+        const url = baseURL + "/games/allGames"
 
         const request = new Request(url, {
             method: 'get',
@@ -70,14 +70,12 @@ class GameQueue extends React.Component {
 
             let gameList = [];
 
-            for (let i = 0; i < data.hottestGamesForGenre.length; i++){
-                for (let j = 0; j < data.hottestGamesForGenre[i].length; j++){
+            for (let i = 0; i < data.length; i++){
+                // for (let j = 0; j < data.hottestGamesForGenre[i].length; j++){
                     let gameObj = {gameName:"", introductionText:""};
-                    gameObj.gameName = data.hottestGamesForGenre[i][j].gameName;
-                    gameObj.introductionText = data.hottestGamesForGenre[i][j].introductionText;
+                    gameObj.gameName = data[i].gameName;
+                    gameObj.introductionText = data[i].introductionText;
                     gameList.push(gameObj);
-                }
-
 
             }
             console.log("this state users" + gameList.length);
@@ -115,16 +113,16 @@ class GameQueue extends React.Component {
         const nameToChangePassword = tableRow.children[0].innerHTML;
 
 
-        for(let i = 0; i < getallGames.hottestGamesForGenre.length; i++){
-            for (let j = 0; j < getallGames.hottestGamesForGenre[i].length; j++) {
-                // for (let i = 0; i < getallGames.allGames.length; i ++) {
+        for(let i = 0; i < getallGames.length; i++){
 
-                if (getallGames.hottestGamesForGenre[i][j].gameName === nameToChangePassword) {
-                    tochangeId = getallGames.hottestGamesForGenre[i][j]._id;
+
+                if (getallGames[i].gameName === nameToChangePassword) {
+                    tochangeId = getallGames[i]._id;
                 }
 
-            }
+
         }
+
 
 
 

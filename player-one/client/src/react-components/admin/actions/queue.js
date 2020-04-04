@@ -29,7 +29,7 @@ export async function getAllusers() {
 
 
 export async function getAllgames() {
-    const url = baseURL + "/games";
+    const url = baseURL + "/games/allGames";
     const request = new Request(url, {
         method: "get",
         credentials: "include",
@@ -232,17 +232,19 @@ export async function removeGame(queue,gameId, getallGames) {
 
 
                 let gameList = [];
+                log("data.game is " + data.game._id);
 
-                for(let i = 0; i < getallGames.hottestGamesForGenre.length; i++){
-                    for (let j = 0; j < getallGames.hottestGamesForGenre[i].length; j++) {
-                        if (getallGames.hottestGamesForGenre[i][j]._id !== data.game._id) {
 
-                            gameList.push(getallGames.hottestGamesForGenre[i][j]);
+                for(let i = 0; i < getallGames.length; i++){
+
+                        if (getallGames[i]._id !== data.game._id) {
+
+                            gameList.push(getallGames[i]);
                         }
-                    }
 
-                    // this.state.users.push(userObj)
+
                 }
+
 
 
                 queue.setState({
