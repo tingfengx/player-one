@@ -1,7 +1,5 @@
 import React from "react";
 
-// import UserList from "../UserList";
-// import UserForm from "../UserForm";
 import { withCookies } from "react-cookie";
 
 
@@ -13,21 +11,16 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
+
 import TableRow from '@material-ui/core/TableRow';
 
-// import User from "../User/User"
-// import {uid} from "react-uid";
-
-// import "../UserList.css"
-// import Input from "../Input";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 import DeleteIcon from "@material-ui/core/SvgIcon/SvgIcon";
 let log = console.log;
-const baseURL = "http://localhost:5000";
+const baseURL = "";
 
 
 class Userqueue extends React.Component{
@@ -42,19 +35,53 @@ class Userqueue extends React.Component{
             userType:"",
             page: 0,
             setPage: 0,
-            users: [
-                { id: "1", username: "aaa", password: "1111", userType:"user" },
-                { id: "2", username: "bbb", password: "22222" , userType:"user" },
-                { id: "3", username: "ccc", password: "1111" , userType:"user" },
-                { id: "4", username: "ddd", password: "22222" , userType:"user" },
-                { id: "5", username: "kkk", password: "1111" , userType:"user" },
-                { id: "6", username: "eee", password: "22222", userType:"user"  }
+            users: []
 
-            ]
         };
 
 
     }
+
+    componentDidMount = () => {
+        const url = baseURL + "/users"
+
+        const request = new Request(url, {
+            method: 'get',
+            credentials: "include",
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        })
+        // fetch the request
+        fetch(request).then(res => {
+            if (res.status === 200) {
+                return res.json()
+            } else {
+                console.log("something wrong happened");
+                console.log(res);
+            }
+        }).then(data => {
+            /*** full game ***/
+
+            let userList = [];
+
+            for (let i = 0; i < data.users.length; i++){
+                let userObj = {username:"", password:""};
+                userObj.username = data.users[i].username;
+                userObj.password = data.users[i].password;
+                userList.push(userObj);
+
+            }
+            console.log("this state users" + userList.length);
+
+            this.setState({
+                users: userList
+            });
+
+        }).catch(e => console.log(e))
+    }
+
 
 
     handleChange = (event, newValue) => {
@@ -66,17 +93,6 @@ class Userqueue extends React.Component{
 
     cookies = this.props;
 
-    handleChangePage = (event, newPage) => {
-        const [page, setPage] = React.useState(0);
-        setPage(newPage);
-    };
-
-    handleChangeRowsPerPage = event => {
-        const [page, setPage] = React.useState(0);
-        const [rowsPerPage, setRowsPerPage] = React.useState(10);
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
 
 
 
@@ -95,13 +111,13 @@ class Userqueue extends React.Component{
 
     // handle change password
     handleChangePassword(event){
-        // const allUsers = await getAllusers();
+
         const tableRow = event.target.parentElement.parentElement.parentElement.parentElement;
         const nameToChangePassword = tableRow.firstElementChild.innerHTML;
-        // console.log("name is " + nameToChangePassword);
+
         this.setState({[nameToChangePassword]: event.target.value});
         console.log("target value is " + event.target.value)
-        // console.log("state is " + this.state.users.length)
+
 
     }
 
@@ -113,8 +129,7 @@ class Userqueue extends React.Component{
         const nameToChangePassword = tableRow.children[0].innerHTML;
         const newPassword = this.state[nameToChangePassword];
         let tochangeId;
-        log("allusers" + allUsers.users);
-        log("alluserslength" + allUsers.users.length);
+
 
         for (let i = 0; i < allUsers.users.length; i ++){
 
@@ -124,9 +139,9 @@ class Userqueue extends React.Component{
 
             }
         }
-        log("tochangeId" + tochangeId);
+
         changePassword(tochangeId, newPassword);
-        // const index = userList.indexOf(shortComment);
+
 
     }
 
@@ -146,43 +161,19 @@ class Userqueue extends React.Component{
 
         log("allUsers" + allUsers.users)
         log("before remove length" + allUsers.users.length)
-        let userList =[];
-        const deleted_user = await removeUser(this, tochangeId);
-        // log("aaaaaaaaaa delete user"+deleted_user);
-        // for (let i = 0; i < allUsers.users.length; i++){
-        //     if(allUsers.users[i]._id !== deleted_user._id){
-        //         userList.push(allUsers[i])
-        //     }
-        //
-        // }
-        // log("after remove length" + userList.length)
 
-        // const deleted_user = await removeUser(this, tochangeId);
-        // this.setState({
-        //     users: userList,
-        //     //     message: {
-        //     //         body: "Success: Added an image.",
-        //     //         type: "success"
-        //     //     }
-        // })
+        await removeUser(this, tochangeId);
+
 
 
     }
-
-
-
-
-
-//     const {users, queueComponent, password} = props;
-// console.log("user " + users);
 
     render() {
 
         const users = this.state.users;
 
 
-        const { queueComponent, password, username,
-            handleChange} = this.props;
+
 
         return (
             <div className="App">
@@ -207,6 +198,18 @@ class Userqueue extends React.Component{
                             label="password"
                             id="margin-normal"
                             defaultValue={this.state.password|| ""}
+                            className="input"
+                            margin="normal"
+                            onChange={this.handleInputChange}
+                        />
+                    </Grid>
+
+                    <Grid item xl={3} lg={3} md={4} s={12} xs={12}>
+                        <TextField
+                            name="userType"
+                            label="userType"
+                            id="margin-normal"
+                            defaultValue={this.state.userType|| ""}
                             className="input"
                             margin="normal"
                             onChange={this.handleInputChange}
@@ -252,7 +255,6 @@ class Userqueue extends React.Component{
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/*{users.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map(user => (*/}
                             {users.map(user => (
                                 <TableRow className="user" key={user.username}>
 
@@ -295,27 +297,12 @@ class Userqueue extends React.Component{
                                         </Button>
                                     </TableCell>
                                 </TableRow>
-                                // <User
-                                //     key={uid(
-                                //         user
-                                //     )}
-                                //     user={user}
-                                //     password={password}
-                                //     queueComponent={queueComponent}
-                                // />
+
                             ))}
 
                         </TableBody>
                     </Table>
-                    <TablePagination
-                        rowsPerPageOptions={[10]}
-                        component="div"
-                        count={users.length}
-                        rowsPerPage={10}
-                        page={0}
-                        onChangePage={this.handleChangePage}
-                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    />
+
                 </Paper>
 
 
