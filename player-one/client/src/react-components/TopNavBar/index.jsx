@@ -42,6 +42,7 @@ export default function TopNavBar(props) {
 
         const request = new Request(url, {
             method: 'get',
+            credentials: 'same-origin',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
@@ -77,9 +78,11 @@ export default function TopNavBar(props) {
     };
 
     const handleSignOut = () => {
-        removeCookie("username");
+        removeCookie("user_name");
         removeCookie("type");
         removeCookie("isLoggedIn");
+        // new
+        removeCookie("user_id");
     }
 
     if (!cookies.isLoggedIn) {
@@ -176,7 +179,7 @@ export default function TopNavBar(props) {
                         <div>
 
                             <div className={"dropdown"}>
-                                <Button className={"dropbtn"}>{cookies.username}</Button>
+                                <Button className={"dropbtn"}>{cookies.user_name}</Button>
                                 <div className={"dropdown-content"}>
                                     <a href={"/user_account"}>My Account</a>
                                     <a href={"/"} onClick={handleSignOut}>Sign Out</a>
@@ -187,7 +190,7 @@ export default function TopNavBar(props) {
                         </div>
                     </Toolbar>
                 </React.Fragment>
-            )
+            );
         } else if (cookies.type === "admin") {
             return (
                 <React.Fragment>
@@ -229,7 +232,7 @@ export default function TopNavBar(props) {
                         <SearchBar />
                         <div>
                             <div className={"dropdown"}>
-                                <Button className={"dropbtn"}>{cookies.username}</Button>
+                                <Button className={"dropbtn"}>{cookies.user_name}</Button>
                                 <div className={"dropdown-content"}>
                                     <a href={"/admin"}>Manage</a>
                                     <a href={"/"} onClick={handleSignOut}>Sign Out</a>
@@ -240,7 +243,11 @@ export default function TopNavBar(props) {
                         </div>
                     </Toolbar>
                 </React.Fragment>
-            )
+            );
+        } else {
+            return <div>
+                There is something wrong with your browser's cookies, please clear the cookies cache and try again.
+            </div>
         }
     }
 }

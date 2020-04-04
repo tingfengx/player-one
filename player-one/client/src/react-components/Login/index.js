@@ -58,30 +58,13 @@ class SignInForm extends Component {
 
     const request = new Request(url, {
       method: 'post',
-      credentials: 'include',
+      credentials: 'same-origin',
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
     })
-
-    // const response = await fetch(request);
-    // if (response.ok) {
-    //   try{
-    //     const data = await response.json();
-    //     this.props.cookies.set("userId", data._id)
-    //     this.props.cookies.set("username", data.username)
-    //     this.props.cookies.set("type", data.userType)
-    //     this.props.cookies.set("isLoggedIn", true)  
-    //   } catch (e) {
-    //     log(e);
-    //   }
-    // } else if (response.status === 400) {
-    //   alert('Wrong username or password')
-    // } else {
-    //   alert('Error occurred. Try again!')
-    // }
 
     fetch(request)
     .then((res) => {
@@ -94,11 +77,16 @@ class SignInForm extends Component {
         alert('Error occurred. Try again!')
       }
     }).then((data) => {
-      log(data)
-      this.props.cookies.set("userId", data._id)
-      this.props.cookies.set("username", data.username)
-      this.props.cookies.set("type", data.userType)
-      this.props.cookies.set("isLoggedIn", true)      
+      log(data);
+      const userid = data._id;
+      const username = data.username;
+      const userType = data.userType;
+
+      this.props.cookies.set("user_id", userid)
+      this.props.cookies.set("user_name", username)
+      this.props.cookies.set("type", userType)
+      this.props.cookies.set("isLoggedIn", true)    
+      log(this.props.cookies);  
     })
     .catch((error) => {
       log(error)

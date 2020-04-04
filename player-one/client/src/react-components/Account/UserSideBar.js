@@ -24,7 +24,7 @@ class UserSideBar extends Component {
 
   componentDidMount() {
     // GET /users/:userId
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId
 
     const request = new Request(url, {
@@ -68,7 +68,7 @@ class UserSideBar extends Component {
       return
     }
 
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId + '/tags/profile'
 
     this.setState({
@@ -108,7 +108,7 @@ class UserSideBar extends Component {
       return
     }
 
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId + '/tags/game'
 
     this.setState({

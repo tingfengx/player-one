@@ -340,7 +340,7 @@ class GamePageOverview extends Component {
         let hasShortComment = false;
         const {cookies} = this.props;
         for (let i = 0; i < this.game.shortComments.length; i++){
-            if (this.game.shortComments[i].commenter === cookies.cookies.username)
+            if (this.game.shortComments[i].commenter === cookies.cookies.user_name)
                 hasShortComment = true;}
         const settings = {
             customPaging: (i) => {
@@ -391,7 +391,7 @@ class GamePageOverview extends Component {
                                     </div>
                                     <div id={"GameReviewsButtons"}>
                                         <Button
-                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.user_name)}
                                             color="secondary"
                                             variant="contained"
                                             aria-label="like"
@@ -399,7 +399,7 @@ class GamePageOverview extends Component {
                                         > My Type! {this.game.thumbUp}
                                         </Button>
                                         <Button
-                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.user_name)}
                                             aria-label="dislike"
                                             variant="contained"
                                             startIcon={<DislikeIcon/>}
@@ -468,20 +468,20 @@ class GamePageOverview extends Component {
                                                 <p>By {longComment.commenter}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
-                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
                                                     > Agree {longComment.thumbUp}
                                                     </Button>
                                                     <Button
-                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.user_name)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
                                                     > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
-                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
@@ -505,20 +505,20 @@ class GamePageOverview extends Component {
                                                             commentBody={shortComment.commentBody}/>
                                                         <div className={"LikeButtons"}>
                                                             <Button
-                                                                onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.username)}
+                                                                onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.user_name)}
                                                                 color="primary"
                                                                 aria-label="like"
                                                                 startIcon={<LikeIcon/>}
                                                             > Agree {shortComment.thumbUp}
                                                             </Button>
                                                             <Button
-                                                                onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.username)}
+                                                                onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.user_name)}
                                                                 aria-label="dislike"
                                                                 startIcon={<DislikeIcon/>}
                                                             > Hmm, Nope {shortComment.thumbDown}
                                                             </Button>
                                                             <Button
-                                                                onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.username)}
+                                                                onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.user_name)}
                                                                 color="secondary"
                                                                 aria-label="funny"
                                                                 startIcon={<FunnyIcon/>}
@@ -557,8 +557,8 @@ class GamePageOverview extends Component {
                                             color={"secondary"}
                                             startIcon={<EmotionIcon/>}
                                             onClick={()=>{hasShortComment ?
-                                                this.handleEditShortComment.bind(this)(cookies.cookies.username):
-                                                this.handleAddShortComment.bind(this)(cookies.cookies.username)
+                                                this.handleEditShortComment.bind(this)(cookies.cookies.user_name):
+                                                this.handleAddShortComment.bind(this)(cookies.cookies.user_name)
                                             }}>
                                             Submit
                                         </Button>
@@ -596,7 +596,7 @@ class GamePageOverview extends Component {
                                     </div>
                                     <div id={"GameReviewsButtons"}>
                                         <Button
-                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.user_name)}
                                             color="secondary"
                                             variant="contained"
                                             aria-label="like"
@@ -604,7 +604,7 @@ class GamePageOverview extends Component {
                                         > My Type! {this.game.thumbUp}
                                         </Button>
                                         <Button
-                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.user_name)}
                                             aria-label="dislike"
                                             variant="contained"
                                             startIcon={<DislikeIcon/>}
@@ -670,20 +670,20 @@ class GamePageOverview extends Component {
                                                 <p className={"LongCommentContent"}>By {longComment.commenter}, {new Date(longComment.time).toDateString()}</p>
                                                 <div className={"LikeButtons"}>
                                                     <Button
-                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
                                                     > Agree {longComment.thumbUp}
                                                     </Button>
                                                     <Button
-                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.user_name)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
                                                     > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
-                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
@@ -733,7 +733,7 @@ class GamePageOverview extends Component {
                                             <Button
                                                 height={"10px"}
                                                 onClick={this.handleAddLongComment.bind(this,
-                                                    cookies.cookies.username)}
+                                                    cookies.cookies.user_name)}
                                                 color="secondary"
                                                 variant={"outlined"}
                                                 aria-label="longCommentSubmission"
@@ -756,20 +756,20 @@ class GamePageOverview extends Component {
                                                         commentBody={shortComment.commentBody}/>
                                                     <div className={"LikeButtons"}>
                                                         <Button
-                                                            onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.user_name)}
                                                             color="primary"
                                                             aria-label="like"
                                                             startIcon={<LikeIcon/>}
                                                         > Agree {shortComment.thumbUp}
                                                         </Button>
                                                         <Button
-                                                            onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.user_name)}
                                                             aria-label="dislike"
                                                             startIcon={<DislikeIcon/>}
                                                         > Hmm, Nope {shortComment.thumbDown}
                                                         </Button>
                                                         <Button
-                                                            onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.user_name)}
                                                             color="secondary"
                                                             aria-label="funny"
                                                             startIcon={<FunnyIcon/>}
@@ -808,8 +808,8 @@ class GamePageOverview extends Component {
                                             color={"secondary"}
                                             startIcon={<EmotionIcon/>}
                                             onClick={()=>{hasShortComment ?
-                                                this.handleEditShortComment.bind(this)(cookies.cookies.username):
-                                                this.handleAddShortComment.bind(this)(cookies.cookies.username)
+                                                this.handleEditShortComment.bind(this)(cookies.cookies.user_name):
+                                                this.handleAddShortComment.bind(this)(cookies.cookies.user_name)
                                             }}>
                                             Submit
                                         </Button>
@@ -848,7 +848,7 @@ class GamePageOverview extends Component {
                                     <div id={"GameReviewsButtons"}>
                                         <Button
                                             disabled
-                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.user_name)}
                                             color="secondary"
                                             variant="contained"
                                             aria-label="like"
@@ -857,7 +857,7 @@ class GamePageOverview extends Component {
                                         </Button>
                                         <Button
                                             disabled
-                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.user_name)}
                                             aria-label="dislike"
                                             variant="contained"
                                             startIcon={<DislikeIcon/>}
@@ -930,7 +930,7 @@ class GamePageOverview extends Component {
                                                 <div className={"LikeButtons"}>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
@@ -938,14 +938,14 @@ class GamePageOverview extends Component {
                                                     </Button>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.user_name)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
                                                     > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
@@ -970,7 +970,7 @@ class GamePageOverview extends Component {
                                                     <div className={"LikeButtons"}>
                                                         <Button
                                                             disabled
-                                                            onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.user_name)}
                                                             color="primary"
                                                             aria-label="like"
                                                             startIcon={<LikeIcon/>}
@@ -978,14 +978,14 @@ class GamePageOverview extends Component {
                                                         </Button>
                                                         <Button
                                                             disabled
-                                                            onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.user_name)}
                                                             aria-label="dislike"
                                                             startIcon={<DislikeIcon/>}
                                                         > Hmm, Nope {shortComment.thumbDown}
                                                         </Button>
                                                         <Button
                                                             disabled
-                                                            onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.user_name)}
                                                             color="secondary"
                                                             aria-label="funny"
                                                             startIcon={<FunnyIcon/>}
@@ -1037,7 +1037,7 @@ class GamePageOverview extends Component {
                                     <div id={"GameReviewsButtons"}>
                                         <Button
                                             disabled
-                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbUp.bind(this, this.game, cookies.cookies.user_name)}
                                             color="secondary"
                                             variant="contained"
                                             aria-label="like"
@@ -1046,7 +1046,7 @@ class GamePageOverview extends Component {
                                         </Button>
                                         <Button
                                             disabled
-                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.username)}
+                                            onClick={this.handleThumbDown.bind(this, this.game, cookies.cookies.user_name)}
                                             aria-label="dislike"
                                             variant="contained"
                                             startIcon={<DislikeIcon/>}
@@ -1113,7 +1113,7 @@ class GamePageOverview extends Component {
                                                 <div className={"LikeButtons"}>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbUp.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="primary"
                                                         aria-label="like"
                                                         startIcon={<LikeIcon/>}
@@ -1121,14 +1121,14 @@ class GamePageOverview extends Component {
                                                     </Button>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleThumbDown.bind(this, longComment, cookies.cookies.user_name)}
                                                         aria-label="dislike"
                                                         startIcon={<DislikeIcon/>}
                                                     > Hmm, Nope {longComment.thumbDown}
                                                     </Button>
                                                     <Button
                                                         disabled
-                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.username)}
+                                                        onClick={this.handleFunny.bind(this, longComment, cookies.cookies.user_name)}
                                                         color="secondary"
                                                         aria-label="funny"
                                                         startIcon={<FunnyIcon/>}
@@ -1153,7 +1153,7 @@ class GamePageOverview extends Component {
                                                     <div className={"LikeButtons"}>
                                                         <Button
                                                             disabled
-                                                            onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleThumbUp.bind(this, shortComment, cookies.cookies.user_name)}
                                                             color="primary"
                                                             aria-label="like"
                                                             startIcon={<LikeIcon/>}
@@ -1161,14 +1161,14 @@ class GamePageOverview extends Component {
                                                         </Button>
                                                         <Button
                                                             disabled
-                                                            onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleThumbDown.bind(this, shortComment, cookies.cookies.user_name)}
                                                             aria-label="dislike"
                                                             startIcon={<DislikeIcon/>}
                                                         > Hmm, Nope {shortComment.thumbDown}
                                                         </Button>
                                                         <Button
                                                             disabled
-                                                            onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.username)}
+                                                            onClick={this.handleFunny.bind(this, shortComment, cookies.cookies.user_name)}
                                                             color="secondary"
                                                             aria-label="funny"
                                                             startIcon={<FunnyIcon/>}
@@ -1206,7 +1206,7 @@ class GamePageOverview extends Component {
                                             color={"primary"}
                                             disabled
                                             startIcon={<EmotionIcon/>}
-                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.username)}}>
+                                            onClick={()=>{this.handleAddShortComment.bind(this)(cookies.cookies.user_name)}}>
                                             Submit
                                         </Button>
                                     </div>

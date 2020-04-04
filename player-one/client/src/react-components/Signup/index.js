@@ -90,8 +90,8 @@ class SignUpForm extends Component {
     })
     .then((data) => {
       log(data)
-      this.props.cookies.set("userId", data._id)
-      this.props.cookies.set("username", data.username)
+      this.props.cookies.set("user_id", data._id)
+      this.props.cookies.set("user_name", data.username)
       this.props.cookies.set("type", data.userType)
       this.props.cookies.set("isLoggedIn", true)
     })
