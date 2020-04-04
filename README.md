@@ -66,14 +66,15 @@ hovering mouse over the admin user name. *Due to the hardcoded nature of this ap
 
 In the Admin page, he/she can 
 - Manage Users
-    - Add a new user by providing Username, Password and also userType. The min length of password is 4 and userType is limited to `user` or `superuser`, otherwise there will be an alert and the admin need to retype. After successfully added user to the database, the newly added user will show up at the top of the user list.
-    - View all the current user in the system. 
-    - Override an existing user's password by entering a new password in the `NewPassword` field and click on the `UPDATE` button, there will be an alert showing up,prompting the new password and the new password will be updated in the database. 
+    - View all the current users in the database. 
+    - Add a new user by providing Username, Password and also userType. The min length of password is 4 and userType is limited to `user` or `superuser`, otherwise there will be an alert and the admin need to retype. After successfully added the user to the database, the newly added user will show up at the top of the user list.
+    - Override an existing user's password by entering a new password in the `NewPassword` field and click on the `UPDATE` button. On Success, there will be an alert showing up,prompting the new password and the new password is also updated in the database. 
     - remove an existing user by clicking the `remove` button in that user entry And that user will be removed from database and also disappear from the user list.
 
-- Manage Games 
+- Manage Games .
+    - View all the current games in the database. 
     - Add a new game by entering the name, introduction Text, publisher, developer and genre of a game. All the banlks have to be filled otherwise there will be an alert saying fill the blanks. And also for each game, we need to add 5 pictures by clicking `choose file` and choose exactly 5 pictures, or there will still be an alert to saying add 5 pictures. After doing all of these, click `ADD GAME`, and the new game will be added to the database and also show at the top of game list.
-    - remove an existing game by clicking the `remove` button in that game entry. And that user will be removed from database and also disappear from the game list.
+    - remove an existing game by clicking the `remove` button in that game entry. And that game will be removed from database and also disappear from the game list.
     
 
 ## Game Page
