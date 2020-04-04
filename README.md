@@ -152,11 +152,65 @@ Anyone can view the game page without signing in into the app, however, for he/s
 ## Game/Comment API
 
 - ```GET /games/```
+
+    - Get hottest five games for each Genre, the hottest five games overall, and all games' names and ids
+    - Hottest games: games with more than 100 thumbUp plus thumbDown with the highest thumbUp rate ( thumbUp/(thumbUp+thumbDown) )
+    - (If not enough games with more than 100 thumbUp plus thumbDown, then the games with less or equal number will be considered as well)
+    - **Input:** N/A
+    - **Output:** {hottestGamesForGenre: 5 games per Genre, hottestGames: 5 hottest games, allGames: all games with only name and _id}
+                     
 - ```POST /games/addGame```
-- ```GET /games/:gameId```
-- ```PATCH /games/:gameId```
-- ```DELETE /games/:gameId```
+
+    - Add a new game to the website
+    - **Input:** body(json): a game model's properties except likedUsers and dislikedUsers, which are meant to be empty at the first.
+    - **Output:** a new game object successfully added
+    
+- ```GET /games/:game_id```
+
+    - Get a game
+    - **Input:** path parameter: ```game_id```
+    - **Output:** the game with corresponding _id equals to ```game_id```
+
+- ```PATCH /games/:game_id```
+
+    - Modify a game's property/properties (click a thumbUp/thumbDown)
+    - **Input:** path parameter: ```game_id```, body(json): ```{username, game```(a new game object)```}```
+    - **Output:** the game with corresponding _id equals to ```game_id``` modified respects to ```game```
+
+- ```DELETE /games/:game_id```
+
+    - Delete a game and all the comments about it
+    - **Input:** path parameter: ```game_id```
+    - **Output:** an object contains the deleted objects: {longComments: long Comments of this game, shortComments: short Comments of this game,game: this game object}
+
 - ```POST /games/addComment```
+
+    - Add a new comment
+    - **Input:** body(json): ```{isLong: <specify if is a long comment; undefined if not LongComment>,
+                            <comment object properties>}```
+    - **Output**: the added comment object
+
 - ```PATCH /games/comments/:comm_id```
+
+    - Modify a comment's property/properties (click a thumbUp/thumbDown/funny or edit the comment)
+    - If have a ```newCommentBody```, then it is an editing action, the thumbUp/thumbDown/funny will be set to 0 
+    - **Input:** path parameter: ```comm_id```, body(json): ```{username: <username>
+                                                            isLong : <specify if is a long comment; undefined if not long comment>,
+                                                 (OPTIONAL) newCommentBody: string,
+                                                            thumbUp: <number to be thumbUp>,
+                                                            thumbDown: <number to be thumbDown>,
+                                                            funny: <number to be funny>}```
+    - **Output:** the comment with corresponding _id equals to ```comm_id``` modified respects to input body
+
 - ```DELETE /games/comments/:comm_id```
+
+    - Delete a comment
+    - **Input:** body(json): ```{isLong: <specify if is a long comment; null if short comment>}```
+    - **Output:** {Comment: Comment been deleted}
+
 - ```GET /games/comments/byUser/:user_id```
+
+    - Get an array of comments which are commented with the user with _id equals to ```user_id```
+    - **Input:** path parameter: ```user_id```
+    - **Output:** {longComments: long comments commented by the user, 
+    shortComments: short comments commented by the user}
