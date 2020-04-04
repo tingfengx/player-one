@@ -11,7 +11,7 @@ import "./styles.css";
 
 
 const log = console.log
-const baseURL = 'http://localhost:5000'
+const baseURL = ''
 
 
 class UserProfile extends Component {
@@ -30,6 +30,7 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     const userId = this.props.cookies.cookies.userId
     const commentsURL = baseURL + '/games/comments/byUser/' + userId
 

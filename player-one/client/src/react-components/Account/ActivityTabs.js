@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 
-import gameCoverImageSrc from "../../imgs/the_witcher_3_wild_hunt/cover.jpg";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,7 +62,7 @@ function ScrollableTabsButtonPrevent(props) {
   useEffect(() => {
     setComments(comments)
     setLikes(likes)
-  })
+  }, [props])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -97,7 +96,7 @@ function ScrollableTabsButtonPrevent(props) {
       </AppBar>
       <TabPanel value={value} index={1}>
         <div className="recentReviews">
-          {comments.map(comment => (
+          {recentComments.map(comment => (
             <div className="recentReview">
               <p className="recentReviewTime">{comment.time}</p>
               <p className="recentReviewText">{comment.commentBody}</p>
@@ -113,7 +112,7 @@ function ScrollableTabsButtonPrevent(props) {
       </TabPanel>
       <TabPanel value={value} index={0}>
         <div className="recentLikes">
-          {likes.map(like => (
+          {recentLikes.map(like => (
             <div className="recentLike">
               <img src={like ? like.gamePicture : null} alt="game1" />
               <Link href={like ? like.gameURL : null} color="primary">
