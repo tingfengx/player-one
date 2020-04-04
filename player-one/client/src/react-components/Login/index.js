@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import "./style.css";
 
 const log = console.log
-const baseURL = 'http://localhost:5000'
+// const baseURL = 'http://localhost:5000'
+const baseURL = "";
 
 
 class SignInForm extends Component {
