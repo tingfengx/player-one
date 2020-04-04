@@ -1,0 +1,23 @@
+{
+  "name": "team42",
+  "version": "1.0.0",
+  "scripts": {
+    "local-start": "npm heroku-postbuild && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd player-one/api && npm install && npm start",
+    "heroku-postbuild": "cd player-one/client && npm install && npm run build && cd ../../"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-winter-2020/team42.git"
+  },
+  "keywords": [
+    "GAME"
+  ],
+  "author": "team042",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-winter-2020/team42/issues"
+  },
+  "homepage": "https://github.com/csc309-winter-2020/team42#readme"
+}

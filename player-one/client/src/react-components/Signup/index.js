@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import "./style.css";
 
 const log = console.log
-const baseURL = 'http://localhost:5000'
+// const baseURL = 'http://localhost:5000'
+const baseURL = "";
 
 
 class SignUpForm extends Component {
@@ -89,8 +90,8 @@ class SignUpForm extends Component {
     })
     .then((data) => {
       log(data)
-      this.props.cookies.set("userId", data._id)
-      this.props.cookies.set("username", data.username)
+      this.props.cookies.set("user_id", data._id)
+      this.props.cookies.set("user_name", data.username)
       this.props.cookies.set("type", data.userType)
       this.props.cookies.set("isLoggedIn", true)
     })

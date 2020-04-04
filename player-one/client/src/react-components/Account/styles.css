@@ -139,18 +139,14 @@
 }
 
 .recentLike {
-    width: 120px;
+    width: 160px;
     height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
     margin: 20px;
 }
 
 .recentLike img {
-    width: 120px;
-    height: 160px;
+    width: 160px;
+    height: 120px;
 }
 
 .recentReview {

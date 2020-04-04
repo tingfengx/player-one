@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 
-import gameCoverImageSrc from "../../imgs/the_witcher_3_wild_hunt/cover.jpg";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,9 +50,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ScrollableTabsButtonPrevent() {
+function ScrollableTabsButtonPrevent(props) {
+  const { likes, comments } = props
+  console.log(comments)
+  console.log(likes)
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [recentComments, setComments] = useState([])
+  const [recentLikes, setLikes] = useState([])
+
+  useEffect(() => {
+    setComments(comments)
+    setLikes(likes)
+  }, [props])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -82,77 +91,39 @@ export default function ScrollableTabsButtonPrevent() {
               icon={<CreateRoundedIcon />}
               {...a11yProps(1)}
             />
-            {/* <Tab icon={<BookmarkRoundedIcon />} {...a11yProps(2)} /> */}
           </Tabs>
         </Paper>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <div className="recentLikes">
-          <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game1"/>
-            <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-          </div>
-          <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game2"/>
-            <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-          </div>
-          <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game3"/>
-            <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-          </div>
-          <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game4"/>
-            <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-          </div>
-          <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game5"/>
-            <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-          </div>
-          <div className="recentLike">
-            <img src={gameCoverImageSrc} alt="game6"/>
-            <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-          </div>
-        </div>
-      </TabPanel>
       <TabPanel value={value} index={1}>
         <div className="recentReviews">
-          <div className="recentReview">
-            <p className="recentReviewTime">2020-3-2 12:34:56</p>
-            <p className="recentReviewText">I love this game! The Witcher 3 is the best!</p>
-            <div className="recentReviewGame">
-              <img src={gameCoverImageSrc} alt="review1"/>
-              <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
+          {recentComments.map(comment => (
+            <div className="recentReview">
+              <p className="recentReviewTime">{comment.time}</p>
+              <p className="recentReviewText">{comment.commentBody}</p>
+              <div className="recentReviewGame">
+                <img src={comment.gameInfo ? comment.gameInfo.gamePicture : null} alt="review1" />
+                <Link href={comment.gameInfo ? comment.gameInfo.gameURL : null} color="primary">
+                  {comment.gameInfo ? comment.gameInfo.gameName : null}
+                </Link>
+              </div>
             </div>
-          </div>
-          <div className="recentReview">
-            <p className="recentReviewTime">2020-3-2 12:34:56</p>
-            <p className="recentReviewText">This game is so great that I have been playing it like everyday! I highly recommend you guys take a look! It won't disappoint you!</p>
-            <div className="recentReviewGame">
-              <img src={gameCoverImageSrc} alt="review2"/>
-              <Link href="/the_witcher_3_wild_hunt" color="primary">
-              The Witcher 3: Wild Hunt
-            </Link>
-            </div>
-          </div>
+          ))}
         </div>
       </TabPanel>
-      {/* <TabPanel value={value} index={2}>
-        Display recent bookmarks
-      </TabPanel> */}
+      <TabPanel value={value} index={0}>
+        <div className="recentLikes">
+          {recentLikes.map(like => (
+            <div className="recentLike">
+              <img src={like ? like.gamePicture : null} alt="game1" />
+              <Link href={like ? like.gameURL : null} color="primary">
+                {like ? like.gameName : null}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </TabPanel>
     </div>
   );
 }
+
+export default React.memo(ScrollableTabsButtonPrevent)

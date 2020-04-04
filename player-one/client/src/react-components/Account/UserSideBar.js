@@ -8,7 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import "./styles.css";
 
 const log = console.log
-const baseURL = 'http://localhost:5000'
+const baseURL = ''
 
 
 class UserSideBar extends Component {
@@ -24,7 +24,7 @@ class UserSideBar extends Component {
 
   componentDidMount() {
     // GET /users/:userId
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId
 
     const request = new Request(url, {
@@ -68,11 +68,12 @@ class UserSideBar extends Component {
       return
     }
 
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId + '/tags/profile'
 
     this.setState({
-      profileTags: [...this.state.profileTags, input]
+      profileTags: [...this.state.profileTags, input],
+      profileTagInput: ""
     }, () => {
       const data = {
         tags: this.state.profileTags
@@ -107,11 +108,12 @@ class UserSideBar extends Component {
       return
     }
 
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId + '/tags/game'
 
     this.setState({
-      gameTags: [...this.state.gameTags, input]
+      gameTags: [...this.state.gameTags, input],
+      gameTagInput: ""
     }, () => {
       const data = {
         tags: this.state.gameTags
@@ -154,6 +156,7 @@ class UserSideBar extends Component {
             variant="outlined"
             color="secondary"
             onChange={this.handleChange}
+            value={this.state.profileTagInput}
             name="profileTagInput"
           ></TextField>
           <IconButton color="secondary" onClick={this.handleAddProfileTag}>
@@ -171,6 +174,7 @@ class UserSideBar extends Component {
             variant="outlined"
             color="primary"
             onChange={this.handleChange}
+            value={this.state.gameTagInput}
             name="gameTagInput"
           ></TextField>
           <IconButton color="primary" onClick={this.handleAddGameTag}>

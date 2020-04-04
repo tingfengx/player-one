@@ -1,65 +1,45 @@
 # team42: Player One - The Player's Game Rating Platform
 This project is an React application on game rating and sharing. To use this app, please follow the following steps.
-## Install
+## Installing and running locally
+    Important: Please do not refresh on the main page for many time, we have a very limited cloudinary quota
 1. clone git repo:
     ```
     git clone https://github.com/csc309-winter-2020/team42.git
     ```
-2. go to project directory:
+2. go to project top level directory:
     ```
-    cd team42/player-one
+    cd team42/
     ```
-3. install dependencies: (both client and api components)
+3. Build client and start the server using 
     ```
-    cd client && npm install && cd ../api && npm install && cd ../
+    npm local-start
     ```
-4. running mongoDB (keep it running)
-    ```
-    cd api && mkdir database-data && mongod --dbpath ./database-data
-    ```
-5. start the server (keep it running) **You must do this before step 6**
-    ```
-    cd api/ && npm start
-    ```
-6. pre populate the database with 26 games (assumes currently in ```team42/player-one/```)
-    ```
-    cd api/db/initial_data && node populate.js
-    ```
-7. start react (keep it running)
-    ```
-    cd client/ && npm start
-    ```
-## Important: Please do not refresh on the main page for many time, we have a very limited cloudinary quota
+4. The app should be available at ```localhost:5000```, have fun. (We will refer to ```localhost:5000/``` as root from now on)
 
-# The information below is out of date, and needs to be updated... (TODO)
+## Viewing the deployed app
+The app is deployed via heroku, and it is available at [```http://player-1.herokuapp.com/```](http://player-1.herokuapp.com/). (as before, we will refer to ```http://player-1.herokuapp.com/``` as our root)
 
-## Run
-This app is built with React, and in particular `create-react-app`, hence, to start you need to run
-```
-npm start
-```
-Now the app is running on `http://localhost:3000`. Please open it in a browser to view this app.  
+# Overview of functionalities
+
 ## Main Page
-Once you open up `http://localhost:3000`, you can see the main page for our site. It is consist of the following
-- A navigation bar at the top, with game categories for users to choose games to browse as well as login and
-sign up buttons. 
-- Five pictures of 5 featured games shown as Carousel Slides. Currently all the games shown are the same, which
-is Wither 3, but it will be infused with possibly dynamically loaded pictures in phase 2. The Carousel sides is
-set to be auto play with stop of 5 seconds for each picture. 
-- Below the large carousel slides, is the section for showing games from different categories. There will be a
-short description for each game category and pictures of some selected games. Again, these are all now the same
-game, but they will be infused with a bunch of different games during phase 2. Stay tuned!
+Once you open up root page, you can see the main page for our site. It is consist of the following
+- A navigation bar at the top, with game categories for users to choose games to browse as well as login and sign up buttons. (also a search bar implemented in phase 2)
+    - The "featured" tab contains five hottest games,
+    - The remaining five tabs are five different genres, and each tab should contain five hottest games in that genre. 
+    - **Search Bar**: You can type in the box to filter the search results, or click the small downward arrow at the right end to expand the selection list and select a game from there. Once you select your game of interest, you should be redirected to the game's page. 
+- Five pictures of 5 featured games shown as Carousel Slides.The Carousel sides is set to be auto play with stop of 5 seconds for each picture. Notice that these five games are exactly the same as those ones in the featured tab. Our design intention is that hottest games at the time of openning up the page should be more eye-grasping and thus making the user stay on our website longer. : )
+- Below the large carousel slides, is the section for showing games from different genres. Each genre has a short description associated with it, and five hottest games' pictures in that genre shown in the small carousel slides. 
 
 
-
-## Available Login Credentials
+## Default Available Login Credentials (SIGN IN)
 You can login to the app by clicking the `SIGNIN` button at the top right of the main page. 
 There are the following three login credentials hardcoded into our app currently, they are
  - For user: username `user` with password `user`, it is intended to be a normal player's user account. 
  - For superuser: username `superuser` with password `superuser`. A super user represents a professional agency, could be game rating company or game makers, etc.
  - For admin: username `admin` with password `admin`; This is the account of the admin of the site. Unlike the previous two types of users, an admin is allowed to modify other users' data, including but not limited to changing password, adding user, deleting user. 
 
-**The Sign Up Page** could be accessed by clicking the `SIGNUP` button besides `SIGNIN`.
+## SIGN UP
+You can sign yourself up as a normal user by clicking the sign up button to the right end of the top navigation bar. Once you have successfully signed up for our webapp, you should immediately notice that you are signed in, and you can no longer see the sign in/ sign up buttons. In stead, you will see your username displayed at the top right. 
 
 
 
@@ -74,6 +54,7 @@ In the account page, an user is currently able to:
 - add a new tag to describe himself/herself or his/her favorite games
 - view a list of recently liked games and go to that game page by clicking the link
 - view a list of recent reviews and go to that games page by clicking the link
+
 ## Manage Page For Admin
 After successful login, an admin user can access the Manege page by clicking `Manage` in the dropdown menu displayed when
 hovering mouse over the admin user name. *Due to the hardcoded nature of this app, this management interface is not connected to anything else, and is for the purpose of demonstrating layout.*
@@ -90,37 +71,16 @@ In the Admin page, he/she can
     
 
 ## Game Page
-Anyone can view the game page without signing in into the app, however, for he/she to make a comment/long comment depending on the type of user that he/she is, logging in is required.
-There is one hardcoded game page in the app now, you can access it by hovering your mouse over any of the categories shown
-in the top navigation bar and click `The Witcher 3: Wild Hunt`. You can also access it by going to
-``````
-http://localhost:3000/the_witcher_3_wild_hunt
-``````
-There should be four selected pictures for the game, and with thumbnails for all of them shown to the left of the screen
-and to the right is a short description, usually from the game developer, and related stats/info for the game. 
-Also, there is one 'selected' comment from the short comments chosen to be displayed below the general stats 
-for the game. The username of the user who left the comment is also shown.
+Anyone can view the game page without signing in into the app, however, for he/she to make a comment/long comment depending on the type of user that he/she is, logging in is required. *There are in total 26 hardcoded games for our app at initial state.*
 
-Below, is the section for comments. Each of the long comment is inside a expansion
-menu, and anyone can view it by clicking on the title text. At the bottom of each of the expanded long coments, there are three buttons, namely `AGREE`, `HUMM, NOPE` and `FUNNY`. Each of the three buttons have a counter associated with them and the number of hits is updated in real time as users click the button. Of course, these are all just dummy hard-coded data and not synchronized with any source of data outside. (**Aside:** these buttons are only available for a user to click once they have logged in. It will be showned disabled by someone who has not logged in.) 
+- **For User:** A general user can add comment for games, press like/dislike buttons for a game, and press like/dislike/funny buttons for comments and long comments.
+    - The user can like/ dislike the game. The user can only either dislike or like the game, i.e. he/she can't both like the game and dislike the game. Also, the user can't like or dislike the game more than once. Notice that if a user has previously liked the game, then when he/she press dislike button, the number of dislikes is incremented, and his like for the game is automatically cancelled. This also holds when the user has previously disliked the game, and wish to press like now. 
+    - The user can press like/dislike/funny for long comments and short comments. The like and dislike work exactly the same as those for the game, which is described above. The funny button is independent, and intentioanlly designed such that one can press it as many times as he want. (so maybe some comment is really funny but not quite related to the game, then the user saw it can click funny a few times. )
+    - The user can add his/her new comment by typing a new comment message in the text input box and then hitting the `SUBMIT` button below. The new comment will be added to the *top* of existing comment list. 
+    - The user can also modify the the comment that he/she left by entering a new comment and press the button below. You can see that the old comment being replaced by the new one. (when a comment is modified, the like/dislike/funny counts are reset to zero, since a modification in comment could make the comment have a entirely different meaning and we think it would be wierd if it still has likes/dislikes/funny from the previous version.)
+    - Note: The current policy for these short comments is that it has to be longer than 30 characters (informative) and less than 500 characters (not too long). Also, the submitted comment will replace all the newline 'returns' with spaces. We did this because it is possible that some malicious user type a lot of returns in some comment and this might ruin the user experience for others.
 
-After the long comment section, what a user can see below varies with the type
-of the user:
-- **For Admin:** We think admin should be limited to his/her own job and should not use the admin account for personal 
-opinion, for example, like writing a comment. Hence, unfortunately, the admin's view of the game page 
-is the same as an not-logged-in user's. In particular, the comment input section down below is disabled for
-admin, just like when the user has not logged in.
-- **For User:** A general user can add comment for games. As you can see, there are already
-four hardcoded comments, and the user can add his/her new comment by typing 
-a new comment message in the text input box and then hitting the `SUBMIT` button below. The new comment
-will be added to the *top* of existing comment list. Note: The current policy for these short comments
-is that it has to be longer than 30 characters (informative) and less than 500 characters (not too long). Also, the submitted
-comment will replace all the newline 'returns' with spaces. We did this because it is possible that some
-malicious user type a lot of returns in some comment and this might ruin the user experience for others.
-- **For Superuser:** A super user can also leave comments, and in addition to that, he/she can add long
-comments for the game. By clicking the `want to share your review?` expansion panel, the super user can see
-an interface for entering a new long comment. As opposed to short comments, long comments have to be at least
-500 characters long. 
+- **For Superuser:** A super user can do **anything** that a normal user can do, and in addition to that, he/she can add long comments for the game. By clicking the `want to share your review?` expansion panel, the super user can see an interface for entering a new long comment. As opposed to short comments, long comments have to be at least 500 characters long. Also, long comments represent a third-party professional agency, which expect to be an independent association or a company's, viewpoint on the game. Hence, to avoid any confusion, we do not allow professional users to modify the contents of the long comment. 
 
-
+- **For Admin:** We think admin should be limited to his/her own job and should not use the admin account for personal opinion, for example, writing a comment. Hence, the only thing that the admin is allowed to do on a game page is to delete comments/long comments. The admin can do so by clicking the ```delete``` button associated with the comment that he/she wants to delete. 
 
