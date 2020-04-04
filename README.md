@@ -10,14 +10,19 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd team42/
     ```
-3. Build client and start the server using 
+3. Install dependencies and build client and start the local server using
     ```
-    npm local-start
+    sh local-start.sh
     ```
+    or alternatively, you can do this manuelly by 
+    ```
+    cd player-one/client/ && npm install && npm run build && cd ../api/ && npm install && npm start
+    ```
+    to invoke the shell script and start the server. 
 4. The app should be available at ```localhost:5000```, have fun. (We will refer to ```localhost:5000/``` as root from now on)
 
 ## Viewing the deployed app
-The app is deployed via heroku, and it is available at [```http://player-1.herokuapp.com/```](http://player-1.herokuapp.com/). (as before, we will refer to ```http://player-1.herokuapp.com/``` as our root)
+The app is deployed via heroku, and it is available at [```https://player-1.herokuapp.com/```](https://player-1.herokuapp.com/). (as before, we will refer to ```https://player-1.herokuapp.com/``` as our root)
 
 # Overview of functionalities
 
@@ -48,7 +53,7 @@ An user (superuser or user) has access to his/her own account page after success
 To go to the account page, please click `My Account` in the dropdown menu displayed when you hover your mouse over the username at the top right corner.
 
 In the account page, an user is currently able to:
-- edit his/her handle name by clicking the pencil icon next to it
+- change avatar by uploading an image
 - view the total number of his/her reviews and likes received for them
 - view his/her personal bio
 - add a new tag to describe himself/herself or his/her favorite games
@@ -84,3 +89,74 @@ Anyone can view the game page without signing in into the app, however, for he/s
 
 - **For Admin:** We think admin should be limited to his/her own job and should not use the admin account for personal opinion, for example, writing a comment. Hence, the only thing that the admin is allowed to do on a game page is to delete comments/long comments. The admin can do so by clicking the ```delete``` button associated with the comment that he/she wants to delete. 
 
+
+# Overview of routes
+
+## User API
+
+- ```GET /users```
+
+    - Get a list of users (for admin only)
+    - **Input:** cookie: ```userId```
+    - **Output:** a list of users with detailed user info
+    
+- ```POST /users```
+
+    - Add a new user
+    - **Input:** body(json): ```username```, ```password```, ```userType```(can be ```user```, ```superuser``` or ```admin```)
+    - **Output:** the newly created user with detailed user info
+
+- ```POST /users/login```
+
+    - Sign in
+    - **Input:** body(json): ```username```, ```password```
+    - **Output:** the authenticated user with detailed user info, also set cookie ```userId```, ```username``` and ```userType```
+    
+- ```GET /users/:userId```
+
+    - Get a user (for admin or the user himself/herself)
+    - **Input:** cookie: ```userId```. path parameter: ```userId```
+    - **Output:** the user with detailed user info
+    
+- ```DELETE /users/:userId```
+
+    - Delete a user (for admin only)
+    - **Input:** cookie: ```userId```. path parameter: ```userId```
+    - **Output:** the deleted user with detailed user info
+    
+- ```PUT /users/:userId/password```
+
+    - Update the password of a user (for admin or the user himself/herself)
+    - **Input:** cookie: ```userId```. path parameter: ```userId```. body(json): ```password```
+    - **Output:** the updated user with detailed user info
+    
+- ```PUT /users/:userId/avatar```
+
+    - Update the avatar of a user (for the user himself/herself only)
+    - **Input:** cookie: ```userId```. path parameter: ```userId```. body(json): ```avatarId```(URL of the image)
+    - **Output:** the updated user with detailed user info
+    
+- ```PUT /users/:userId/bio```
+
+    - Update the bio of a user (for the user himself/herself only)
+    - **Input:** cookie: ```userId```. path parameter: ```userId```. body(json): ```bio```
+    - **Output:** the updated user with detailed user info
+    
+- ```PUT /users/:userId/tags/:type```
+
+    - Update the tags of a user (for the user himself/herself only)
+    - **Input:** cookie: ```userId```. path parameter: ```userId```, ```type```(can be ```profile``` or ```game```). body(json): ```tags```(array of string)
+    - **Output:** the updated user with detailed user info
+    
+
+## Game/Comment API
+
+- ```GET /games/```
+- ```POST /games/addGame```
+- ```GET /games/:gameId```
+- ```PATCH /games/:gameId```
+- ```DELETE /games/:gameId```
+- ```POST /games/addComment```
+- ```PATCH /games/comments/:comm_id```
+- ```DELETE /games/comments/:comm_id```
+- ```GET /games/comments/byUser/:user_id```
