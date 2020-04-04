@@ -253,6 +253,75 @@ export const addUser=queue=>{
 };
 
 
+
+
+export async function removeGame(queue,gameId, getallGames) {
+
+    // const getallGames = await getAllgames();
+
+    const url = baseURL + "/games/" + gameId;
+
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: "delete",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    fetch(request)
+        .then(async function (res) {
+
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+
+                const data = await res.json();
+                console.log("data is " + data.game._id);
+
+                let gameList = [];
+
+                for(let i = 0; i < getallGames.hottestGamesForGenre.length; i++){
+                    for (let j = 0; j < getallGames.hottestGamesForGenre[i].length; j++) {
+                        if (getallGames.hottestGamesForGenre[i][j]._id !== data.game._id) {
+                            log("id is" + getallGames.hottestGamesForGenre[i][j]._id)
+                            log("jinlai llllllllllllllllll")
+                            gameList.push(getallGames.hottestGamesForGenre[i][j]);
+                        }
+                    }
+
+                    // this.state.users.push(userObj)
+                }
+
+                log("after remove length" + gameList.length);
+                queue.setState({
+                    games: gameList,
+                    message: {
+                        body: "Delete successful.",
+                        type: "success"
+                    }
+                });
+                log("wrnxrrrrrrr" + queue.state.games.length)
+                return data;
+
+            } else {
+                // If server couldn't delete the image, tell the user.
+                // Here we are adding a generic message, but you could be more specific in your app.
+                queue.setState({
+                    message: {
+                        body: "Error: Could not delete image.",
+                        type: "error"
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+
 export async function addGame(queue,urlList){
     // the URL for the request
     const url = baseURL + "/games/addGame";
@@ -265,15 +334,11 @@ export async function addGame(queue,urlList){
     // const imageData = new FormData(form);
     if(urlList.length < 5){
         alert("please add 5 pictures!");
-       return;
+        return;
     }
     const game = {
         ////////////////////////to fixxxx
-        gamePictures: ["https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines5_ihohqj.jpg",
-            "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines4_eyxbyu.jpg",
-            "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines3_w4pyi8.jpg",
-            "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines2_mpg0bu.jpg",
-            "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines1_vjkvvh.jpg"],
+        gamePictures: urlList,
         gameName: queue.state.gameName,
         introductionText: queue.state.introductionText,
         publisher:queue.state.publisher,
@@ -353,70 +418,6 @@ export async function addGame(queue,urlList){
             });
         // }
     }
-
-};
-
-
-export async function removeGame(queue,gameId) {
-
-    const getallGames = await getAllgames();
-
-    const url = baseURL + "/games/" + gameId;
-
-    // Create our request constructor with all the parameters we need
-    const request = new Request(url, {
-        method: "delete",
-        credentials: "include",
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
-    });
-
-    fetch(request)
-        .then(async function (res) {
-
-            // Handle response we get from the API.
-            // Usually check the error codes to see what happened.
-            if (res.status === 200) {
-
-                const data = await res.json();
-
-                let gameList = [];
-                for(let i = 0; i < getallGames.hottestGamesForGenre.length; i++){
-                    for (let j = 0; j < getallGames.hottestGamesForGenre[i].length; j++){
-                        if(getallGames.hottestGamesForGenre[i][j]._id !== data._id) {
-                            gameList.push(getallGames.hottestGamesForGenre[i][j]);
-                        }
-                    }
-
-                    // this.state.users.push(userObj)
-                }
-
-                log("after remove length" + gameList.length);
-                queue.setState({
-                    games: gameList,
-                    message: {
-                        body: "Delete successful.",
-                        type: "success"
-                    }
-                });
-                return data;
-
-            } else {
-                // If server couldn't delete the image, tell the user.
-                // Here we are adding a generic message, but you could be more specific in your app.
-                queue.setState({
-                    message: {
-                        body: "Error: Could not delete image.",
-                        type: "error"
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
 
 };
 

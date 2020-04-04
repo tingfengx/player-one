@@ -42,12 +42,7 @@ class GameQueue extends React.Component {
             thumbUp: 0,
             thumbDown: 0,
             gamePictures:[],
-            // games: [
-            //     {gameName: "aaa", introductionText: "1111"},
-            //     {gameName: "bbb", introductionText: "22222"},
-            //     {gameName: "ccc", introductionText: "22222"}
-            //
-            // ]
+
             games:[]
         };
         this.GameP = [];
@@ -88,21 +83,15 @@ class GameQueue extends React.Component {
                     gameList.push(gameObj);
                 }
 
-                // this.state.users.push(userObj)
+
             }
             console.log("this state users" + gameList.length);
 
-            // this.state.users.username = data.allGames.gameName;
-            // this.state.games.introductionText = data.allGames.introductionText;
-            // this.game.longComments = data.longComments;
-            // this.game.shortComments = data.shortComments;
-            // this.setState({imgs: data.game.gamePictures.slice(-4)});
             this.setState({
                 games: gameList
             });
 
-            // console.log("full game loaded!");
-            // console.log(data.game);
+
         }).catch(e => console.log(e))
     }
 
@@ -124,236 +113,97 @@ class GameQueue extends React.Component {
 
     };
     cookies = this.props;
-
     async handleDelete(event){
         const tableRow = event.target.parentElement.parentElement.parentElement;
         const getallGames = await getAllgames();
         let tochangeId;
         const nameToChangePassword = tableRow.children[0].innerHTML;
-        for (let i = 0; i < getallGames.allGames.length; i ++){
+        let theList = []
 
-            if (getallGames.allGames[i].gameName === nameToChangePassword){
+        for(let i = 0; i < getallGames.hottestGamesForGenre.length; i++){
+            for (let j = 0; j < getallGames.hottestGamesForGenre[i].length; j++) {
+                // for (let i = 0; i < getallGames.allGames.length; i ++) {
 
-                tochangeId = getallGames.allGames[i]._id;
+                if (getallGames.hottestGamesForGenre[i][j].gameName === nameToChangePassword) {
+                    tochangeId = getallGames.hottestGamesForGenre[i][j]._id;
+                }
 
             }
         }
+        log("to change id is " + tochangeId);
 
-        // log("allUsers" + getallGames.allGames)
         log("before remove length" + getallGames.allGames.length)
-        // let userList =[];
-        const deleted_game = await removeGame(this, tochangeId);
+        // this.setState({games: theList});
+
+        const deleted_game = await removeGame(this, tochangeId, getallGames);
     }
 
-    //
-    handleUpload =e =>{
+    async handleUpload(){
         const cloudinaryURL = "https://api.cloudinary.com/v1_1/dzld6bb6y/image/upload";
 
-        const formData = new FormData();
-        formData.append('file', e.target.files[0])
-        formData.append('upload_preset', 'wzgg2ljz')
-        // formData.append('folder', 'user_account')
-        formData.append('folder', 'game_pics')
 
+        await this.handleSelectChange;
+        let urlList = []
+        log("length is " + this.state.gamePictures.length)
+        for(let i = 0; i < this.state.gamePictures.length; i++){
+            log("file is " + this.state.gamePictures[i]);
+            const formData = new FormData();
+            formData.append('file',this.state.gamePictures[i])
+            formData.append('upload_preset', 'wzgg2ljz')
+            // formData.append('folder', 'user_account')
+            formData.append('folder', 'game_pics')
+            const uploadRequest = new Request(cloudinaryURL, {
+                method: "post",
+                body: formData
+            })
 
-        const uploadRequest = new Request(cloudinaryURL, {
-            method: "post",
-            body: formData
-        })
+            let imageURL;
+            fetch(uploadRequest)
+                .then(async function (res) {
+                    if (res.status === 200) {
+                        log('Successfully uploaded game pictures!')
+                        const data = await res.json();
+                        imageURL = data.url;
+                        urlList.push(imageURL);
 
-        let imageURL;
-        fetch(uploadRequest)
-            .then(async function (res) {
-                if (res.status === 200) {
-                    log('Successfully uploaded game pictures!')
-                    const data = await res.json();
-
-                    // if(this.state.gamePictures.length === 5){
-                    //     this.setState({gamePictures: []});
-                    // }
-                    const joined = this.state.gamePictures.concat(data.url);
-                    this.setState({gamePictures: joined});
-                    if(this.state.gamePictures.length === 6){
-                        this.setState({gamePictures: []});
+                        return data
+                    } else {
+                        log('Failed uploading game pictures.')
                     }
-                    // this.state.gamePictures.push(data.url);
-                    return data
-                } else {
-                    log('Failed uploading game pictures.')
-                }
-            }).then((data) => {
+                }).then((data) => {
+                this.setState({gamePictures: urlList});
+                log("the state is " + this.state.gamePictures.length);
                 log(data)
-        }).catch((error)=>{
-            log(error)
-        });
+            }).catch((error)=>{
+                log(error)
+            });
+
+        }
+
+
+
     }
 
+    async handleAdd(){
+        await this.handleUpload;
+        await addGame(this,this.state.gamePictures);
 
-    async HandleaddGame(){
-        // the URL for the request
-        const url = baseURL + "/games/addGame";
-        log("zaiiiiiiiiiiiiiiiiii")
+    }
 
-        // const url = "/users";
-        const gameList = this.state.games;
-
-        // The data we are going to send in our request
-        // const imageData = new FormData(form);
-        // if(urlList.length < 5){
-        //     alert("please add 5 pictures!");
-        //     return;
-        // }
-        const game = {
-            ////////////////////////to fixxxx
-            gamePictures: ["https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines5_ihohqj.jpg",
-                "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines4_eyxbyu.jpg",
-                "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines3_w4pyi8.jpg",
-                "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines2_mpg0bu.jpg",
-                "https://res.cloudinary.com/dzld6bb6y/image/upload/v1585191973/Games/cities_skylines1_vjkvvh.jpg"],
-            gameName: this.state.gameName,
-            introductionText: this.state.introductionText,
-            publisher:this.state.publisher,
-            developer: this.state.developer,
-            genre: this.state.genre,
-            thumbUp: 0,
-            thumbDown: 0,
-            releaseDate: Date.now()
-
-        };
-        log("game"+ game.gameName + game.introductionText+ game.publisher + game.developer + game.genre)
-
-        let indicator = 0;
-        for(let i = 0; i < gameList.length; i++){
-            if (gameList[i].gameName === game.gameName){
-                log(gameList[i].gameName);
-                indicator = 1;
-            }
-
-        }
-        if (indicator === 1){
-            alert("the game has been uploaded!");
-            return;
-        }else {
-            // log("new user is " + game.gameName + game.password)
-
-            // Create our request constructor with all the parameters we need
-            const request = new Request(url, {
-                method: "post",
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(game)
-            });
-            // userList.unshift(user);
-
-
-            // this.setState({
-            //     games: gameList,
-            //     message: {
-            //         body: "Success: Added an image.",
-            //         type: "success"
-            //     }
-            // });
-            // Send the request with fetch()
-            fetch(request)
-                .then(function (res) {
-                    log("res" + res);
-
-                    // Handle response we get from the API.
-                    // Usually check the error codes to see what happened.
-                    log(`status is ${res.status}`)
-                    if (res.status === 200) {
-                        // If image was added successfully, tell the user.
-                        gameList.unshift(game);
-                        this.setState({
-                            games: gameList,
-                            message: {
-                                body: "Success: Added an image.",
-                                type: "success"
-                            }
-                        });
-                        return res.json();
-                    } else {
-                        // If server couldn't add the image, tell the user.
-                        // Here we are adding a generic message, but you could be more specific in your app.
-                        this.setState({
-                            message: {
-                                body: "Error: Could not add image.",
-                                type: "error"
-                            }
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-            // }
+    async handleSelectChange(event){
+        const fileArray = await Array.from(event.target.files);
+        if(fileArray.length !== 5){
+            alert("Please select 5 image");
+        }else{
+            this.setState({gamePictures: fileArray})
+            return fileArray;
         }
 
-    };
 
-    //     let tochangeId;
-    //     const getallGames = await getAllgames();
-    //     let gameName;
-    //     if(this.state.games.length !== 0){
-    //         gameName = this.state.games[0].gameName
-    //     }
-    //     log("game name is " + gameName)
-    //     if(gameName){
+    }
+
     //
-    //         for (let i = 0; i < getallGames.allGames.length; i ++){
-    //
-    //             if (getallGames.allGames[i].gameName === gameName){
-    //
-    //                 tochangeId = getallGames.allGames[i]._id;
-    //
-    //             }
-    //         }
-    //         //add url to the list of tochangeId user
-    //
-    //     }else{
-    //         alert("please first add a game!");
-    //         return;
-    //     }
-    //     let data = await uploadGamePics(event);
-    //     let imgUrl = data.url;
-    //     let dataGame = await getGameById();
-    //     dataGame.gamePictures.push(imgUrl);
 
-
-
-        // const userId = this.props.cookies.cookies.userId
-
-
-
-
-        // fetch(uploadRequest)
-        //     .then(function (res) {
-        //         if (res.status === 200) {
-        //             log('Successfully uploaded game pictures!')
-        //             const data = res.json();
-        //             return res.json()
-        //         } else {
-        //             log('Failed uploading game pictures.')
-        //         }
-        //     }).then((data) => {
-        //     imageURL = data.url
-        //     const toAddURL = baseURL + '/games/' + tochangeId;
-        //     const toaddRequest = new Request(toAddURL, {
-        //         method: 'put',
-        //         credentials: 'include',
-        //         headers: {
-        //             'Accept': 'application/json, text/plain, */*',
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({ 'avatarId': imageURL })
-        //     })
-        // })
-        //     .catch((error) => {
-        //         log(error)
-        //     })
-    // }
 
 
 
@@ -441,7 +291,7 @@ class GameQueue extends React.Component {
                             variant="contained"
                             color="primary"
                             // onClick={this.HandleaddGame().bind(this)}
-                            onClick={() =>addGame(this, this.state.gamePictures)}
+                            onClick={this.handleAdd.bind(this)}
                             // size="small"
                             className="user-form__submit-button"
                         >
@@ -463,15 +313,14 @@ class GameQueue extends React.Component {
                             color="primary"
                             size="small"
 
-                            onChange={this.handleUpload}
+                            onChange={this.handleUpload.bind(this)}
                         >
-                            Upload Avatar
+                            Upload Pictures
                             <input
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                style={{ display: "none" }}
+                                type="file" multiple
+                                onChange={this.handleSelectChange.bind(this)}
                             />
+
                         </Button>
                     </Grid>
                 </Grid>
@@ -524,19 +373,7 @@ class GameQueue extends React.Component {
 
                         </TableBody>
                     </Table>
-                    {/*<TablePagination*/}
-                    {/*    rowsPerPageOptions={[10, 15, 100]}*/}
-                    {/*    component="div"*/}
-                    {/*    count={users.length}*/}
-                    {/*    rowsPerPage={rowsPerPage}*/}
-                    {/*    page={page}*/}
-                    {/*    onChangePage={handleChangePage}*/}
-                    {/*    onChangeRowsPerPage={handleChangeRowsPerPage}*/}
-                    {/*/>*/}
                 </Paper>
-
-
-                {/*<GameList users={this.state.users} queueComponent={this}/>*/}
 
 
             </div>
