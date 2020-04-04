@@ -1,7 +1,5 @@
 import React from "react";
 
-// import UserList from "../UserList";
-// import UserForm from "../UserForm";
 import { withCookies } from "react-cookie";
 
 
@@ -13,21 +11,16 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
+
 import TableRow from '@material-ui/core/TableRow';
 
-// import User from "../User/User"
-// import {uid} from "react-uid";
-
-// import "../UserList.css"
-// import Input from "../Input";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 import DeleteIcon from "@material-ui/core/SvgIcon/SvgIcon";
 let log = console.log;
-const baseURL = "http://localhost:5000";
+const baseURL = "";
 
 
 class Userqueue extends React.Component{
@@ -43,15 +36,7 @@ class Userqueue extends React.Component{
             page: 0,
             setPage: 0,
             users: []
-            // users: [
-            //                    { id: "1", username: "aaa", password: "1111", userType:"user" },
-            //     { id: "2", username: "bbb", password: "22222" , userType:"user" },
-            //     { id: "3", username: "ccc", password: "1111" , userType:"user" },
-            //     { id: "4", username: "ddd", password: "22222" , userType:"user" },
-            //     { id: "5", username: "kkk", password: "1111" , userType:"user" },
-            //     { id: "6", username: "eee", password: "22222", userType:"user"  }
-            //
-            // ]
+
         };
 
 
@@ -78,29 +63,22 @@ class Userqueue extends React.Component{
             }
         }).then(data => {
             /*** full game ***/
-            // this.state.users = data.users;
+
             let userList = [];
-            // log("hhhhhhhh" + data.users[0].username);
+
             for (let i = 0; i < data.users.length; i++){
                 let userObj = {username:"", password:""};
                 userObj.username = data.users[i].username;
                 userObj.password = data.users[i].password;
                 userList.push(userObj);
-                // this.state.users.push(userObj)
+
             }
             console.log("this state users" + userList.length);
 
-            // this.state.users.username = data.allGames.gameName;
-            // this.state.games.introductionText = data.allGames.introductionText;
-            // this.game.longComments = data.longComments;
-            // this.game.shortComments = data.shortComments;
-            // this.setState({imgs: data.game.gamePictures.slice(-4)});
             this.setState({
                 users: userList
             });
 
-            // console.log("full game loaded!");
-            // console.log(data.game);
         }).catch(e => console.log(e))
     }
 
@@ -115,17 +93,6 @@ class Userqueue extends React.Component{
 
     cookies = this.props;
 
-    handleChangePage = (event, newPage) => {
-        const [page, setPage] = React.useState(0);
-        setPage(newPage);
-    };
-
-    handleChangeRowsPerPage = event => {
-        const [page, setPage] = React.useState(0);
-        const [rowsPerPage, setRowsPerPage] = React.useState(10);
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
 
 
 
@@ -144,13 +111,13 @@ class Userqueue extends React.Component{
 
     // handle change password
     handleChangePassword(event){
-        // const allUsers = await getAllusers();
+
         const tableRow = event.target.parentElement.parentElement.parentElement.parentElement;
         const nameToChangePassword = tableRow.firstElementChild.innerHTML;
-        // console.log("name is " + nameToChangePassword);
+
         this.setState({[nameToChangePassword]: event.target.value});
         console.log("target value is " + event.target.value)
-        // console.log("state is " + this.state.users.length)
+
 
     }
 
@@ -162,8 +129,7 @@ class Userqueue extends React.Component{
         const nameToChangePassword = tableRow.children[0].innerHTML;
         const newPassword = this.state[nameToChangePassword];
         let tochangeId;
-        log("allusers" + allUsers.users);
-        log("alluserslength" + allUsers.users.length);
+
 
         for (let i = 0; i < allUsers.users.length; i ++){
 
@@ -173,9 +139,9 @@ class Userqueue extends React.Component{
 
             }
         }
-        log("tochangeId" + tochangeId);
+
         changePassword(tochangeId, newPassword);
-        // const index = userList.indexOf(shortComment);
+
 
     }
 
@@ -195,43 +161,19 @@ class Userqueue extends React.Component{
 
         log("allUsers" + allUsers.users)
         log("before remove length" + allUsers.users.length)
-        let userList =[];
-        const deleted_user = await removeUser(this, tochangeId);
-        // log("aaaaaaaaaa delete user"+deleted_user);
-        // for (let i = 0; i < allUsers.users.length; i++){
-        //     if(allUsers.users[i]._id !== deleted_user._id){
-        //         userList.push(allUsers[i])
-        //     }
-        //
-        // }
-        // log("after remove length" + userList.length)
 
-        // const deleted_user = await removeUser(this, tochangeId);
-        // this.setState({
-        //     users: userList,
-        //     //     message: {
-        //     //         body: "Success: Added an image.",
-        //     //         type: "success"
-        //     //     }
-        // })
+        await removeUser(this, tochangeId);
+
 
 
     }
-
-
-
-
-
-//     const {users, queueComponent, password} = props;
-// console.log("user " + users);
 
     render() {
 
         const users = this.state.users;
 
 
-        const { queueComponent, password, username,
-            handleChange} = this.props;
+
 
         return (
             <div className="App">
@@ -313,7 +255,6 @@ class Userqueue extends React.Component{
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/*{users.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map(user => (*/}
                             {users.map(user => (
                                 <TableRow className="user" key={user.username}>
 
@@ -356,27 +297,12 @@ class Userqueue extends React.Component{
                                         </Button>
                                     </TableCell>
                                 </TableRow>
-                                // <User
-                                //     key={uid(
-                                //         user
-                                //     )}
-                                //     user={user}
-                                //     password={password}
-                                //     queueComponent={queueComponent}
-                                // />
+
                             ))}
 
                         </TableBody>
                     </Table>
-                    <TablePagination
-                        rowsPerPageOptions={[10]}
-                        component="div"
-                        count={users.length}
-                        rowsPerPage={10}
-                        page={0}
-                        onChangePage={this.handleChangePage}
-                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    />
+
                 </Paper>
 
 

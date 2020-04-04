@@ -1,11 +1,8 @@
 import React from "react";
 
-
-// import GameList from "./GameList/GameList";
-// import GameForm from "./GameForm/GameForm";
 import "./GameQueue.css"
 
-import {addGame, getAllgames, getAllusers, removeUser, removeGame, uploadGamePics, getGameById} from "../actions/queue";
+import {addGame, getAllgames,  removeGame} from "../actions/queue";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -14,14 +11,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-// import GameAd from "../GameAd";
-import {uid} from "react-uid";
-// import TablePagination from "@material-ui/core/TablePagination";
+
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 let log = console.log
-const baseURL = "http://localhost:5000";
+const baseURL = "";
 class GameQueue extends React.Component {
 
 
@@ -72,9 +67,9 @@ class GameQueue extends React.Component {
             }
         }).then(data => {
             /*** full game ***/
-                // this.state.users = data.users;
+
             let gameList = [];
-            // console.log("hhhhhhhh" + data.hottestGamesForGenre[0][0].gameName);
+
             for (let i = 0; i < data.hottestGamesForGenre.length; i++){
                 for (let j = 0; j < data.hottestGamesForGenre[i].length; j++){
                     let gameObj = {gameName:"", introductionText:""};
@@ -118,7 +113,7 @@ class GameQueue extends React.Component {
         const getallGames = await getAllgames();
         let tochangeId;
         const nameToChangePassword = tableRow.children[0].innerHTML;
-        let theList = []
+
 
         for(let i = 0; i < getallGames.hottestGamesForGenre.length; i++){
             for (let j = 0; j < getallGames.hottestGamesForGenre[i].length; j++) {
@@ -130,12 +125,12 @@ class GameQueue extends React.Component {
 
             }
         }
-        log("to change id is " + tochangeId);
 
-        log("before remove length" + getallGames.allGames.length)
-        // this.setState({games: theList});
 
-        const deleted_game = await removeGame(this, tochangeId, getallGames);
+
+
+
+        await removeGame(this, tochangeId, getallGames);
     }
 
     async handleUpload(){
@@ -150,7 +145,7 @@ class GameQueue extends React.Component {
             const formData = new FormData();
             formData.append('file',this.state.gamePictures[i])
             formData.append('upload_preset', 'wzgg2ljz')
-            // formData.append('folder', 'user_account')
+
             formData.append('folder', 'game_pics')
             const uploadRequest = new Request(cloudinaryURL, {
                 method: "post",
@@ -202,7 +197,7 @@ class GameQueue extends React.Component {
 
     }
 
-    //
+
 
 
 
@@ -285,7 +280,7 @@ class GameQueue extends React.Component {
                         lg={1}
                         md={6}
                         s={6}
-                        xs={2}
+                        xs={6}
                     >
                         <Button
                             variant="contained"
@@ -301,8 +296,8 @@ class GameQueue extends React.Component {
                     <Grid
                         className="user-form__button-grid"
                         item
-                        xl={1}
-                        lg={1}
+                        xl={2}
+                        lg={2}
                         md={6}
                         s={6}
                         xs={6}
@@ -310,12 +305,10 @@ class GameQueue extends React.Component {
                         <Button
                             variant="contained"
                             component="label"
-                            color="primary"
-                            size="small"
+
 
                             onChange={this.handleUpload.bind(this)}
                         >
-                            Upload Pictures
                             <input
                                 type="file" multiple
                                 onChange={this.handleSelectChange.bind(this)}
@@ -341,7 +334,7 @@ class GameQueue extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/*{users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (*/}
+
                             {games.map(game => (
                                 <TableRow className="user" key={game.gameName}>
 
