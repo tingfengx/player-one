@@ -62,17 +62,19 @@ In the account page, an user is currently able to:
 
 ## Manage Page For Admin
 After successful login, an admin user can access the Manege page by clicking `Manage` in the dropdown menu displayed when
-hovering mouse over the admin user name. *Due to the hardcoded nature of this app, this management interface is not connected to anything else, and is for the purpose of demonstrating layout.*
+hovering mouse over the admin user name. 
 
 In the Admin page, he/she can 
 - Manage Users
-    - Add a new user by providing Username and Password
-    - View all the current user in the system. 
-    - Override an existing user's password by entering a new password in the `NewPassword` field and click on the `UPDATE` button, after which an alert will show, prompting the username of the user and the new password. 
+    - View all the current users in the database. 
+    - Add a new user by providing Username, Password and also userType. The min length of password is 4 and userType is limited to `user` or `superuser`, otherwise there will be an alert and the admin need to retype. After successfully added the user to the database, the newly added user will show up at the top of the user list.
+    - Override an existing user's password by entering a new password in the `NewPassword` field and click on the `UPDATE` button. On Success, there will be an alert showing up,prompting the new password and the new password is also updated in the database. 
+    - remove an existing user by clicking the `remove` button in that user entry And that user will be removed from database and also disappear from the user list.
 
-- Manage Games 
-    - Add a new game by entering the name of the game and description of a game and click `ADD GAME`
-    - Remove a game by clicking `REMOVE` button in the game entry.
+- Manage Games .
+    - View all the current games in the database. 
+    - Add a new game by entering the name, introduction Text, publisher, developer and genre of a game. All the banlks have to be filled otherwise there will be an alert saying fill the blanks. And also for each game, we need to add 5 pictures by clicking `choose file` and choose exactly 5 pictures, or there will still be an alert to saying add 5 pictures. After doing all of these, click `ADD GAME`, and the new game will be added to the database and also show at the top of game list.
+    - remove an existing game by clicking the `remove` button in that game entry. And that game will be removed from database and also disappear from the game list.
     
 
 ## Game Page
