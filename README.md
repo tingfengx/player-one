@@ -66,7 +66,7 @@ hovering mouse over the admin user name. *Due to the hardcoded nature of this ap
 
 In the Admin page, he/she can 
 - Manage Users
-    - Add a new user by providing Username, Password and also userType. The min length of password is 4 and userType has to be limited to `user` or `superuser`, otherwise there will be an alert and the admin need to retype. After successfully added user to the database, the newly added user will show up at the top of the user list.
+    - Add a new user by providing Username, Password and also userType. The min length of password is 4 and userType is limited to `user` or `superuser`, otherwise there will be an alert and the admin need to retype. After successfully added user to the database, the newly added user will show up at the top of the user list.
     - View all the current user in the system. 
     - Override an existing user's password by entering a new password in the `NewPassword` field and click on the `UPDATE` button, there will be an alert showing up,prompting the new password and the new password will be updated in the database. 
     - remove an existing user by clicking the `remove` button in that user entry And that user will be removed from database and also disappear from the user list.
