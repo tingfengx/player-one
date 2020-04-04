@@ -29,9 +29,10 @@ for (let i = 0; i < allGames.allGames.length; i++) {
 }
 
 const allUsers = require('./user_info_start')
+// console.log(allUsers);
 
-for (let i = 0; i < allUsers.allUsers.length; i++) {
-    const user = allUsers.allUsers[i];
+for (let i = 0; i < allUsers.defaultUsers.length; i++) {
+    const user = allUsers.defaultUsers[i];
 
     fetch("http://localhost:5000/users", {
         method: 'post',

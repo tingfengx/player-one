@@ -20,7 +20,7 @@ class UserActivities extends Component {
     }
 
     async componentDidMount() {
-        const userId = this.props.cookies.cookies.userId
+        const userId = this.props.cookies.cookies.user_id
         const userURL = baseURL + '/users/' + userId
 
 

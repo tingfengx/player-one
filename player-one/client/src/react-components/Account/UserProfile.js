@@ -31,7 +31,7 @@ class UserProfile extends Component {
 
   componentDidMount() {
     console.log(this.props)
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const commentsURL = baseURL + '/games/comments/byUser/' + userId
 
     const commentsRequest = new Request(commentsURL, {
@@ -103,7 +103,7 @@ class UserProfile extends Component {
         log(error)
       })
     this.setState({
-      name: this.props.cookies.cookies.username
+      name: this.props.cookies.cookies.user_name
     });
   }
 
@@ -118,7 +118,7 @@ class UserProfile extends Component {
   };
 
   handleUpload = e => {
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id
     const cloudinaryURL = "https://api.cloudinary.com/v1_1/dzld6bb6y/image/upload"
 
     const formData = new FormData();
@@ -179,7 +179,7 @@ class UserProfile extends Component {
   };
 
   handleFinishEditingName = e => {
-    const userId = this.props.cookies.cookies.userId
+    const userId = this.props.cookies.cookies.user_id;
     const url = baseURL + '/users/' + userId + '/bio'
 
     this.setState({

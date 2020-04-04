@@ -46,7 +46,7 @@ class SignInForm extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     // POST /users/login
@@ -58,6 +58,7 @@ class SignInForm extends Component {
 
     const request = new Request(url, {
       method: 'post',
+      credentials: 'same-origin',
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -76,11 +77,16 @@ class SignInForm extends Component {
         alert('Error occurred. Try again!')
       }
     }).then((data) => {
-      log(data)
-      this.props.cookies.set("userId", data._id)
-      this.props.cookies.set("username", data.username)
-      this.props.cookies.set("type", data.userType)
-      this.props.cookies.set("isLoggedIn", true)      
+      log(data);
+      const userid = data._id;
+      const username = data.username;
+      const userType = data.userType;
+
+      this.props.cookies.set("user_id", userid)
+      this.props.cookies.set("user_name", username)
+      this.props.cookies.set("type", userType)
+      this.props.cookies.set("isLoggedIn", true)    
+      log(this.props.cookies);  
     })
     .catch((error) => {
       log(error)
