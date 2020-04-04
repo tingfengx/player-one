@@ -95,7 +95,23 @@ router.post('/addComment', function (req, res) {
 
 });
 
-// root: get all games
+// root: get all games for admin page
+// Expected Output: 
+router.get('/allGames/', async function(req, res) {
+    const allGames = await Game.find().then((games) => {
+        return games;
+    },
+    (error) => {
+        res.status(500).send(error) // server error
+    });
+    if (!allGames) {
+        allGames = []
+    }
+    res.send(allGames);
+});
+
+
+// root: get all games for front page
 // Expected Output: {hottestGamesForGenre: [[<5 games per Genre>]],
 //                  hottestGames: [<5 hottest games>],
 //                  allGames: [<all games with only name and _id>]}
