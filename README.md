@@ -160,6 +160,11 @@ Anyone can view the game page without signing in into the app, however, for he/s
     - (If not enough games with more than 100 thumbUp plus thumbDown, then the games with less or equal number will be considered as well)
     - **Input:** N/A
     - **Output:** {hottestGamesForGenre: 5 games per Genre, hottestGames: 5 hottest games, allGames: all games with only name and _id}
+
+- ```GET /games/allGames```
+    - Get all the Game objects stored in the data base
+    - **Input:** N/A
+    - **Output:** array of all the game objects available in the database
                      
 - ```POST /games/addGame```
 

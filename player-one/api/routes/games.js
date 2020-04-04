@@ -96,7 +96,7 @@ router.post('/addComment', function (req, res) {
 });
 
 // root: get all games for admin page
-// Expected Output: 
+// Expected Output: [ {Game} ]; these games are complete
 router.get('/allGames/', async function(req, res) {
     const allGames = await Game.find().then((games) => {
         return games;
