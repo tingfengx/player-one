@@ -62,7 +62,7 @@ In the account page, an user is currently able to:
 
 ## Manage Page For Admin
 After successful login, an admin user can access the Manege page by clicking `Manage` in the dropdown menu displayed when
-hovering mouse over the admin user name. *Due to the hardcoded nature of this app, this management interface is not connected to anything else, and is for the purpose of demonstrating layout.*
+hovering mouse over the admin user name. 
 
 In the Admin page, he/she can 
 - Manage Users
