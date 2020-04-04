@@ -46,7 +46,7 @@ class SignInForm extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     // POST /users/login
@@ -58,12 +58,30 @@ class SignInForm extends Component {
 
     const request = new Request(url, {
       method: 'post',
+      credentials: 'include',
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
     })
+
+    // const response = await fetch(request);
+    // if (response.ok) {
+    //   try{
+    //     const data = await response.json();
+    //     this.props.cookies.set("userId", data._id)
+    //     this.props.cookies.set("username", data.username)
+    //     this.props.cookies.set("type", data.userType)
+    //     this.props.cookies.set("isLoggedIn", true)  
+    //   } catch (e) {
+    //     log(e);
+    //   }
+    // } else if (response.status === 400) {
+    //   alert('Wrong username or password')
+    // } else {
+    //   alert('Error occurred. Try again!')
+    // }
 
     fetch(request)
     .then((res) => {

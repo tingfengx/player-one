@@ -164,7 +164,7 @@ export default function TopNavBar(props) {
                                         {
                                             section.games.map(function (game) {
                                                 const gameName = game.gameName;
-                                                const gameUrl = "/games/" + game._id;
+                                                const gameUrl = "/viewgames/" + game._id;
                                                 return <a href={gameUrl} key={uid(gameUrl)}>{gameName}</a>
                                             })
                                         }
@@ -218,7 +218,7 @@ export default function TopNavBar(props) {
                                         {
                                             section.games.map(function (game) {
                                                 const gameName = game.gameName;
-                                                const gameUrl = "/games/" + game._id;
+                                                const gameUrl = "/viewgames/" + game._id;
                                                 return <a href={gameUrl} key={uid(gameUrl)}>{gameName}</a>
                                             })
                                         }
