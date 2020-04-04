@@ -65,7 +65,7 @@ class App extends React.Component {
                     {/* Each Route below shows a different component depending on the exact path in the URL  */}
                     <Route exact path="/" render={() => <Home state={this.state} />} />
                     <Route 
-                        path={`/games/:gameId`}
+                        path={`/viewgames/:gameId`}
                         component={GamePageOverview}
                     />
                     {/* !! DEPRECATED !! */}

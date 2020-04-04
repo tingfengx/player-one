@@ -11,7 +11,8 @@ export default class CarouselSlides extends Component {
     }
 
     componentDidMount = () => {
-        const baseURL = "http://localhost:5000"
+        // const baseURL = "http://localhost:5000"
+        const baseURL = "";
         const url = baseURL + '/games'
 
         const request = new Request(url, {
@@ -35,7 +36,7 @@ export default class CarouselSlides extends Component {
             let imagesCache = [];
             for (let i = 0; i < this.state.hottestGames.length; i++) {
                 imagesCache.push({
-                    urlToPush: "/games/" + this.state.hottestGames[i]._id,
+                    urlToPush: "/viewgames/" + this.state.hottestGames[i]._id,
                     imageLink: this.state.hottestGames[i].gamePictures[0]
                 })
             }

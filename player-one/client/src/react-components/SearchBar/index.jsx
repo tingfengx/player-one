@@ -16,7 +16,7 @@ class SearchBar extends React.Component{
         this.setState({ selectedOption });
         if (selectedOption) {
             console.log(selectedOption);
-            const redirectURL = "/games/" + selectedOption.value;
+            const redirectURL = "/viewgames/" + selectedOption.value;
             // this.props.history.push(redirectURL);
             /**
              * FORCE to absolute position
@@ -31,7 +31,8 @@ class SearchBar extends React.Component{
     };
 
     componentDidMount = () => {
-        const baseURL = "http://localhost:5000"
+        // const baseURL = "http://localhost:5000"
+        const baseURL = "";
         const url = baseURL + '/games'
 
         const request = new Request(url, {

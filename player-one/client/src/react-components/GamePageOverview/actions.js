@@ -1,5 +1,6 @@
 const l = console.log;
-const baseURL = "http://localhost:5000";
+// const baseURL = "http://localhost:5000";
+const baseURL = "";
 
 /**
  * @param Union({Comment}, {LongComment}, {Game}) item 

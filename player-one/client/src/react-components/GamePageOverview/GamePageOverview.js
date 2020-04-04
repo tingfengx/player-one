@@ -34,7 +34,8 @@ const l = console.log;
 /**
  * TODO: Change this before deployment
  */
-const baseURL = "http://localhost:5000"
+// const baseURL = "http://localhost:5000"
+const baseURL = "";
 
 let bestShort = {};
 for (let i = 0; i < game.shortComments.length; i++){

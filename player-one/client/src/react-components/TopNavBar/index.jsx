@@ -36,7 +36,8 @@ export default function TopNavBar(props) {
      * second argument has to be an emty array for it to load only once
      */
     useEffect(() => {
-        const baseURL = "http://localhost:5000"
+        // const baseURL = "http://localhost:5000"
+        const baseURL = "";
         const url = baseURL + '/games'
 
         const request = new Request(url, {
@@ -111,7 +112,7 @@ export default function TopNavBar(props) {
                                     {
                                         section.games.map(function (game) {
                                             const gameName = game.gameName;
-                                            const gameUrl = "/games/" + game._id;
+                                            const gameUrl = "/viewgames/" + game._id;
                                             return <a href={gameUrl} key={uid(gameUrl)}>{gameName}</a>
                                         })
                                     }
