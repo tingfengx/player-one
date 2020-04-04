@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
+        default: "Love to share my favorite games with you!",
         required: false // allow admin have no bio
     },
     /**
