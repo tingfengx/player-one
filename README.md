@@ -54,6 +54,7 @@ In the account page, an user is currently able to:
 - add a new tag to describe himself/herself or his/her favorite games
 - view a list of recently liked games and go to that game page by clicking the link
 - view a list of recent reviews and go to that games page by clicking the link
+
 ## Manage Page For Admin
 After successful login, an admin user can access the Manege page by clicking `Manage` in the dropdown menu displayed when
 hovering mouse over the admin user name. *Due to the hardcoded nature of this app, this management interface is not connected to anything else, and is for the purpose of demonstrating layout.*
@@ -70,28 +71,16 @@ In the Admin page, he/she can
     
 
 ## Game Page
-Anyone can view the game page without signing in into the app, however, for he/she to make a comment/long comment depending on the type of user that he/she is, logging in is required.
-There is one hardcoded game page in the app now, you can access it by hovering your mouse over any of the categories shown
-in the top navigation bar and click `The Witcher 3: Wild Hunt`. You can also access it by going to
-``````
-http://localhost:3000/the_witcher_3_wild_hunt
-``````
-There should be four selected pictures for the game, and with thumbnails for all of them shown to the left of the screen
-and to the right is a short description, usually from the game developer, and related stats/info for the game. 
-Also, there is one 'selected' comment from the short comments chosen to be displayed below the general stats 
-for the game. The username of the user who left the comment is also shown.
+Anyone can view the game page without signing in into the app, however, for he/she to make a comment/long comment depending on the type of user that he/she is, logging in is required. *There are in total 26 hardcoded games for our app at initial state.*
 
-Below, is the section for comments. Each of the long comment is inside a expansion
-menu, and anyone can view it by clicking on the title text. At the bottom of each of the expanded long coments, there are three buttons, namely `AGREE`, `HUMM, NOPE` and `FUNNY`. Each of the three buttons have a counter associated with them and the number of hits is updated in real time as users click the button. Of course, these are all just dummy hard-coded data and not synchronized with any source of data outside. (**Aside:** these buttons are only available for a user to click once they have logged in. It will be showned disabled by someone who has not logged in.) 
-
-After the long comment section, what a user can see below varies with the type
-of the user:
 - **For User:** A general user can add comment for games, press like/dislike buttons for a game, and press like/dislike/funny buttons for comments and long comments.
+    - The user can like/ dislike the game. The user can only either dislike or like the game, i.e. he/she can't both like the game and dislike the game. Also, the user can't like or dislike the game more than once. Notice that if a user has previously liked the game, then when he/she press dislike button, the number of dislikes is incremented, and his like for the game is automatically cancelled. This also holds when the user has previously disliked the game, and wish to press like now. 
+    - The user can press like/dislike/funny for long comments and short comments. The like and dislike work exactly the same as those for the game, which is described above. The funny button is independent, and intentioanlly designed such that one can press it as many times as he want. (so maybe some comment is really funny but not quite related to the game, then the user saw it can click funny a few times. )
     - The user can add his/her new comment by typing a new comment message in the text input box and then hitting the `SUBMIT` button below. The new comment will be added to the *top* of existing comment list. 
-    - The user can also modify the comments
+    - The user can also modify the the comment that he/she left by entering a new comment and press the button below. You can see that the old comment being replaced by the new one. (when a comment is modified, the like/dislike/funny counts are reset to zero, since a modification in comment could make the comment have a entirely different meaning and we think it would be wierd if it still has likes/dislikes/funny from the previous version.)
     - Note: The current policy for these short comments is that it has to be longer than 30 characters (informative) and less than 500 characters (not too long). Also, the submitted comment will replace all the newline 'returns' with spaces. We did this because it is possible that some malicious user type a lot of returns in some comment and this might ruin the user experience for others.
 
-- **For Superuser:** A super user can also leave comments, and in addition to that, he/she can add long comments for the game. By clicking the `want to share your review?` expansion panel, the super user can see an interface for entering a new long comment. As opposed to short comments, long comments have to be at least 500 characters long. Also, long comments represent professional agencies's viewpoint on the game, which we expect to be professional. Hence, we do not allow professinal users to modify the contents of the long comment. 
+- **For Superuser:** A super user can do **anything** that a normal user can do, and in addition to that, he/she can add long comments for the game. By clicking the `want to share your review?` expansion panel, the super user can see an interface for entering a new long comment. As opposed to short comments, long comments have to be at least 500 characters long. Also, long comments represent professional agencies's viewpoint on the game, which we expect to be professional. Hence, we do not allow professinal users to modify the contents of the long comment. 
 
 - **For Admin:** We think admin should be limited to his/her own job and should not use the admin account for personal opinion, for example, like writing a comment. Hence, the only thing that a admin is allowed to do on a game page is to delete comments. The admin can do so by clicking the ```delete``` button associated with the comment that he/she wants to delete. 
 
