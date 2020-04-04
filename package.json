@@ -4,7 +4,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd player-one/api && npm install && npm start",
-    "heroku-postbuild": "cd player-one/client && npm install && npm run build && cd../../"
+    "heroku-postbuild": "cd player-one/client && npm install && npm run build && cd ../../"
   },
   "repository": {
     "type": "git",
