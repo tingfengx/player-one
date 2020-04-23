@@ -2,7 +2,7 @@
 This project is an React application on game rating and sharing. To use this app, please follow the following steps.
 
 ### Authors
-| [@koichishi](https://github.com/koichishi) | [@tingfengx](https://github.com/tingfengx) | [@jujubeee](https://github.com/jujubeee) | [@way1998](https://github.com/way1998) |
+| [@koichishi](https://github.com/koichishi) | [@tingfengx](https://tingfengx.com) | [@jujubeee](https://github.com/jujubeee) | [@way1998](https://github.com/way1998) |
 |--------------------------------------------|--------------------------------------------|------------------------------------------|----------------------------------------|
 
 ## Installing and running locally
