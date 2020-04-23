@@ -1,10 +1,15 @@
 # team42: Player One - The Player's Game Rating Platform
 This project is an React application on game rating and sharing. To use this app, please follow the following steps.
+
+### Authors
+| [@koichishi](https://github.com/koichishi) | [@tingfengx](https://github.com/tingfengx) | [@jujubeee](https://github.com/jujubeee) | [@way1998](https://github.com/way1998) |
+|--------------------------------------------|--------------------------------------------|------------------------------------------|----------------------------------------|
+
 ## Installing and running locally
     Important: Please do not refresh on the main page for many time, we have a very limited cloudinary quota
 1. clone git repo:
     ```
-    git clone https://github.com/csc309-winter-2020/team42.git
+    git clone https://github.com/tingfengx/player-one.git
     ```
 2. go to project top level directory:
     ```
