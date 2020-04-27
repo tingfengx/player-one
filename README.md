@@ -1,9 +1,10 @@
 # team42: Player One - The Player's Game Rating Platform
-This project is an React application on game rating and sharing. To use this app, please follow the following steps.
 
 ### Authors
 | [@koichishi](https://github.com/koichishi) | [@tingfengx](https://tingfengx.com) | [@jujubeee](https://github.com/jujubeee) | [@way1998](https://github.com/way1998) |
 |--------------------------------------------|--------------------------------------------|------------------------------------------|----------------------------------------|
+
+This project is an React application on game rating and sharing. To use this app, please follow the following steps.
 
 ## Installing and running locally
     Important: Please do not refresh on the main page for many time, we have a very limited cloudinary quota
