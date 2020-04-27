@@ -15,7 +15,7 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd team42/
     ```
-3. Install dependencies and build client and start the local server using
+3. Install dependencies and build client and start the local server using the convenient shell script
     ```
     sh local-start.sh
     ```
@@ -23,7 +23,6 @@ This project is an React application on game rating and sharing. To use this app
     ```
     cd player-one/client/ && npm install && npm run build && cd ../api/ && npm install && npm start
     ```
-    to invoke the shell script and start the server. 
 4. The app should be available at ```localhost:5000```, have fun. (We will refer to ```localhost:5000/``` as root from now on)
 
 ## Viewing the deployed app

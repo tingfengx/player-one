@@ -112,7 +112,7 @@ class UserActivities extends Component {
                             const resjson = await resp.json();
                             let obj = {
                                 gameName: resjson.game.gameName,
-                                gameURL: origin + '/games/' + resjson.game._id,
+                                gameURL: origin + '/viewgames/' + resjson.game._id,
                                 gamePicture: resjson.game.gamePictures[0]
                             }
                             let tempComment = allComments[i]
